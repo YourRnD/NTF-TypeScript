@@ -3,18 +3,27 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { compose } from 'redux';
-import { setUserAction } from '../../redux/actions/authAction';
+import {
+  setPasswordValueAction,
+  setEmailValueAction,
+  setNameValueAction,
+  setUserAction,
+} from '../../redux/actions/authAction';
 import { RootState } from '../../redux/reducers';
-import { IUser } from '../../redux/types';
+import { IUser, IValues } from '../../redux/types';
 import { IAuthFormInitialValues } from '../../types/componentsTypes';
 import Auth from './Auth';
 
 type MapStatePropsType = {
   isAuth: boolean;
+  values: IValues;
 };
 
 type MapDispatchPropsType = {
   setUser: (user: IUser, isAuth: boolean) => void;
+  setNameValue: (name: string) => void;
+  setEmailValue: (email: string) => void;
+  setPasswordValue: (password: string) => void;
 };
 
 type OwnPropsType = {
@@ -23,15 +32,20 @@ type OwnPropsType = {
 
 type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType;
 
-const AuthContainer: React.FC<PropsType> = ({ isAuth, typeOperation }) => {
+const AuthContainer: React.FC<PropsType> = ({
+  isAuth,
+  typeOperation,
+  values,
+  setNameValue,
+  setEmailValue,
+  setPasswordValue,
+}) => {
   if (isAuth) {
     return <Redirect to="/" />;
   }
 
   const initialValues: IAuthFormInitialValues = {
-    name: '',
-    password: '',
-    email: '',
+    ...values,
   };
 
   const onSubmit = (values: FormikValues) => {
@@ -43,12 +57,17 @@ const AuthContainer: React.FC<PropsType> = ({ isAuth, typeOperation }) => {
       typeOperation={typeOperation}
       initialValues={initialValues}
       onSubmit={onSubmit}
+      values={values}
+      setNameValue={setNameValue}
+      setEmailValue={setEmailValue}
+      setPasswordValue={setPasswordValue}
     />
   );
 };
 
 const mapToStateProps = (state: RootState): MapStatePropsType => ({
   isAuth: state.auth.isAuth,
+  values: state.auth.values,
 });
 
 export default compose(
@@ -56,6 +75,9 @@ export default compose(
     mapToStateProps,
     {
       setUser: setUserAction,
+      setNameValue: setNameValueAction,
+      setEmailValue: setEmailValueAction,
+      setPasswordValue: setPasswordValueAction,
     }
   )
 )(AuthContainer);

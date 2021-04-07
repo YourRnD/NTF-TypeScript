@@ -12,16 +12,14 @@ export interface IFieldAdditionallyProps {
 
 interface IInputAdditionallyProps {
   name: string;
-  value: string;
-  onChange: () => void;
-  onBlur: () => void;
-  onFocus: () => void;
 }
 
 interface IInputProps {
   field: IInputAdditionallyProps;
   placeholder: string;
   type: string;
+  setStateValue: (value: string) => void;
+  value: string;
 }
 
 export type FormControlsType = IInputProps | null;
