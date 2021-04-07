@@ -9,6 +9,8 @@ const createField = (
   component: React.FC<FormControlsType>,
   name: string,
   placeholder: string,
+  setStateValue: (value: string) => void,
+  value: string,
   props: IFieldAdditionallyProps
 ): ReactNode => (
   <>
@@ -16,6 +18,8 @@ const createField = (
       component={component}
       name={name}
       placeholder={placeholder}
+      setStateValue={setStateValue}
+      value={value}
       {...props}
     />
   </>
