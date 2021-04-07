@@ -2,3 +2,36 @@
   min-width: 100vw;
   min-height: 100%;
 }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'PT Sans', sans-serif;
+}
+
+a {
+  text-decoration: none;
+
+  color: #000;
+}
+
+input {
+  outline: none;
+}
+
+body {
+  margin-top: 80px;
+
+  /* COLORS */
+  --white: #ffffff;
+  --lightGrey: #fafafa;
+  --lightBlack: #c8c8c8;
+  --blue: #0367a6;
+  --fontBlue: #b0c4de;
+  --red: rgb(235, 59, 59);
+}
+
+img {
+  max-width: 100%;
+}
