@@ -1,0 +1,48 @@
+.container {
+  position: relative;
+}
+
+.elem {
+  min-width: 300px;
+  min-height: 50px;
+
+  padding-left: 15px;
+
+  border-radius: 10px;
+  border: solid 1px var(--lightBlack);
+
+  margin-bottom: 30px;
+}
+
+.elem::-moz-placeholder {
+  color: var(--fontBlue);
+}
+.elem::-webkit-input-placeholder {
+  color: var(--fontBlue);
+}
+.elem:-ms-input-placeholder {
+  color: var(--fontBlue);
+}
+.elem::-ms-input-placeholder {
+  color: var(--fontBlue);
+}
+.elem::placeholder {
+  color: var(--fontBlue);
+}
+
+.placeholder {
+  position: absolute;
+  display: none;
+
+  top: 0;
+  left: 11px;
+
+  color: var(--fontBlue);
+  background-color: var(--white);
+
+  padding: 0 5px;
+
+  font-size: 0.8rem;
+
+  transform: translateY(-50%);
+}
