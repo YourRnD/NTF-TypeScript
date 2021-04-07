@@ -15,7 +15,10 @@ const initialState: stateAuth = {
   isInit: false,
 };
 
-const authReducer = (state = initialState, action: AuthActionTypes): stateAuth => {
+const authReducer = (
+  state = initialState,
+  action: AuthActionTypes
+): stateAuth => {
   switch (action.type) {
     case SET_USER:
       return {
