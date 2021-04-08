@@ -10,7 +10,11 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/auth" component={Auth} />
+          <Route
+            exact
+            path="/auth"
+            render={() => <Auth typeOperation="Regist" />}
+          />
         </Switch>
       </BrowserRouter>
     </div>

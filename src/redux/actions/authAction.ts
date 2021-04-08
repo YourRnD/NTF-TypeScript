@@ -5,7 +5,9 @@ import {
   SET_EMAIL_VALUE,
   SET_PASSWORD_VALUE,
 } from '../constants';
-import { IUser, AuthActionTypes } from '../types';
+import { IUser, AuthActionTypes } from '../../types/authReducerTypes';
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from '../reducers';
 
 export const setUserAction = (
   user: IUser,
@@ -45,3 +47,30 @@ export const setPasswordValueAction = (password: string): AuthActionTypes => ({
     password,
   },
 });
+
+export const signupTh = (
+  name: string,
+  email: string,
+  password: string
+): ThunkAction<Promise<void>, RootState, unknown, AuthActionTypes> => async (
+  dispatch
+) => {
+  const data = await exampleAPI(name, email, password);
+  const user: IUser = {
+    id: 255,
+    name: data.split(', ')[0],
+    email: data.split(', ')[1],
+    status: 'customer',
+    idBusiness: 200,
+  };
+
+  dispatch(setUserAction(user, true));
+};
+
+const exampleAPI = (
+  name: string,
+  email: string,
+  password: string
+): Promise<string> => {
+  return Promise.resolve(`${name}, ${email}, ${password}`);
+};

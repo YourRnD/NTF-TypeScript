@@ -1,4 +1,3 @@
-import { FormikValues } from 'formik';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
@@ -8,9 +7,10 @@ import {
   setEmailValueAction,
   setNameValueAction,
   setUserAction,
+  signupTh,
 } from '../../redux/actions/authAction';
 import { RootState } from '../../redux/reducers';
-import { IUser, IValues } from '../../redux/types';
+import { IUser, IValues } from '../../types/authReducerTypes';
 import { IAuthFormInitialValues } from '../../types/componentsTypes';
 import Auth from './Auth';
 
@@ -24,6 +24,7 @@ type MapDispatchPropsType = {
   setNameValue: (name: string) => void;
   setEmailValue: (email: string) => void;
   setPasswordValue: (password: string) => void;
+  signup: (name: string, email: string, password: string) => void;
 };
 
 type OwnPropsType = {
@@ -39,6 +40,7 @@ const AuthContainer: React.FC<PropsType> = ({
   setNameValue,
   setEmailValue,
   setPasswordValue,
+  signup,
 }) => {
   if (isAuth) {
     return <Redirect to="/" />;
@@ -48,8 +50,12 @@ const AuthContainer: React.FC<PropsType> = ({
     ...values,
   };
 
-  const onSubmit = (values: FormikValues) => {
-    console.log(values);
+  const onSubmit = () => {
+    if (typeOperation === 'Auth') {
+      console.log('Соре');
+    } else if (typeOperation === 'Regist') {
+      signup(values.name, values.email, values.password);
+    }
   };
 
   return (
@@ -78,6 +84,7 @@ export default compose(
       setNameValue: setNameValueAction,
       setEmailValue: setEmailValueAction,
       setPasswordValue: setPasswordValueAction,
+      signup: signupTh,
     }
   )
 )(AuthContainer);
