@@ -8,11 +8,11 @@ import {
 
 // Store
 export interface IUser {
-  id: number | null;
-  email: string | null;
-  name: string | null;
-  status: string | null;
-  idBusiness: number | null;
+  id: number | null | undefined;
+  email: string | null | undefined;
+  name: string | null | undefined;
+  status: string | null | undefined;
+  idBusiness: number | null | undefined;
 }
 
 export interface IValues {
