@@ -5,7 +5,7 @@ import {
   SET_EMAIL_VALUE,
   SET_PASSWORD_VALUE,
 } from '../constants';
-import { AuthActionTypes, IAuth } from '../types';
+import { AuthActionTypes, IAuth } from '../../types/authReducerTypes';
 
 type stateAuth = IAuth;
 

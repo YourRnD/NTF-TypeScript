@@ -1,4 +1,4 @@
-import { Form, Formik, FormikValues } from 'formik';
+import { Form, Formik } from 'formik';
 import React from 'react';
 import { IAuthFormInitialValues } from '../../types/componentsTypes';
 import createField from '../common/FormControls';
@@ -13,7 +13,7 @@ interface IValues {
 type PropsType = {
   typeOperation: 'Auth' | 'Regist';
   initialValues: IAuthFormInitialValues;
-  onSubmit: (values: FormikValues) => void;
+  onSubmit: () => void;
   values: IValues;
   setNameValue: (value: string) => void;
   setEmailValue: (value: string) => void;

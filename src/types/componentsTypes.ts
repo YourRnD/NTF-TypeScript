@@ -1,14 +1,12 @@
+// AuthForm
+
 export interface IAuthFormInitialValues {
   name: string;
   password: string;
   email: string;
 }
 
-export interface IFieldAdditionallyProps {
-  type?: string;
-}
-
-// Form controls
+// Input
 
 interface IInputAdditionallyProps {
   name: string;
@@ -20,6 +18,12 @@ interface IInputProps {
   type: string;
   setStateValue: (value: string) => void;
   value: string;
+}
+
+// Form controls
+
+export interface IFieldAdditionallyProps {
+  type?: string;
 }
 
 export type FormControlsType = IInputProps | null;

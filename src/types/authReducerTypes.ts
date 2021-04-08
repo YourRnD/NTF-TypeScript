@@ -4,7 +4,7 @@ import {
   SET_NAME_VALUE,
   SET_EMAIL_VALUE,
   SET_PASSWORD_VALUE,
-} from './constants';
+} from '../redux/constants';
 
 // Store
 export interface IUser {
