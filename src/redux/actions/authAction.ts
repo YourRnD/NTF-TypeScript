@@ -8,6 +8,7 @@ import {
 import { IUser, AuthActionTypes } from '../../types/authReducerTypes';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../reducers';
+import { authAPI } from '../../api/api';
 
 export const setUserAction = (
   user: IUser,
@@ -55,22 +56,19 @@ export const signupTh = (
 ): ThunkAction<Promise<void>, RootState, unknown, AuthActionTypes> => async (
   dispatch
 ) => {
-  const data = await exampleAPI(name, email, password);
+  const data = await authAPI
+    .signup(name, email, password)
+    .then((result) => result.data);
+
+  console.log(data);
+
   const user: IUser = {
-    id: 255,
-    name: data.split(', ')[0],
-    email: data.split(', ')[1],
-    status: 'customer',
-    idBusiness: 200,
+    id: data.user?.id,
+    name: data.user?.name,
+    email: data.user?.email,
+    status: data.user?.userStatus,
+    idBusiness: data.user?.business,
   };
 
   dispatch(setUserAction(user, true));
-};
-
-const exampleAPI = (
-  name: string,
-  email: string,
-  password: string
-): Promise<string> => {
-  return Promise.resolve(`${name}, ${email}, ${password}`);
 };
