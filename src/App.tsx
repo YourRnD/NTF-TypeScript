@@ -1,12 +1,27 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { compose } from 'redux';
 import Style from './App.module.css';
 import Auth from './components/Auth';
+import Preloader from './components/common/Preloader';
 import Home from './components/Home';
+import { RootState } from './redux/reducers';
 
-const App: React.FC = () => {
+type MapStatePropsType = {
+  isLoaded: boolean;
+};
+
+type MapDispatchPropsType = {};
+
+type OwnPropsType = {};
+
+type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType;
+
+const App: React.FC<PropsType> = ({ isLoaded }) => {
   return (
     <div className={Style.root}>
+      <Preloader isLoader={isLoaded} />
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />
@@ -21,4 +36,13 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+const mapToStateProps = (state: RootState): MapStatePropsType => ({
+  isLoaded: state.common.isLoaded,
+});
+
+export default compose(
+  connect<MapStatePropsType, MapDispatchPropsType, {}, RootState>(
+    mapToStateProps,
+    {}
+  )
+)(App);

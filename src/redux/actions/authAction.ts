@@ -9,6 +9,8 @@ import { IUser, AuthActionTypes } from '../../types/authReducerTypes';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../reducers';
 import { authAPI } from '../../api/api';
+import { changeLoaded } from './commonAction';
+import { CommonActionTypes } from '../../types/commonReducerTypes';
 
 export const setUserAction = (
   user: IUser,
@@ -53,22 +55,28 @@ export const signupTh = (
   name: string,
   email: string,
   password: string
-): ThunkAction<Promise<void>, RootState, unknown, AuthActionTypes> => async (
-  dispatch
-) => {
+): ThunkAction<
+  Promise<void>,
+  RootState,
+  unknown,
+  AuthActionTypes | CommonActionTypes
+> => async (dispatch) => {
+  dispatch(changeLoaded(true));
+
   const data = await authAPI
     .signup(name, email, password)
     .then((result) => result.data);
+  if (data.status === 200) {
+    const user: IUser = {
+      id: data.user?.id,
+      name: data.user?.name,
+      email: data.user?.email,
+      status: data.user?.userStatus,
+      idBusiness: data.user?.business,
+    };
 
-  console.log(data);
+    dispatch(setUserAction(user, true));
+  }
 
-  const user: IUser = {
-    id: data.user?.id,
-    name: data.user?.name,
-    email: data.user?.email,
-    status: data.user?.userStatus,
-    idBusiness: data.user?.business,
-  };
-
-  dispatch(setUserAction(user, true));
+  dispatch(changeLoaded(false));
 };
