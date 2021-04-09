@@ -2,9 +2,9 @@ import { CHANGE_LOADED, SET_ERROR, SET_UPLOAD_IMAGE } from '../redux/constants';
 
 // Store
 export interface IError {
-  status: number | null;
-  param: string | null;
-  message: string | null;
+  status: number | undefined;
+  param?: string | undefined;
+  message: string | undefined;
 }
 
 export interface IUploadImage {
