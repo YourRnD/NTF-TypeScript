@@ -1,29 +1,19 @@
+import { FormikValues } from 'formik';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { compose } from 'redux';
-import {
-  setPasswordValueAction,
-  setEmailValueAction,
-  setNameValueAction,
-  setUserAction,
-  signupTh,
-} from '../../redux/actions/authAction';
+import { setUserAction, signupTh } from '../../redux/actions/authAction';
 import { RootState } from '../../redux/reducers';
-import { IUser, IValues } from '../../types/authReducerTypes';
-import { IAuthFormInitialValues } from '../../types/componentsTypes';
+import { IUser } from '../../types/authReducerTypes';
 import Auth from './Auth';
 
 type MapStatePropsType = {
   isAuth: boolean;
-  values: IValues;
 };
 
 type MapDispatchPropsType = {
   setUser: (user: IUser, isAuth: boolean) => void;
-  setNameValue: (name: string) => void;
-  setEmailValue: (email: string) => void;
-  setPasswordValue: (password: string) => void;
   signup: (name: string, email: string, password: string) => void;
 };
 
@@ -36,21 +26,13 @@ type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType;
 const AuthContainer: React.FC<PropsType> = ({
   isAuth,
   typeOperation,
-  values,
-  setNameValue,
-  setEmailValue,
-  setPasswordValue,
   signup,
 }) => {
   if (isAuth) {
     return <Redirect to="/" />;
   }
 
-  const initialValues: IAuthFormInitialValues = {
-    ...values,
-  };
-
-  const onSubmit = () => {
+  const onSubmit = (values: FormikValues) => {
     if (typeOperation === 'Auth') {
       console.log('Соре');
     } else if (typeOperation === 'Regist') {
@@ -58,22 +40,11 @@ const AuthContainer: React.FC<PropsType> = ({
     }
   };
 
-  return (
-    <Auth
-      typeOperation={typeOperation}
-      initialValues={initialValues}
-      onSubmit={onSubmit}
-      values={values}
-      setNameValue={setNameValue}
-      setEmailValue={setEmailValue}
-      setPasswordValue={setPasswordValue}
-    />
-  );
+  return <Auth typeOperation={typeOperation} onSubmit={onSubmit} />;
 };
 
 const mapToStateProps = (state: RootState): MapStatePropsType => ({
   isAuth: state.auth.isAuth,
-  values: state.auth.values,
 });
 
 export default compose(
@@ -81,9 +52,6 @@ export default compose(
     mapToStateProps,
     {
       setUser: setUserAction,
-      setNameValue: setNameValueAction,
-      setEmailValue: setEmailValueAction,
-      setPasswordValue: setPasswordValueAction,
       signup: signupTh,
     }
   )

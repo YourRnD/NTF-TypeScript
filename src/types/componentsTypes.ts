@@ -1,23 +1,17 @@
-// AuthForm
-
-export interface IAuthFormInitialValues {
-  name: string;
-  password: string;
-  email: string;
-}
-
 // Input
 
 interface IInputAdditionallyProps {
   name: string;
+  onChange: () => void;
 }
 
 interface IInputProps {
   field: IInputAdditionallyProps;
   placeholder: string;
   type: string;
-  setStateValue: (value: string) => void;
-  value: string;
+  form: {
+    errors: any;
+  };
 }
 
 // Form controls

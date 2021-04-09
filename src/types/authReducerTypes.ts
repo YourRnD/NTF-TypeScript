@@ -1,10 +1,4 @@
-import {
-  SET_USER,
-  SET_INIT,
-  SET_NAME_VALUE,
-  SET_EMAIL_VALUE,
-  SET_PASSWORD_VALUE,
-} from '../redux/constants';
+import { SET_USER, SET_INIT } from '../redux/constants';
 
 // Store
 export interface IUser {
@@ -15,17 +9,10 @@ export interface IUser {
   idBusiness: number | null | undefined;
 }
 
-export interface IValues {
-  email: string;
-  name: string;
-  password: string;
-}
-
 export interface IAuth {
   isAuth: boolean;
   isInit: boolean;
   user: IUser;
-  values: IValues;
 }
 
 // Actions
@@ -44,30 +31,4 @@ interface ISetInitAction {
   };
 }
 
-interface ISetNameValue {
-  type: typeof SET_NAME_VALUE;
-  payload: {
-    name: string;
-  };
-}
-
-interface ISetEmailValue {
-  type: typeof SET_EMAIL_VALUE;
-  payload: {
-    email: string;
-  };
-}
-
-interface ISetPasswordValue {
-  type: typeof SET_PASSWORD_VALUE;
-  payload: {
-    password: string;
-  };
-}
-
-export type AuthActionTypes =
-  | ISetUserAction
-  | ISetInitAction
-  | ISetNameValue
-  | ISetEmailValue
-  | ISetPasswordValue;
+export type AuthActionTypes = ISetUserAction | ISetInitAction;

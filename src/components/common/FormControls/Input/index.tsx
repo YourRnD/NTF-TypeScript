@@ -6,8 +6,7 @@ const InputContainer: React.FC<FormControlsType> = ({
   field,
   placeholder,
   type,
-  setStateValue,
-  value,
+  form,
 }) => {
   const onFocus = (e: React.FocusEvent<HTMLInputElement>): void => {
     e.target.placeholder = '';
@@ -18,7 +17,7 @@ const InputContainer: React.FC<FormControlsType> = ({
     span != undefined && span != null ? (span.style.display = 'block') : false;
   };
   const onBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
-    if (value === '') {
+    if (e.target.value === '') {
       const span:
         | HTMLSpanElement
         | undefined
@@ -37,11 +36,6 @@ const InputContainer: React.FC<FormControlsType> = ({
       }
     }
   };
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const value: string | null = e.target.value;
-
-    value != null ? setStateValue(value) : false;
-  };
 
   return (
     <Input
@@ -50,8 +44,8 @@ const InputContainer: React.FC<FormControlsType> = ({
       type={type}
       onFocus={onFocus}
       onBlur={onBlur}
-      onChange={onChange}
-      value={value}
+      onChange={field.onChange}
+      error={form.errors[`${field.name}`] ? form.errors[`${field.name}`] : null}
     />
   );
 };
