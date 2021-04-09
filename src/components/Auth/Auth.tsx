@@ -1,54 +1,55 @@
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikValues } from 'formik';
 import React from 'react';
-import { IAuthFormInitialValues } from '../../types/componentsTypes';
-import createField from '../common/FormControls';
+import { signUpSchema } from '../../common/validate';
+import ContainerField from '../common/FormControls';
 import Input from '../common/FormControls/Input';
-
-interface IValues {
-  name: string;
-  email: string;
-  password: string;
-}
 
 type PropsType = {
   typeOperation: 'Auth' | 'Regist';
-  initialValues: IAuthFormInitialValues;
-  onSubmit: () => void;
-  values: IValues;
-  setNameValue: (value: string) => void;
-  setEmailValue: (value: string) => void;
-  setPasswordValue: (value: string) => void;
+  onSubmit: (values: FormikValues) => void;
 };
 
-const Auth: React.FC<PropsType> = ({
-  initialValues,
-  onSubmit,
-  typeOperation,
-  values,
-  setNameValue,
-  setEmailValue,
-  setPasswordValue,
-}) => (
-  <Formik initialValues={initialValues} onSubmit={onSubmit}>
+const Auth: React.FC<PropsType> = ({ onSubmit, typeOperation }) => (
+  <Formik
+    initialValues={{
+      name: '',
+      email: '',
+      password: '',
+    }}
+    onSubmit={onSubmit}
+    validationSchema={signUpSchema}
+  >
     <Form>
-      {typeOperation === 'Regist'
-        ? createField(Input, 'name', 'Name', setNameValue, values.name, {
-            type: 'name',
-          })
-        : null}
-      {createField(Input, 'email', 'Email', setEmailValue, values.email, {
-        type: 'email',
-      })}
-      {createField(
-        Input,
-        'password',
-        'Password',
-        setPasswordValue,
-        values.password,
-        {
-          type: 'password',
-        }
-      )}
+      {typeOperation === 'Regist' ? (
+        <ContainerField
+          component={Input}
+          name="name"
+          placeholder="Name"
+          props={{
+            type: 'text',
+          }}
+        />
+      ) : null}
+      {
+        <ContainerField
+          component={Input}
+          name="email"
+          placeholder="Email"
+          props={{
+            type: 'email',
+          }}
+        />
+      }
+      {
+        <ContainerField
+          component={Input}
+          name="password"
+          placeholder="Password"
+          props={{
+            type: 'password',
+          }}
+        />
+      }
       <button type="submit">Кнопочка</button>
     </Form>
   </Formik>

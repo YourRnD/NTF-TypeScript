@@ -1,28 +1,31 @@
 import { Field } from 'formik';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import {
   FormControlsType,
   IFieldAdditionallyProps,
 } from '../../../types/componentsTypes';
 
-const createField = (
-  component: React.FC<FormControlsType>,
-  name: string,
-  placeholder: string,
-  setStateValue: (value: string) => void,
-  value: string,
-  props: IFieldAdditionallyProps
-): ReactNode => (
+type PropsType = {
+  component: React.FC<FormControlsType>;
+  name: string;
+  placeholder: string;
+  props: IFieldAdditionallyProps;
+};
+
+const ContainerField: React.FC<PropsType> = ({
+  component,
+  name,
+  placeholder,
+  props,
+}) => (
   <>
     <Field
       component={component}
       name={name}
       placeholder={placeholder}
-      setStateValue={setStateValue}
-      value={value}
       {...props}
     />
   </>
 );
 
-export default createField;
+export default ContainerField;
