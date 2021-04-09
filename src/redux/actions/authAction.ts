@@ -9,7 +9,7 @@ import { IUser, AuthActionTypes } from '../../types/authReducerTypes';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../reducers';
 import { authAPI } from '../../api/api';
-import { changeLoaded } from './commonAction';
+import { changeLoaded, setError } from './commonAction';
 import { CommonActionTypes } from '../../types/commonReducerTypes';
 
 export const setUserAction = (
@@ -76,6 +76,8 @@ export const signupTh = (
     };
 
     dispatch(setUserAction(user, true));
+  } else {
+    dispatch(setError(data, true));
   }
 
   dispatch(changeLoaded(false));
