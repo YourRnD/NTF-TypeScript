@@ -1,17 +1,26 @@
 .container {
   position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  margin-bottom: 50px;
+
+  min-width: 100%;
+
+  padding: 0 50px;
 }
 
 .elem {
-  min-width: 300px;
+  min-width: 100%;
   min-height: 50px;
 
   padding-left: 15px;
 
   border-radius: 10px;
   border: solid 1px var(--lightBlack);
-
-  margin-bottom: 30px;
 }
 
 .elem::-moz-placeholder {
@@ -35,14 +44,102 @@
   display: none;
 
   top: 0;
-  left: 11px;
+  left: 61px;
 
   color: var(--fontBlue);
   background-color: var(--white);
 
   padding: 0 5px;
 
-  font-size: 0.8rem;
+  font-size: 14px;
 
   transform: translateY(-50%);
+}
+
+.error {
+  color: var(--red);
+
+  min-width: 100%;
+
+  margin-top: 5px;
+  padding-left: 5px;
+
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .elem {
+    font-size: 25px;
+
+    min-width: 100%;
+    min-height: 80px;
+
+    padding-left: 20px;
+  }
+
+  .placeholder {
+    left: 65px;
+
+    font-size: 25px;
+  }
+
+  .error {
+    font-size: 25px;
+  }
+
+  .elem::-moz-placeholder {
+    font-size: 25px;
+  }
+  .elem::-webkit-input-placeholder {
+    font-size: 25px;
+  }
+  .elem:-ms-input-placeholder {
+    font-size: 25px;
+  }
+  .elem::-ms-input-placeholder {
+    font-size: 25px;
+  }
+  .elem::placeholder {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 425px) {
+  .container {
+    padding: 0 50px;
+  }
+
+  .elem {
+    font-size: 15px;
+
+    min-height: 50px;
+
+    padding-left: 15px;
+  }
+
+  .placeholder {
+    left: 61px;
+
+    font-size: 15px;
+  }
+
+  .error {
+    font-size: 15px;
+  }
+
+  .elem::-moz-placeholder {
+    font-size: 15px;
+  }
+  .elem::-webkit-input-placeholder {
+    font-size: 15px;
+  }
+  .elem:-ms-input-placeholder {
+    font-size: 15px;
+  }
+  .elem::-ms-input-placeholder {
+    font-size: 15px;
+  }
+  .elem::placeholder {
+    font-size: 15px;
+  }
 }
