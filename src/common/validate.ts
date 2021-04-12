@@ -26,3 +26,20 @@ export const signUpSchema = yup.object({
     .oneOf([yup.ref('password')], 'Password mismatch!')
     .required('Required!'),
 });
+
+export const signInSchema = yup.object({
+  email: yup
+    .string()
+    .max(50, 'Too long!')
+    .email('Invalid email')
+    .required('Required!'),
+  password: yup
+    .string()
+    .min(2, 'Too short!')
+    .max(50, 'Too long!')
+    .matches(
+      /(?=.*[0-9])(?=.*[!@#$%^&_*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&_*]{6,}/g,
+      'The password must contain numbers, special characters, lowercase and uppercase Latin letters!'
+    )
+    .required('Required!'),
+});

@@ -1,57 +1,92 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { compose } from 'redux';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Style from './App.module.css';
 import Auth from './components/Auth';
 import ErrorMessage from './components/common/ErrorMessage';
 import Preloader from './components/common/Preloader';
 import SuccessMessage from './components/common/SuccessMessage';
 import Home from './components/Home';
+import { checkAuthTh, setInitAction } from './redux/actions/authAction';
 import { RootState } from './redux/reducers';
 
 type MapStatePropsType = {
   isLoaded: boolean;
+  isAuth: boolean;
+  isInit: boolean;
 };
 
-type MapDispatchPropsType = {};
+type MapDispatchPropsType = {
+  checkAuth: () => void;
+  setInit: (init: boolean) => void;
+};
 
-type OwnPropsType = {};
+type PropsType = MapStatePropsType & MapDispatchPropsType;
 
-type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType;
+const App: React.FC<PropsType> = ({
+  isLoaded,
+  isAuth,
+  isInit,
+  checkAuth,
+  setInit,
+}) => {
+  useEffect(() => {
+    if (!isInit) {
+      if (localStorage.getItem('star_it_access_token')) {
+        checkAuth();
+      } else {
+        setInit(true);
+      }
+    }
+  }, [isInit, checkAuth, setInit]);
 
-const App: React.FC<PropsType> = ({ isLoaded }) => {
-  return (
-    <div className={Style.root}>
-      <Preloader isLoader={isLoaded} />
-      <ErrorMessage />
-      <SuccessMessage />
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route
-            exact
-            path="/signin"
-            render={() => <Auth typeOperation="Auth" />}
-          />
-          <Route
-            exact
-            path="/signup"
-            render={() => <Auth typeOperation="Regist" />}
-          />
-        </Switch>
-      </BrowserRouter>
-    </div>
-  );
+  if (isInit) {
+    return (
+      <div className={Style.root}>
+        <Preloader isLoader={isLoaded} />
+        <ErrorMessage />
+        <SuccessMessage />
+        <BrowserRouter>
+          <Switch>
+            {isAuth ? (
+              <>
+                <Route exact path="/" component={Home} />
+                <Redirect to="/" />
+              </>
+            ) : (
+              <>
+                <Route
+                  exact
+                  path="/signin"
+                  render={() => <Auth typeOperation="Auth" />}
+                />
+                <Route
+                  exact
+                  path="/signup"
+                  render={() => <Auth typeOperation="Regist" />}
+                />
+                <Redirect to="/signin" />
+              </>
+            )}
+          </Switch>
+        </BrowserRouter>
+      </div>
+    );
+  }
+
+  return <Preloader isLoader={isLoaded} />;
 };
 
 const mapToStateProps = (state: RootState): MapStatePropsType => ({
   isLoaded: state.common.isLoaded,
+  isAuth: state.auth.isAuth,
+  isInit: state.auth.isInit,
 });
 
-export default compose(
-  connect<MapStatePropsType, MapDispatchPropsType, {}, RootState>(
-    mapToStateProps,
-    {}
-  )
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootState>(
+  mapToStateProps,
+  {
+    checkAuth: checkAuthTh,
+    setInit: setInitAction,
+  }
 )(App);

@@ -3,8 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { compose } from 'redux';
-import { signUpSchema } from '../../common/validate';
-import { signupTh } from '../../redux/actions/authAction';
+import { signInSchema, signUpSchema } from '../../common/validate';
+import { signinTh, signupTh } from '../../redux/actions/authAction';
 import { RootState } from '../../redux/reducers';
 import Auth from './Auth';
 
@@ -14,6 +14,7 @@ type MapStatePropsType = {
 
 type MapDispatchPropsType = {
   signup: (name: string, email: string, password: string) => void;
+  signin: (email: string, password: string) => void;
 };
 
 type OwnPropsType = {
@@ -26,14 +27,17 @@ const AuthContainer: React.FC<PropsType> = ({
   isAuth,
   typeOperation,
   signup,
+  signin,
 }) => {
+  console.log(isAuth);
+
   if (isAuth) {
     return <Redirect to="/" />;
   }
 
   const onSubmit = (values: FormikValues) => {
     if (typeOperation === 'Auth') {
-      console.log('Соре');
+      signin(values.email, values.password);
     } else if (typeOperation === 'Regist') {
       signup(values.name, values.email, values.password);
     }
@@ -55,7 +59,13 @@ const AuthContainer: React.FC<PropsType> = ({
     <Auth
       typeOperation={typeOperation}
       onSubmit={onSubmit}
-      validateSchema={signUpSchema}
+      validateSchema={
+        typeOperation === 'Regist'
+          ? signUpSchema
+          : typeOperation === 'Auth'
+          ? signInSchema
+          : null
+      }
       initialValue={initialValue}
     />
   );
@@ -70,6 +80,7 @@ export default compose(
     mapToStateProps,
     {
       signup: signupTh,
+      signin: signinTh,
     }
   )
 )(AuthContainer);
