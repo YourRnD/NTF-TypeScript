@@ -6,6 +6,7 @@ import Style from './App.module.css';
 import Auth from './components/Auth';
 import ErrorMessage from './components/common/ErrorMessage';
 import Preloader from './components/common/Preloader';
+import SuccessMessage from './components/common/SuccessMessage';
 import Home from './components/Home';
 import { RootState } from './redux/reducers';
 
@@ -24,6 +25,7 @@ const App: React.FC<PropsType> = ({ isLoaded }) => {
     <div className={Style.root}>
       <Preloader isLoader={isLoaded} />
       <ErrorMessage />
+      <SuccessMessage />
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />

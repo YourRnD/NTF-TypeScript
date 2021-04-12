@@ -1,4 +1,9 @@
-import { CHANGE_LOADED, SET_ERROR, SET_UPLOAD_IMAGE } from '../redux/constants';
+import {
+  CHANGE_LOADED,
+  SET_ERROR,
+  SET_SUCCESS,
+  SET_UPLOAD_IMAGE,
+} from '../redux/constants';
 
 // Store
 export interface IError {
@@ -18,6 +23,8 @@ export interface ICommon {
   error: IError;
   isError: boolean;
   uploadImage: IUploadImage;
+  isSuccess: boolean;
+  successMessage: string;
 }
 
 // Actions
@@ -37,6 +44,14 @@ export interface ISetErrorAction {
   };
 }
 
+export interface ISetSuccessAction {
+  type: typeof SET_SUCCESS;
+  payload: {
+    successMessage: string;
+    isSuccess: boolean;
+  };
+}
+
 interface ISetUploadImageAction {
   type: typeof SET_UPLOAD_IMAGE;
   payload: {
@@ -47,4 +62,5 @@ interface ISetUploadImageAction {
 export type CommonActionTypes =
   | IChangeLoadAction
   | ISetErrorAction
+  | ISetSuccessAction
   | ISetUploadImageAction;

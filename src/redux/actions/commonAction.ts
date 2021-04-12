@@ -3,7 +3,12 @@ import {
   IError,
   IUploadImage,
 } from '../../types/commonReducerTypes';
-import { CHANGE_LOADED, SET_ERROR, SET_UPLOAD_IMAGE } from '../constants';
+import {
+  CHANGE_LOADED,
+  SET_ERROR,
+  SET_SUCCESS,
+  SET_UPLOAD_IMAGE,
+} from '../constants';
 
 export const changeLoaded = (isLoaded: boolean): CommonActionTypes => ({
   type: CHANGE_LOADED,
@@ -24,6 +29,17 @@ export const setError = (
       param: error.param ? error.param : '',
     },
     isError,
+  },
+});
+
+export const setSuccess = (
+  successMessage: string,
+  isSuccess: boolean
+): CommonActionTypes => ({
+  type: SET_SUCCESS,
+  payload: {
+    successMessage,
+    isSuccess,
   },
 });
 
