@@ -1,7 +1,7 @@
 import { Form, Formik, FormikValues } from 'formik';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { signUpSchema } from '../../common/validate';
+import { signInSchema, signUpSchema } from '../../common/validate';
 import ContainerField from '../common/FormControls';
 import Input from '../common/FormControls/Input';
 import Style from './Auth.module.css';
@@ -16,7 +16,7 @@ interface IInitialValue {
 type PropsType = {
   typeOperation: 'Auth' | 'Regist';
   onSubmit: (values: FormikValues) => void;
-  validateSchema: typeof signUpSchema;
+  validateSchema: typeof signUpSchema | typeof signInSchema | null;
   initialValue: IInitialValue | {};
 };
 
