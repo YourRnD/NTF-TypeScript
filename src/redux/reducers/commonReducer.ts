@@ -1,5 +1,10 @@
 import { CommonActionTypes, ICommon } from '../../types/commonReducerTypes';
-import { CHANGE_LOADED, SET_ERROR, SET_UPLOAD_IMAGE } from '../constants';
+import {
+  CHANGE_LOADED,
+  SET_ERROR,
+  SET_SUCCESS,
+  SET_UPLOAD_IMAGE,
+} from '../constants';
 
 type stateCommon = ICommon;
 
@@ -16,6 +21,8 @@ const initialState: stateCommon = {
     type: '',
     imageInBase64: '',
   },
+  isSuccess: false,
+  successMessage: '',
 };
 
 const commonReducer = (
@@ -29,6 +36,11 @@ const commonReducer = (
         ...action.payload,
       };
     case SET_ERROR:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case SET_SUCCESS:
       return {
         ...state,
         ...action.payload,
