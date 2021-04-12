@@ -29,7 +29,12 @@ const App: React.FC<PropsType> = ({ isLoaded }) => {
           <Route exact path="/" component={Home} />
           <Route
             exact
-            path="/auth"
+            path="/signin"
+            render={() => <Auth typeOperation="Auth" />}
+          />
+          <Route
+            exact
+            path="/signup"
             render={() => <Auth typeOperation="Regist" />}
           />
         </Switch>

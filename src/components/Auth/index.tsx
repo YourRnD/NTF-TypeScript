@@ -3,9 +3,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { compose } from 'redux';
-import { setUserAction, signupTh } from '../../redux/actions/authAction';
+import { signUpSchema } from '../../common/validate';
+import { signupTh } from '../../redux/actions/authAction';
 import { RootState } from '../../redux/reducers';
-import { IUser } from '../../types/authReducerTypes';
 import Auth from './Auth';
 
 type MapStatePropsType = {
@@ -13,7 +13,6 @@ type MapStatePropsType = {
 };
 
 type MapDispatchPropsType = {
-  setUser: (user: IUser, isAuth: boolean) => void;
   signup: (name: string, email: string, password: string) => void;
 };
 
@@ -40,7 +39,26 @@ const AuthContainer: React.FC<PropsType> = ({
     }
   };
 
-  return <Auth typeOperation={typeOperation} onSubmit={onSubmit} />;
+  const initialValue =
+    typeOperation === 'Regist'
+      ? {
+          name: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        }
+      : typeOperation === 'Auth'
+      ? { email: '', password: '' }
+      : {};
+
+  return (
+    <Auth
+      typeOperation={typeOperation}
+      onSubmit={onSubmit}
+      validateSchema={signUpSchema}
+      initialValue={initialValue}
+    />
+  );
 };
 
 const mapToStateProps = (state: RootState): MapStatePropsType => ({
@@ -51,7 +69,6 @@ export default compose(
   connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, RootState>(
     mapToStateProps,
     {
-      setUser: setUserAction,
       signup: signupTh,
     }
   )

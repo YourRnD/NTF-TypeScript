@@ -32,7 +32,7 @@ const Input: React.FC<PropsType> = ({
         name={name}
         onChange={onChange}
       />
-      {error !== null ? <p>{error}</p> : null}
+      {error !== null ? <p className={Style.error}>{error}</p> : null}
     </div>
   );
 };
