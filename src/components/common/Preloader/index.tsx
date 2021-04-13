@@ -10,7 +10,7 @@ const Preloader: React.FC<PropsType> = ({ isLoader }) => {
   if (isLoader) {
     return (
       <div className={Style.loader}>
-        <img className={Style.loaderInner} src={preloader} alt="Прелоадер" />
+        <img className={Style.loaderInner} src={preloader} alt="Preloader" />
       </div>
     );
   }
