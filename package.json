@@ -12,6 +12,8 @@
     "@types/react-dom": "17.0.3",
     "@types/react-redux": "^7.1.16",
     "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "formik": "^2.2.6",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -29,7 +31,9 @@
     "build": "react-scripts build",
     "lint": "eslint --ext .ts,.tsx src --fix",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev-start": "serve -s build",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
   },
   "prettier": {
     "singleQuote": true,
