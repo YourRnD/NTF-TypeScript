@@ -1,6 +1,6 @@
 import { SET_USER, SET_INIT } from '../redux/constants';
 
-// Store
+// State
 export interface IUser {
   id: number | null | undefined;
   email: string | null | undefined;
@@ -9,7 +9,7 @@ export interface IUser {
   idBusiness: number | null | undefined;
 }
 
-export interface IAuth {
+export interface IAuthState {
   isAuth: boolean;
   isInit: boolean;
   user: IUser;

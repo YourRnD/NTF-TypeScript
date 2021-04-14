@@ -64,7 +64,7 @@ const AuthContainer: React.FC<PropsType> = ({
           ? signUpSchema
           : typeOperation === 'Auth'
           ? signInSchema
-          : null
+          : {}
       }
       initialValue={initialValue}
     />

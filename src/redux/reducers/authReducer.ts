@@ -1,7 +1,7 @@
 import { SET_USER, SET_INIT } from '../constants';
-import { AuthActionTypes, IAuth } from '../../types/authReducerTypes';
+import { AuthActionTypes, IAuthState } from '../../types/authReducerTypes';
 
-type stateAuth = IAuth;
+type stateAuth = IAuthState;
 
 const initialState: stateAuth = {
   user: {

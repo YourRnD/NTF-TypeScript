@@ -2,10 +2,10 @@ import React from 'react';
 import { FormControlsType } from '../../../../types/componentsTypes';
 import Input from './Input';
 
-const InputContainer: React.FC<FormControlsType> = ({
+const InputContainer: React.FunctionComponent<FormControlsType> = ({
+  anotherArg,
   field,
   placeholder,
-  type,
   form,
 }) => {
   const onFocus = (e: React.FocusEvent<HTMLInputElement>): void => {
@@ -41,7 +41,7 @@ const InputContainer: React.FC<FormControlsType> = ({
     <Input
       name={field.name}
       placeholder={placeholder}
-      type={type}
+      type={anotherArg.type !== undefined ? anotherArg.type : 'text'}
       onFocus={onFocus}
       onBlur={onBlur}
       onChange={field.onChange}

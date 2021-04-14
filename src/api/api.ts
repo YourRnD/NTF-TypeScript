@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { IBusiness, IUpdateBusinessObj } from '../types/businessReducerTypes';
 
 const instance = axios.create({
   baseURL: 'https://star-it-api.herokuapp.com/', // 'http://localhost:3500/',
@@ -50,17 +51,24 @@ interface IUser {
   business?: number | null;
 }
 
-interface IUniversalResultData {
+export interface IAuthAPI {
+  accessToken?: string;
+  refreshToken?: string;
+  user?: IUser;
+}
+
+export interface IBusinessAPI {
+  business?: IBusiness;
+}
+
+export interface IUniversalResultData {
   message: string;
   status: number;
-  accessToken?: string;
-  refresh?: string;
-  user?: IUser;
   param?: string;
 }
 
 export type ResultType = {
-  data: IUniversalResultData;
+  data: IUniversalResultData & (IAuthAPI | IBusinessAPI);
 };
 
 export const authAPI = {
@@ -95,6 +103,35 @@ export const authAPI = {
     return instance.get(`${this.path}refresh`, {
       params: {
         mac: 'E1:8C:24:6D:F9:85',
+      },
+    });
+  },
+};
+
+export const businessAPI = {
+  path: 'api/business/',
+  get(id: number): Promise<ResultType> {
+    return instance.get(`${this.path}${id}`, {
+      params: {
+        mac: 'E1:8C:24:6D:F9:85',
+      },
+    });
+  },
+  add(name: string, image: string | ArrayBuffer): Promise<ResultType> {
+    return instance.post(`${this.path}`, {
+      payload: {
+        mac: 'E1:8C:24:6D:F9:85',
+        name,
+        image,
+      },
+    });
+  },
+  update(id: number, obj: IUpdateBusinessObj): Promise<ResultType> {
+    console.log(obj);
+    return instance.put(`${this.path}${id}`, {
+      payload: {
+        mac: 'E1:8C:24:6D:F9:85',
+        ...obj,
       },
     });
   },
