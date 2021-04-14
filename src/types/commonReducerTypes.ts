@@ -15,7 +15,7 @@ export interface IError {
 export interface IUploadImage {
   name: string;
   type: string;
-  imageInBase64: string;
+  imageInBase64: string | ArrayBuffer | null;
 }
 
 export interface ICommon {

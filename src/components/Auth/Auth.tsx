@@ -16,7 +16,7 @@ interface IInitialValue {
 type PropsType = {
   typeOperation: 'Auth' | 'Regist';
   onSubmit: (values: FormikValues) => void;
-  validateSchema: typeof signUpSchema | typeof signInSchema | null;
+  validateSchema: typeof signUpSchema | typeof signInSchema | {};
   initialValue: IInitialValue | {};
 };
 

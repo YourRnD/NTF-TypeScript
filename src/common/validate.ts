@@ -43,3 +43,24 @@ export const signInSchema = yup.object({
     )
     .required('Required!'),
 });
+
+export const createBusinessSchema = yup.object({
+  name: yup
+    .string()
+    .min(3, 'Too short!')
+    .max(50, 'Too long!')
+    .matches(/^([a-zA-Z]\s*)+/i, 'Name is incorrect!')
+    .required('Required!'),
+  image: yup.object().required('Required!'),
+});
+
+export const updateBusinessSchema = yup.object({
+  name: yup
+    .string()
+    .default(null)
+    .nullable()
+    .min(3, 'Too short!')
+    .max(50, 'Too long!')
+    .matches(/^([a-zA-Z]\s*)+/i, 'Name is incorrect!'),
+  image: yup.object().default(null).nullable(),
+});

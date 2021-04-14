@@ -1,0 +1,49 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-width: 100%;
+  max-height: 100%;
+}
+
+.form {
+  background-color: var(--white);
+
+  max-width: 400px;
+  width: 100%;
+
+  margin: 75px 0 30px;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.submit {
+  height: 50px;
+  width: 350px;
+
+  border-radius: 10px;
+  border: 0;
+
+  font-size: 16px;
+
+  color: var(--white);
+  background-color: var(--blue);
+
+  transition: all 0.5s;
+}
+
+.submit:hover {
+  box-shadow: -10px 10px 15px 0px rgba(0, 0, 0, 0.3);
+
+  transform: translate(5px, -5px);
+}
+
+@media (max-width: 415px) {
+  .submit {
+    width: 250px;
+  }
+}

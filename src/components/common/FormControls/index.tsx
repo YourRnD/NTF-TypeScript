@@ -23,7 +23,7 @@ const ContainerField: React.FC<PropsType> = ({
       component={component}
       name={name}
       placeholder={placeholder}
-      {...props}
+      anotherArg={{ ...props }}
     />
   </>
 );
