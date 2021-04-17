@@ -4,7 +4,7 @@ import {
 } from '../../types/businessReducerTypes';
 import {
   SET_BUSINESSES,
-  SET_PAGE_NUMBER,
+  SET_BUSINESS_PAGE_NUMBER,
   SET_SELECTED_BUSINESS,
 } from '../constants';
 
@@ -34,7 +34,7 @@ const businessReducer = (
         ...state,
         ...action.payload,
       };
-    case SET_PAGE_NUMBER:
+    case SET_BUSINESS_PAGE_NUMBER:
       return {
         ...state,
         ...action.payload,

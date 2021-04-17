@@ -8,4 +8,8 @@ export const SET_SUCCESS = 'star_it/common/SET-SUCCESS';
 
 export const SET_BUSINESSES = 'star_it/business/SET-BUSINESSES';
 export const SET_SELECTED_BUSINESS = 'star_it/business/SET-SELECTED-BUSINESS';
-export const SET_PAGE_NUMBER = 'star_it/business/SET_PAGE-NUMBER';
+export const SET_BUSINESS_PAGE_NUMBER = 'star_it/business/SET_PAGE-NUMBER';
+
+export const SET_POINTS = 'star_it/business/SET-POINTS';
+export const SET_SELECTED_POINT = 'star_it/business/SET-SELECTED-POINT';
+export const SET_POINT_PAGE_NUMBER = 'star_it/business/SET-PAGE-NUMBER';

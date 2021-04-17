@@ -9,7 +9,7 @@ import {
 import { CommonActionTypes } from '../../types/commonReducerTypes';
 import {
   SET_BUSINESSES,
-  SET_PAGE_NUMBER,
+  SET_BUSINESS_PAGE_NUMBER,
   SET_SELECTED_BUSINESS,
 } from '../constants';
 import { RootState } from '../reducers';
@@ -36,7 +36,7 @@ export const setSelectedBusiness = (
 });
 
 export const setPageNumber = (pageNumber: number): BusinessActionTypes => ({
-  type: SET_PAGE_NUMBER,
+  type: SET_BUSINESS_PAGE_NUMBER,
   payload: {
     pageNumber,
   },
@@ -111,107 +111,3 @@ export const getBusinessTh = (
   }
   dispatch(changeLoaded(false));
 };
-
-/*
-import { businessAPI } from '../../../api/api';
-import pathConvector from '../../../common/pathConvector';
-import { changeLoaded, errorTh } from '../common';
-
-// Actions level
-
-
-
-// Thunks level
-
-export const createBusinessTh = (name, logo) => async (dispatch) => {
-  dispatch(changeLoaded(true));
-  const data = await businessAPI.add(name, logo);
-  if (data.status === 200) {
-    console.log('Sucsess');
-  } else {
-    dispatch(errorTh(data));
-  }
-  dispatch(changeLoaded(false));
-};
-
-export const updateBusinessTh = (id, obj) => async (dispatch) => {
-  dispatch(changeLoaded(true));
-  const data = await businessAPI.update(id, obj);
-  if (data.status === 200) {
-    console.log('Sucsess');
-  } else {
-    dispatch(errorTh(data));
-  }
-  dispatch(changeLoaded(false));
-};
-
-export const getBusinessesTh = (pageNumber) => async (dispatch) => {
-  dispatch(changeLoaded(true));
-  const data = await businessAPI.getAll(pageNumber);
-  const businesses = data.businesses.map((item) => ({
-    ...item,
-    path: pathConvector(item.path),
-  }));
-  if (data.status === 200) {
-    dispatch(setBusinesses(businesses, data.countPages));
-  } else {
-    errorTh(data);
-  }
-  dispatch(changeLoaded(false));
-};
-
-export const searchBusinessesTh = (pageNumber, value) => async (dispatch) => {
-  dispatch(changeLoaded(true));
-  const data = await businessAPI.search(pageNumber, value);
-  const businesses = data.businesses.map((item) => ({
-    ...item,
-    path: pathConvector(item.path),
-  }));
-  if (data.status === 200) {
-    dispatch(setBusinesses(businesses, data.countPages));
-  } else {
-    errorTh(data);
-  }
-  dispatch(changeLoaded(false));
-};
-
-export const getBusinessTh = (id) => async (dispatch) => {
-  dispatch(changeLoaded(true));
-  const data = await businessAPI.get(id);
-  if (data.status === 200) {
-    dispatch(
-      setSelectedBusiness({
-        ...data.business,
-        path: pathConvector(data.business.path),
-      })
-    );
-  } else {
-    errorTh(data);
-  }
-  dispatch(changeLoaded(false));
-};
-
-const authReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SET_BUSINESSES:
-      return {
-        ...state,
-        ...action.data,
-      };
-    case SET_SELECTED_BUSINESS:
-      return {
-        ...state,
-        ...action.data,
-      };
-    case SET_PAGE_NUMBER:
-      return {
-        ...state,
-        ...action.data,
-      };
-    default:
-      return state;
-  }
-};
-
-export default authReducer;
-*/

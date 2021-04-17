@@ -1,0 +1,32 @@
+.root {
+	display: flex;
+	justify-content: start;
+}
+
+.ceil {
+	padding: 20px;
+
+	margin: 1px;
+
+	background-color: var(--white);
+}
+
+.id {
+	flex-basis: 10%;
+}
+
+.name {
+	flex-basis: 20%;
+}
+
+.address {
+	flex-basis: 45%;
+}
+
+.edit {
+	flex-basis: 10%;
+}
+
+.qr-code {
+	flex-basis: 15%;
+}
