@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IBusiness, IUpdateBusinessObj } from '../types/businessReducerTypes';
+import { IUpdatePointsObj } from '../types/pointReducerTypes';
 
 const instance = axios.create({
   baseURL: 'https://star-it-api.herokuapp.com/', // 'http://localhost:3500/',
@@ -61,6 +62,18 @@ export interface IBusinessAPI {
   business?: IBusiness;
 }
 
+interface IPoint {
+  id: number | null | undefined;
+  name: string | null | undefined;
+  address: string | null | undefined;
+}
+
+export interface IPointAPI {
+  point?: IPoint;
+  points?: Array<IPoint> | [];
+  countPages?: number | null | undefined;
+}
+
 export interface IUniversalResultData {
   message: string;
   status: number;
@@ -68,7 +81,7 @@ export interface IUniversalResultData {
 }
 
 export type ResultType = {
-  data: IUniversalResultData & (IAuthAPI | IBusinessAPI);
+  data: IUniversalResultData & (IAuthAPI | IBusinessAPI | IPointAPI);
 };
 
 export const authAPI = {
@@ -127,7 +140,64 @@ export const businessAPI = {
     });
   },
   update(id: number, obj: IUpdateBusinessObj): Promise<ResultType> {
-    console.log(obj);
+    return instance.put(`${this.path}${id}`, {
+      payload: {
+        mac: 'E1:8C:24:6D:F9:85',
+        ...obj,
+      },
+    });
+  },
+};
+
+export const pointAPI = {
+  path: 'api/point/',
+  search(pageNumber: number, value: string): Promise<ResultType> {
+    return instance.get(`${this.path}search`, {
+      params: {
+        mac: 'E1:8C:24:6D:F9:85',
+        pageNumber,
+        value,
+      },
+    });
+  },
+  get(id: number): Promise<ResultType> {
+    return instance.get(`${this.path}${id}`, {
+      params: {
+        mac: 'E1:8C:24:6D:F9:85',
+      },
+    });
+  },
+  getAll(pageNumber: number): Promise<ResultType> {
+    return instance.get(`${this.path}`, {
+      params: {
+        mac: 'E1:8C:24:6D:F9:85',
+        pageNumber,
+      },
+    });
+  },
+  getAllGroupByBusinessId(
+    pageNumber: number,
+    businessId: number
+  ): Promise<ResultType> {
+    return instance.get(`${this.path}group-by-business`, {
+      params: {
+        mac: 'E1:8C:24:6D:F9:85',
+        pageNumber,
+        businessId,
+      },
+    });
+  },
+  add(name: string, address: string, idbusiness: number): Promise<ResultType> {
+    return instance.post(`${this.path}`, {
+      payload: {
+        mac: 'E1:8C:24:6D:F9:85',
+        name,
+        address,
+        idbusiness,
+      },
+    });
+  },
+  update(id: number, obj: IUpdatePointsObj): Promise<ResultType> {
     return instance.put(`${this.path}${id}`, {
       payload: {
         mac: 'E1:8C:24:6D:F9:85',

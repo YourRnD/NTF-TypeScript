@@ -8,6 +8,7 @@ import Preloader from './components/common/Preloader';
 import SuccessMessage from './components/common/SuccessMessage';
 import EditBusiness from './components/EditBusiness';
 import Home from './components/Home';
+import PointsTable from './components/PointsTable';
 import { checkAuthTh, setInitAction } from './redux/actions/authAction';
 import { RootState } from './redux/reducers';
 
@@ -52,6 +53,7 @@ const App: React.FC<PropsType> = ({
             <Switch>
               <Route exact path="/home" component={Home} />
               <Route exact path="/edit-business" component={EditBusiness} />
+              <Route exact path="/table-points" component={PointsTable} />
               <Redirect to="/home" />
             </Switch>
           ) : (

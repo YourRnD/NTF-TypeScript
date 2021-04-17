@@ -1,6 +1,6 @@
 import {
   SET_BUSINESSES,
-  SET_PAGE_NUMBER,
+  SET_BUSINESS_PAGE_NUMBER,
   SET_SELECTED_BUSINESS,
 } from '../redux/constants';
 
@@ -30,7 +30,7 @@ interface ISetBusinessesAction {
 }
 
 interface ISetPageNumberAction {
-  type: typeof SET_PAGE_NUMBER;
+  type: typeof SET_BUSINESS_PAGE_NUMBER;
   payload: {
     pageNumber: number;
   };
