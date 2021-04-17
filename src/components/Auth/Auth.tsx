@@ -94,7 +94,7 @@ const Auth: React.FC<PropsType> = ({
             }}
           />
         ) : null}
-        <button type="submit" className={Style.submit}>
+        <button type="submit" className={Style.submit} data-testid="submit">
           {typeOperation == 'Auth'
             ? 'Sign in'
             : typeOperation == 'Regist'
