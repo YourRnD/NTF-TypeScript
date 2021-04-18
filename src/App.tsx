@@ -7,6 +7,7 @@ import ErrorMessage from './components/common/ErrorMessage';
 import Preloader from './components/common/Preloader';
 import SuccessMessage from './components/common/SuccessMessage';
 import EditBusiness from './components/EditBusiness';
+import EditFeedback from './components/EditFeedback';
 import EditPoint from './components/EditPoint';
 import Header from './components/Header';
 import Home from './components/Home';
@@ -59,6 +60,10 @@ const App: React.FC<PropsType> = ({
                 <Route exact path="/edit-business" component={EditBusiness} />
                 <Route exact path="/table-points" component={PointsTable} />
                 <Route path="/edit-points/:type?/:id?" component={EditPoint} />
+                <Route
+                  path="/edit-feedback/:type?/:id?"
+                  component={EditFeedback}
+                />
                 <Redirect to="/home" />
               </Switch>
             </>

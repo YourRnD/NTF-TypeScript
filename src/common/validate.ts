@@ -96,3 +96,10 @@ export const updatePointSchema = yup.object({
     .max(100, 'Too long!')
     .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Address is incorrect!'),
 });
+
+export const createFeedbackSchema = yup.object().shape({
+  notes: yup
+    .string()
+    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Notes is incorrect!')
+    .required('Required!'),
+});
