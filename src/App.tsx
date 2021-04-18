@@ -8,6 +8,7 @@ import Preloader from './components/common/Preloader';
 import SuccessMessage from './components/common/SuccessMessage';
 import EditBusiness from './components/EditBusiness';
 import EditPoint from './components/EditPoint';
+import Header from './components/Header';
 import Home from './components/Home';
 import PointsTable from './components/PointsTable';
 import { checkAuthTh, setInitAction } from './redux/actions/authAction';
@@ -51,13 +52,16 @@ const App: React.FC<PropsType> = ({
         <SuccessMessage />
         <BrowserRouter>
           {isAuth ? (
-            <Switch>
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/edit-business" component={EditBusiness} />
-              <Route exact path="/table-points" component={PointsTable} />
-              <Route path="/edit-points/:type?/:id?" component={EditPoint} />
-              <Redirect to="/home" />
-            </Switch>
+            <>
+              <Header />
+              <Switch>
+                <Route exact path="/home" component={Home} />
+                <Route exact path="/edit-business" component={EditBusiness} />
+                <Route exact path="/table-points" component={PointsTable} />
+                <Route path="/edit-points/:type?/:id?" component={EditPoint} />
+                <Redirect to="/home" />
+              </Switch>
+            </>
           ) : (
             <Switch>
               <Route
