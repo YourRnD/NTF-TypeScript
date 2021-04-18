@@ -64,3 +64,35 @@ export const updateBusinessSchema = yup.object({
     .matches(/^([a-zA-Z]\s*)+/i, 'Name is incorrect!'),
   image: yup.object().default(null).nullable(),
 });
+
+export const createPointSchema = yup.object({
+  name: yup
+    .string()
+    .min(3, 'Too short!')
+    .max(50, 'Too long!')
+    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Name is incorrect!')
+    .required('Required!'),
+  address: yup
+    .string()
+    .min(3, 'Too short!')
+    .max(100, 'Too long!')
+    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Address is incorrect!')
+    .required('Required!'),
+});
+
+export const updatePointSchema = yup.object({
+  name: yup
+    .string()
+    .default(null)
+    .nullable()
+    .min(3, 'Too short!')
+    .max(50, 'Too long!')
+    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Name is incorrect!'),
+  address: yup
+    .string()
+    .default(null)
+    .nullable()
+    .min(3, 'Too short!')
+    .max(100, 'Too long!')
+    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Address is incorrect!'),
+});

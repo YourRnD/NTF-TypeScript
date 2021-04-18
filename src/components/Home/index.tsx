@@ -1,8 +1,14 @@
 import React from 'react';
-import Style from './Home.module.css';
+import { NavLink } from 'react-router-dom';
 
 const Home: React.FC = () => {
-  return <p className={Style.root}>Home</p>;
+  return (
+    <>
+      <NavLink to={`/table-points`}>Point table</NavLink>
+      <br />
+      <NavLink to={`/edit-business`}>Edit business</NavLink>
+    </>
+  );
 };
 
 export default Home;
