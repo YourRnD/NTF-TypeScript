@@ -216,3 +216,21 @@ export const pointAPI = {
     });
   },
 };
+
+export const feedbackAPI = {
+  path: 'api/feedback/',
+  add(
+    rating: '1' | '2' | '3' | '4' | '5',
+    notes: string,
+    idPoint: number
+  ): Promise<ResultType> {
+    return instance.post(`${this.path}`, {
+      payload: {
+        rating,
+        notes,
+        idPoint,
+        mac: 'E1:8C:24:6D:F9:85',
+      },
+    });
+  },
+};

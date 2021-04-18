@@ -1,0 +1,145 @@
+.container {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  margin-bottom: 50px;
+
+  min-width: 100%;
+
+  padding: 0 50px;
+}
+
+.elem {
+  min-width: 100%;
+  min-height: 200px;
+
+  padding-left: 15px;
+  padding-top: 10px;
+
+  border-radius: 10px;
+  border: solid 1px var(--lightBlack);
+
+  resize: none;
+}
+
+.elem::-moz-placeholder {
+  color: var(--fontBlue);
+}
+.elem::-webkit-input-placeholder {
+  color: var(--fontBlue);
+}
+.elem:-ms-input-placeholder {
+  color: var(--fontBlue);
+}
+.elem::-ms-input-placeholder {
+  color: var(--fontBlue);
+}
+.elem::placeholder {
+  color: var(--fontBlue);
+}
+
+.placeholder {
+  position: absolute;
+  display: none;
+
+  top: 0;
+  left: 61px;
+
+  color: var(--fontBlue);
+  background-color: var(--white);
+
+  padding: 0 5px;
+
+  font-size: 14px;
+
+  transform: translateY(-50%);
+}
+
+.error {
+  color: var(--red);
+
+  min-width: 100%;
+
+  margin-top: 5px;
+  padding-left: 5px;
+
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .elem {
+    font-size: 25px;
+
+    min-width: 100%;
+
+    padding-left: 20px;
+  }
+
+  .placeholder {
+    left: 65px;
+
+    font-size: 25px;
+  }
+
+  .error {
+    font-size: 25px;
+  }
+
+  .elem::-moz-placeholder {
+    font-size: 25px;
+  }
+  .elem::-webkit-input-placeholder {
+    font-size: 25px;
+  }
+  .elem:-ms-input-placeholder {
+    font-size: 25px;
+  }
+  .elem::-ms-input-placeholder {
+    font-size: 25px;
+  }
+  .elem::placeholder {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 425px) {
+  .container {
+    padding: 0 50px;
+  }
+
+  .elem {
+    font-size: 15px;
+
+    padding-left: 15px;
+  }
+
+  .placeholder {
+    left: 61px;
+
+    font-size: 15px;
+  }
+
+  .error {
+    font-size: 15px;
+  }
+
+  .elem::-moz-placeholder {
+    font-size: 15px;
+  }
+  .elem::-webkit-input-placeholder {
+    font-size: 15px;
+  }
+  .elem:-ms-input-placeholder {
+    font-size: 15px;
+  }
+  .elem::-ms-input-placeholder {
+    font-size: 15px;
+  }
+  .elem::placeholder {
+    font-size: 15px;
+  }
+}
