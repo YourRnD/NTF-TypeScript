@@ -1,0 +1,66 @@
+import React from 'react';
+import Style from './FormEditPoint.module.css';
+import { Form, Formik, FormikValues } from 'formik';
+import { createPointSchema, updatePointSchema } from '../../../common/validate';
+import ContainerField from '../../common/FormControls';
+import Input from '../../common/FormControls/Input';
+
+interface IInitialValues {
+  name: string;
+  address: string;
+}
+
+type PropsType = {
+  onSubmit: (values: FormikValues) => void;
+  initialValues: IInitialValues;
+  validateSchema: typeof updatePointSchema | typeof createPointSchema | {};
+  type: 'edit' | 'create' | null;
+};
+
+const FormEditPoint: React.FC<PropsType> = ({
+  onSubmit,
+  initialValues,
+  validateSchema,
+  type,
+}) => (
+  <div className={Style.root}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={validateSchema}
+      className={Style['root-container']}
+    >
+      <Form className={Style.form}>
+        {
+          <ContainerField
+            component={Input}
+            name="name"
+            placeholder="Name"
+            props={{
+              type: 'text',
+            }}
+          />
+        }
+        {
+          <ContainerField
+            component={Input}
+            name="address"
+            placeholder="Address"
+            props={{
+              type: 'text',
+            }}
+          />
+        }
+        <button type="submit" className={Style.submit}>
+          {type === 'create'
+            ? 'Create new point'
+            : type === 'edit'
+            ? 'Edit point'
+            : null}
+        </button>
+      </Form>
+    </Formik>
+  </div>
+);
+
+export default FormEditPoint;

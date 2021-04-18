@@ -187,14 +187,24 @@ export const pointAPI = {
       },
     });
   },
-  add(name: string, address: string, idbusiness: number): Promise<ResultType> {
+  add(
+    name: string,
+    address: string,
+    idbusiness: number | null
+  ): Promise<ResultType> {
+    const payload: {
+      name: string;
+      address: string;
+      idbusiness?: number | null;
+      mac: string;
+    } = {
+      name,
+      address,
+      mac: 'E1:8C:24:6D:F9:85',
+    };
+    idbusiness !== null ? (payload.idbusiness = idbusiness) : null;
     return instance.post(`${this.path}`, {
-      payload: {
-        mac: 'E1:8C:24:6D:F9:85',
-        name,
-        address,
-        idbusiness,
-      },
+      payload,
     });
   },
   update(id: number, obj: IUpdatePointsObj): Promise<ResultType> {

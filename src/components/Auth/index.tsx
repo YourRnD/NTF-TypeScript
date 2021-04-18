@@ -2,7 +2,6 @@ import { FormikValues } from 'formik';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { compose } from 'redux';
 import { signInSchema, signUpSchema } from '../../common/validate';
 import { signinTh, signupTh } from '../../redux/actions/authAction';
 import { RootState } from '../../redux/reducers';
@@ -75,12 +74,12 @@ const mapToStateProps = (state: RootState): MapStatePropsType => ({
   isAuth: state.auth.isAuth,
 });
 
-export default compose(
-  connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, RootState>(
-    mapToStateProps,
-    {
-      signup: signupTh,
-      signin: signinTh,
-    }
-  )
-)(AuthContainer);
+export default connect<
+  MapStatePropsType,
+  MapDispatchPropsType,
+  OwnPropsType,
+  RootState
+>(mapToStateProps, {
+  signup: signupTh,
+  signin: signinTh,
+})(AuthContainer);

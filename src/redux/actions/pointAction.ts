@@ -46,7 +46,7 @@ export const setPageNumber = (pageNumber: number): PointActionTypes => ({
 export const createPointTh = (
   name: string,
   address: string,
-  businessId: number
+  businessId: number | null
 ): ThunkAction<
   Promise<void>,
   RootState,

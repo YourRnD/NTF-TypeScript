@@ -53,8 +53,8 @@ const FormEditBusiness: React.FC<PropsType> = ({
         {
           <ContainerField
             component={UploadFile}
-            name="password"
-            placeholder="Password"
+            name="business-upload-image"
+            placeholder="business-upload-image"
             props={{
               fileName,
               id: 'business-upload-image',
