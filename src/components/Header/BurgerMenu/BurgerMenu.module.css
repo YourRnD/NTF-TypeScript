@@ -1,0 +1,141 @@
+.root {
+	position: relative;
+}
+
+.header {
+	width: 30px;
+	height: 20px;
+
+	position: relative;
+
+	outline: none;
+
+	z-index: 9509;
+}
+
+.header span,
+.header:after,
+.header:before {
+	height: 3px;
+	width: 100%;
+
+	position: absolute;
+
+	background: var(--blue);
+
+	margin: 0 auto;
+
+	transition: 0.5s;
+}
+
+.header span {
+	top: 9px;
+}
+
+.header:after,
+.header:before {
+	content: "";
+}
+
+.header:after {
+	bottom: 0px;
+}
+
+.header:before {
+	top: 0px;
+}
+
+.nav {
+	display: none;
+
+	position: fixed;
+
+	top: 0;
+	left: 0;
+
+	min-width: 100vw;
+	min-height: 100vh;
+
+	background-color: var(--blue);
+
+	z-index: 9500;
+}
+
+.menu {
+	min-width: 100%;
+
+	margin-top: 150px;
+}
+
+.item {
+	min-width: 100%;
+
+	padding: 15px 20px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	font-size: 30px;
+
+	transition: all 0.5s;
+}
+
+.item a {
+	color: var(--white);
+}
+
+.item:hover {
+	background-color: var(--white);
+}
+
+.item:hover a {
+	color: var(--blue);
+}
+
+.btn {
+	min-width: 100%;
+
+	padding: 15px 20px;
+
+	color: var(--white);
+	background-color: var(--blue);
+
+	font-size: 30px;
+
+	transition: all 0.5s;
+
+	cursor: pointer;
+
+	border: none;
+}
+
+.btn:hover {
+	background-color: var(--white);
+	color: var(--blue);
+}
+
+nav.nav.active {
+	display: block;
+}
+
+.header.open-menu span {
+	opacity: 0;
+	transition: 0.5s;
+}
+
+.header.open-menu:before {
+	transform: rotate(45deg);
+	top: 9px;
+	transition: 0.4s;
+
+	background: var(--white);
+}
+
+.header.open-menu:after {
+	transform: rotate(-45deg);
+	bottom: 9px;
+	transition: 0.4s;
+
+	background: var(--white);
+}
