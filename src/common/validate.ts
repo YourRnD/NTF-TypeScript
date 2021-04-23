@@ -5,7 +5,7 @@ export const signUpSchema = yup.object({
     .string()
     .min(3, 'Too short!')
     .max(50, 'Too long!')
-    .matches(/^([a-zA-Z]\s*)+/i, 'Name is incorrect!')
+    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Name is incorrect!')
     .required('Required!'),
   email: yup
     .string()
@@ -49,9 +49,8 @@ export const createBusinessSchema = yup.object({
     .string()
     .min(3, 'Too short!')
     .max(50, 'Too long!')
-    .matches(/^([a-zA-Z]\s*)+/i, 'Name is incorrect!')
+    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Name is incorrect!')
     .required('Required!'),
-  image: yup.object().required('Required!'),
 });
 
 export const updateBusinessSchema = yup.object({
@@ -61,8 +60,7 @@ export const updateBusinessSchema = yup.object({
     .nullable()
     .min(3, 'Too short!')
     .max(50, 'Too long!')
-    .matches(/^([a-zA-Z]\s*)+/i, 'Name is incorrect!'),
-  image: yup.object().default(null).nullable(),
+    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Name is incorrect!'),
 });
 
 export const createPointSchema = yup.object({

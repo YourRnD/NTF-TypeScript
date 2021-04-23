@@ -1,6 +1,5 @@
 import { ThunkAction } from 'redux-thunk';
 import { businessAPI, IBusinessAPI, IUniversalResultData } from '../../api/api';
-import pathConvector from '../../common/pathConvector';
 import {
   BusinessActionTypes,
   IBusiness,
@@ -44,7 +43,7 @@ export const setPageNumber = (pageNumber: number): BusinessActionTypes => ({
 
 export const createBusinessTh = (
   name: string,
-  logo: string | ArrayBuffer
+  logo: Array<string | ArrayBuffer>
 ): ThunkAction<
   Promise<void>,
   RootState,
@@ -96,12 +95,7 @@ export const getBusinessTh = (
     const business: IBusiness = {
       id: data.business?.id,
       name: data.business?.name,
-      path:
-        data.business?.path !== '' &&
-        data.business?.path !== null &&
-        data.business?.path !== undefined
-          ? pathConvector(data.business?.path)
-          : '',
+      path: data.business?.path === undefined ? [] : data.business.path,
     };
 
     dispatch(setSelectedBusiness(business));

@@ -16,11 +16,7 @@ const initialState: stateCommon = {
     message: '',
   },
   isError: false,
-  uploadImage: {
-    name: '',
-    type: '',
-    imageInBase64: '',
-  },
+  uploadImages: null,
   isSuccess: false,
   successMessage: '',
 };

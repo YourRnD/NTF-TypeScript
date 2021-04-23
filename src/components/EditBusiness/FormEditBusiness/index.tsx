@@ -17,11 +17,11 @@ import {
 type MapStatePropsType = {
   businessId: number | null | undefined;
   status: string | null | undefined;
-  uploadImage: IUploadImage;
+  uploadImages: Array<IUploadImage> | null;
 };
 
 type MapDispatchPropsType = {
-  createBusiness: (name: string, image: string | ArrayBuffer) => void;
+  createBusiness: (name: string, image: Array<string | ArrayBuffer>) => void;
   updateBusiness: (id: number, obj: IUpdateBusinessObj) => void;
 };
 
@@ -32,9 +32,10 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
   businessId,
   createBusiness,
   status,
-  uploadImage,
+  uploadImages,
 }) => {
   const onSubmit = (values: FormikValues): void => {
+    console.log(123);
     if (status === 'manager') {
       const obj: IUpdateBusinessObj = {};
 
@@ -42,10 +43,8 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
         obj.name = values.name;
       }
 
-      console.log(uploadImage);
-
-      if (uploadImage.imageInBase64 !== '') {
-        obj.image = uploadImage.imageInBase64;
+      if (uploadImages !== null) {
+        obj.image = uploadImages.map((item) => item.imageInBase64);
       }
 
       if (businessId === null || businessId === undefined) {
@@ -56,21 +55,30 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
     }
 
     if (status === 'admin') {
-      if (values.name === null || uploadImage.imageInBase64 === null) {
+      console.log(123);
+
+      if (values.name === null || uploadImages === null) {
         return;
       }
 
-      return createBusiness(values.name, uploadImage.imageInBase64);
+      console.log(12);
+
+      return createBusiness(
+        values.name,
+        uploadImages.map((item) => item.imageInBase64)
+      );
     }
   };
 
-  const initialValue = { name: '', image: uploadImage.imageInBase64 };
+  const initialValue = { name: '', image: '' };
 
   return (
     <FormEditBusiness
       status={status}
       onSubmit={onSubmit}
-      fileName={uploadImage.name}
+      fileName={
+        uploadImages === null ? [''] : uploadImages.map((item) => item.name)
+      }
       validateSchema={
         status === 'admin'
           ? createBusinessSchema
@@ -86,7 +94,7 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
 const mapStateToProps = (state: RootState): MapStatePropsType => ({
   businessId: state.auth.user.idBusiness,
   status: state.auth.user.status,
-  uploadImage: state.common.uploadImage,
+  uploadImages: state.common.uploadImages,
 });
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootState>(

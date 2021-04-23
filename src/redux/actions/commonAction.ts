@@ -44,10 +44,10 @@ export const setSuccess = (
 });
 
 export const setUploadImage = (
-  uploadImage: IUploadImage
+  uploadImages: Array<IUploadImage> | null
 ): CommonActionTypes => ({
   type: SET_UPLOAD_IMAGE,
   payload: {
-    uploadImage,
+    uploadImages,
   },
 });
