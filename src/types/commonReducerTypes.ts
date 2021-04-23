@@ -15,14 +15,14 @@ export interface IError {
 export interface IUploadImage {
   name: string;
   type: string;
-  imageInBase64: string | ArrayBuffer | null;
+  imageInBase64: string | ArrayBuffer;
 }
 
 export interface ICommon {
   isLoaded: boolean;
   error: IError;
   isError: boolean;
-  uploadImage: IUploadImage;
+  uploadImages: Array<IUploadImage> | null;
   isSuccess: boolean;
   successMessage: string;
 }
@@ -55,7 +55,7 @@ export interface ISetSuccessAction {
 interface ISetUploadImageAction {
   type: typeof SET_UPLOAD_IMAGE;
   payload: {
-    uploadImage: IUploadImage;
+    uploadImages: Array<IUploadImage> | null;
   };
 }
 

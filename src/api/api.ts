@@ -130,7 +130,7 @@ export const businessAPI = {
       },
     });
   },
-  add(name: string, image: string | ArrayBuffer): Promise<ResultType> {
+  add(name: string, image: Array<string | ArrayBuffer>): Promise<ResultType> {
     return instance.post(`${this.path}`, {
       payload: {
         mac: 'E1:8C:24:6D:F9:85',

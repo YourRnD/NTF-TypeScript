@@ -9,7 +9,7 @@ import {
 export interface IBusiness {
   id: number | null | undefined;
   name: string | null | undefined;
-  path: string | null | undefined;
+  path: Array<string> | null;
 }
 
 export interface IBusinessState {
@@ -52,5 +52,5 @@ export type BusinessActionTypes =
 
 export interface IUpdateBusinessObj {
   name?: string;
-  image?: string | ArrayBuffer | null;
+  image?: Array<string | ArrayBuffer> | [];
 }

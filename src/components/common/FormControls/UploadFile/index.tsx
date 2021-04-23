@@ -6,11 +6,15 @@ import { IUploadImage } from '../../../../types/commonReducerTypes';
 import { FormControlsType } from '../../../../types/componentsTypes';
 import UploadFile from './UploadFile';
 
+type MapStatePropsType = {
+  uploadImages: Array<IUploadImage> | null;
+};
+
 interface MapDispatchPropsType {
-  setUploadImage: (uploadImage: IUploadImage) => void;
+  setUploadImage: (uploadImages: Array<IUploadImage> | null) => void;
 }
 
-type PropsType = FormControlsType & MapDispatchPropsType;
+type PropsType = FormControlsType & MapDispatchPropsType & MapStatePropsType;
 
 const UploadFileContainer: React.FC<PropsType> = ({
   anotherArg,
@@ -18,6 +22,7 @@ const UploadFileContainer: React.FC<PropsType> = ({
   placeholder,
   form,
   setUploadImage,
+  uploadImages,
 }) => {
   const uploadEvent = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e?.currentTarget !== null || e?.currentTarget !== undefined) {
@@ -29,11 +34,29 @@ const UploadFileContainer: React.FC<PropsType> = ({
         return;
       }
       reader.onloadend = () => {
-        setUploadImage({
-          name: image.name,
-          type: image.type,
-          imageInBase64: reader.result,
-        });
+        console.log(uploadImages);
+        if (uploadImages === null) {
+          setUploadImage([
+            {
+              name: image.name,
+              type: image.type,
+              imageInBase64: reader.result === null ? '' : reader.result,
+            },
+          ]);
+        } else {
+          const uploadImagesCopy: Array<IUploadImage> = [];
+
+          uploadImages.forEach((item) => {
+            item?.name && item.name === anotherArg.fileName
+              ? uploadImagesCopy.push({
+                  name: image.name,
+                  type: image.type,
+                  imageInBase64: reader.result === null ? '' : reader.result,
+                })
+              : uploadImagesCopy.push(item);
+          });
+          setUploadImage(uploadImagesCopy);
+        }
       };
       reader.readAsDataURL(image);
     }
@@ -51,9 +74,15 @@ const UploadFileContainer: React.FC<PropsType> = ({
   );
 };
 
-export default connect<{}, MapDispatchPropsType, FormControlsType, RootState>(
-  null,
-  {
-    setUploadImage,
-  }
-)(UploadFileContainer);
+const mapToStateProps = (state: RootState): MapStatePropsType => ({
+  uploadImages: state.common.uploadImages,
+});
+
+export default connect<
+  MapStatePropsType,
+  MapDispatchPropsType,
+  FormControlsType,
+  RootState
+>(mapToStateProps, {
+  setUploadImage,
+})(UploadFileContainer);

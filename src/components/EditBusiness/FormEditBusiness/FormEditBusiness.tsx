@@ -17,7 +17,7 @@ interface IInitialValue {
 type PropsType = {
   status: string | null | undefined;
   onSubmit: (values: FormikValues) => void;
-  fileName: string;
+  fileName: Array<string>;
   initialValue: IInitialValue;
   validateSchema:
     | typeof createBusinessSchema
@@ -50,17 +50,18 @@ const FormEditBusiness: React.FC<PropsType> = ({
             }}
           />
         }
-        {
+        {fileName.map((item) => (
           <ContainerField
+            key={item}
             component={UploadFile}
-            name="business-upload-image"
-            placeholder="business-upload-image"
+            name="image"
+            placeholder="image"
             props={{
-              fileName,
+              fileName: item,
               id: 'business-upload-image',
             }}
           />
-        }
+        ))}
         <button type="submit" className={Style.submit}>
           {status === 'admin' ? 'Create new business' : 'Edit business'}
         </button>
