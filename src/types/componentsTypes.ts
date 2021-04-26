@@ -20,6 +20,7 @@ export interface IFieldAdditionallyProps {
   id?: string;
   fileName?: string;
   valuesArray?: Array<IRadioAdditionallyProps>;
+  maxElem?: number;
 }
 
 export type FormControlsType = {
@@ -27,6 +28,11 @@ export type FormControlsType = {
   placeholder: string;
   form: {
     errors: any;
+    setFieldValue: (
+      field: string,
+      value: any,
+      shouldValidate?: boolean
+    ) => void;
   };
   anotherArg: IFieldAdditionallyProps;
 };

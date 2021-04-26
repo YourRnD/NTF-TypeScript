@@ -1,3 +1,4 @@
+import { FormikValues } from 'formik';
 import * as yup from 'yup';
 
 export const signUpSchema = yup.object({
@@ -44,24 +45,80 @@ export const signInSchema = yup.object({
     .required('Required!'),
 });
 
-export const createBusinessSchema = yup.object({
-  name: yup
-    .string()
-    .min(3, 'Too short!')
-    .max(50, 'Too long!')
-    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Name is incorrect!')
-    .required('Required!'),
-});
+export interface IBusinessValidateError {
+  image?: string;
+  name?: string;
+}
 
-export const updateBusinessSchema = yup.object({
-  name: yup
-    .string()
-    .default(null)
-    .nullable()
-    .min(3, 'Too short!')
-    .max(50, 'Too long!')
-    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Name is incorrect!'),
-});
+export const createBusinessValidate = (
+  values: FormikValues
+): IBusinessValidateError => {
+  const errors: IBusinessValidateError = {};
+  // image
+  if (values.image !== undefined) {
+    const image = values.image;
+    if (image.type === undefined) {
+      errors.image = 'Required';
+    } else {
+      image.type.search(/jpeg|jpg|png/i) === -1
+        ? (errors.image =
+            'The file can only have the resolution of the jpeg, jpg, png format')
+        : null;
+    }
+  } else {
+    errors.image = 'Required';
+  }
+
+  // name
+  if (values.name !== undefined && values.name !== '') {
+    const name = values.name;
+    typeof name !== 'string'
+      ? (errors.name = 'The name field can only be a string')
+      : null;
+    name.length <= 2 ? (errors.name = 'Too short!') : null;
+    name.length > 50 ? (errors.name = 'Too long!') : null;
+    name.search(/^([a-zA-ZА-Яа-я]\s*)+/i) === -1
+      ? (errors.name = 'Name is incorrect!')
+      : null;
+  } else {
+    errors.name = 'Required';
+  }
+
+  return errors;
+};
+
+export const updateBusinessValidate = (
+  values: FormikValues
+): IBusinessValidateError => {
+  const errors: IBusinessValidateError = {};
+  // image
+  if (values.image !== undefined && values.name !== '') {
+    const image = values.image;
+    if (image.type === undefined) {
+      errors.image = 'Required';
+    } else {
+      image.type.search(/jpeg|jpg|png/i) === -1
+        ? (errors.image =
+            'The file can only have the resolution of the jpeg, jpg, png format')
+        : null;
+    }
+  }
+
+  // name
+  if (values.name !== undefined && values.name !== '') {
+    const name = values.name;
+    typeof name !== 'string'
+      ? (errors.name = 'The name field can only be a string')
+      : null;
+    name.length <= 2 ? (errors.name = 'Too short!') : null;
+    name.length > 50 ? (errors.name = 'Too long!') : null;
+    name.search(/^([a-zA-ZА-Яа-я]\s*)+/i) === -1
+      ? (errors.name = 'Name is incorrect!')
+      : null;
+  }
+
+  return errors;
+};
 
 export const createPointSchema = yup.object({
   name: yup

@@ -8,7 +8,6 @@ const InputContainer: React.FunctionComponent<FormControlsType> = ({
   placeholder,
   form,
 }) => {
-  console.log(field);
   return (
     <Radio
       name={field.name}
