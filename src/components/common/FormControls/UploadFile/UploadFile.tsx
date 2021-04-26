@@ -7,6 +7,7 @@ type PropsType = {
   fileName: string;
   name: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  clear: () => void;
   error: string | null;
 };
 
@@ -15,22 +16,26 @@ const UploadFile: React.FC<PropsType> = ({
   fileName,
   name,
   onChange,
+  clear,
   error,
   id,
 }) => {
   return (
-    <label htmlFor={id} className={Style['upload-file-label']}>
-      {fileName !== '' ? `Файл: ${fileName}` : 'Загрузить файл'}
-      <input
-        type="file"
-        id={id}
-        name={name}
-        placeholder={placeholder}
-        className={Style['upload-file']}
-        onChange={onChange}
-      />
+    <div className={Style.container}>
+      <label htmlFor={id} className={Style['upload-file-label']}>
+        {fileName !== '' ? `Файл: ${fileName}` : 'Загрузить файл'}
+        <input
+          type="file"
+          id={id}
+          name={name}
+          placeholder={placeholder}
+          className={Style['upload-file']}
+          onChange={onChange}
+        />
+      </label>
+      <div onClick={clear} className={Style['close-btn']} />
       {error !== null ? <p className={Style.error}>{error}</p> : null}
-    </label>
+    </div>
   );
 };
 

@@ -10,8 +10,8 @@ import {
 } from '../../../redux/actions/businessAction';
 import { IUpdateBusinessObj } from '../../../types/businessReducerTypes';
 import {
-  createBusinessSchema,
-  updateBusinessSchema,
+  createBusinessValidate,
+  updateBusinessValidate,
 } from '../../../common/validate';
 
 type MapStatePropsType = {
@@ -35,7 +35,6 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
   uploadImages,
 }) => {
   const onSubmit = (values: FormikValues): void => {
-    console.log(123);
     if (status === 'manager') {
       const obj: IUpdateBusinessObj = {};
 
@@ -55,13 +54,11 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
     }
 
     if (status === 'admin') {
-      console.log(123);
+      console.log(values);
 
       if (values.name === null || uploadImages === null) {
         return;
       }
-
-      console.log(12);
 
       return createBusiness(
         values.name,
@@ -70,7 +67,10 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
     }
   };
 
-  const initialValue = { name: '', image: '' };
+  const initialValue = {
+    name: '',
+    image: undefined,
+  };
 
   return (
     <FormEditBusiness
@@ -79,12 +79,12 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
       fileName={
         uploadImages === null ? [''] : uploadImages.map((item) => item.name)
       }
-      validateSchema={
+      validate={
         status === 'admin'
-          ? createBusinessSchema
+          ? createBusinessValidate
           : status === 'manager'
-          ? updateBusinessSchema
-          : {}
+          ? updateBusinessValidate
+          : undefined
       }
       initialValue={initialValue}
     />

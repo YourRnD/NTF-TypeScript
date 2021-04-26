@@ -28,8 +28,6 @@ const AuthContainer: React.FC<PropsType> = ({
   signup,
   signin,
 }) => {
-  console.log(isAuth);
-
   if (isAuth) {
     return <Redirect to="/" />;
   }

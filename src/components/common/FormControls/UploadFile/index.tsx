@@ -34,9 +34,15 @@ const UploadFileContainer: React.FC<PropsType> = ({
         return;
       }
       reader.onloadend = () => {
-        console.log(uploadImages);
         if (uploadImages === null) {
           setUploadImage([
+            {
+              name: image.name,
+              type: image.type,
+              imageInBase64: reader.result === null ? '' : reader.result,
+            },
+          ]);
+          form.setFieldValue('image', [
             {
               name: image.name,
               type: image.type,
@@ -56,22 +62,52 @@ const UploadFileContainer: React.FC<PropsType> = ({
               : uploadImagesCopy.push(item);
           });
           setUploadImage(uploadImagesCopy);
+          form.setFieldValue('image', uploadImagesCopy);
         }
       };
       reader.readAsDataURL(image);
     }
   };
 
-  return (
-    <UploadFile
-      name={field.name}
-      id={anotherArg.id !== undefined ? anotherArg.id : ''}
-      fileName={anotherArg.fileName !== undefined ? anotherArg.fileName : ''}
-      placeholder={placeholder}
-      onChange={uploadEvent}
-      error={form.errors[`${field.name}`] ? form.errors[`${field.name}`] : null}
-    />
-  );
+  const clearField = (): void => {
+    if (uploadImages === null) {
+      return;
+    }
+
+    const uploadImagesCopy: Array<IUploadImage> = [];
+
+    uploadImages.forEach((item) => {
+      item?.name && item.name === anotherArg.fileName
+        ? null
+        : uploadImagesCopy.push(item);
+    });
+
+    setUploadImage(uploadImagesCopy.length === 0 ? null : uploadImagesCopy);
+
+    form.setFieldValue('image', uploadImagesCopy);
+  };
+
+  if (
+    anotherArg.maxElem === undefined ||
+    document.querySelectorAll(`input[name="${field.name}"]`).length >=
+      anotherArg.maxElem
+  ) {
+    return <></>;
+  } else {
+    return (
+      <UploadFile
+        name={field.name}
+        id={anotherArg.id !== undefined ? anotherArg.id : ''}
+        fileName={anotherArg.fileName !== undefined ? anotherArg.fileName : ''}
+        placeholder={placeholder}
+        onChange={uploadEvent}
+        clear={clearField}
+        error={
+          form.errors[`${field.name}`] ? form.errors[`${field.name}`] : null
+        }
+      />
+    );
+  }
 };
 
 const mapToStateProps = (state: RootState): MapStatePropsType => ({

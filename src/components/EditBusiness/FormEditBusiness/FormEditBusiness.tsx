@@ -1,9 +1,7 @@
 import { Form, Formik, FormikValues } from 'formik';
 import React from 'react';
-import {
-  createBusinessSchema,
-  updateBusinessSchema,
-} from '../../../common/validate';
+import { IBusinessValidateError } from '../../../common/validate';
+import { IUploadImage } from '../../../types/commonReducerTypes';
 import ContainerField from '../../common/FormControls';
 import Input from '../../common/FormControls/Input';
 import UploadFile from '../../common/FormControls/UploadFile';
@@ -11,7 +9,7 @@ import Style from './FormEditBusiness.module.css';
 
 interface IInitialValue {
   name: string;
-  image: string | ArrayBuffer | null;
+  image: Array<IUploadImage> | undefined;
 }
 
 type PropsType = {
@@ -19,10 +17,7 @@ type PropsType = {
   onSubmit: (values: FormikValues) => void;
   fileName: Array<string>;
   initialValue: IInitialValue;
-  validateSchema:
-    | typeof createBusinessSchema
-    | typeof updateBusinessSchema
-    | {};
+  validate: ((values: FormikValues) => IBusinessValidateError) | undefined;
 };
 
 const FormEditBusiness: React.FC<PropsType> = ({
@@ -30,13 +25,13 @@ const FormEditBusiness: React.FC<PropsType> = ({
   onSubmit,
   fileName,
   initialValue,
-  validateSchema,
+  validate,
 }) => (
   <div className={Style.root}>
     <Formik
       initialValues={initialValue}
       onSubmit={onSubmit}
-      validationSchema={validateSchema}
+      validate={validate}
       className={Style['root-container']}
     >
       <Form className={Style.form}>
@@ -59,6 +54,7 @@ const FormEditBusiness: React.FC<PropsType> = ({
             props={{
               fileName: item,
               id: 'business-upload-image',
+              maxElem: 3,
             }}
           />
         ))}
