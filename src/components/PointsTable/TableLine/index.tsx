@@ -11,7 +11,6 @@ type PropsType = {
 
 const TableLine: React.FC<PropsType> = ({ id, name, address, isTitle }) => (
   <>
-    {console.log(isTitle)}
     {isTitle == true ? (
       <tr id={`points-title`} className={Style.root}>
         <th className={`${Style.ceil} ${Style.id}`}>{id}</th>

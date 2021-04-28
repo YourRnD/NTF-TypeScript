@@ -23,6 +23,7 @@ export interface ICommon {
   error: IError;
   isError: boolean;
   uploadImages: Array<IUploadImage> | null;
+  countImages: number;
   isSuccess: boolean;
   successMessage: string;
 }
@@ -56,6 +57,7 @@ interface ISetUploadImageAction {
   type: typeof SET_UPLOAD_IMAGE;
   payload: {
     uploadImages: Array<IUploadImage> | null;
+    countImages: number;
   };
 }
 

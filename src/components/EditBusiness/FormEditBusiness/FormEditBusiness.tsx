@@ -9,13 +9,13 @@ import Style from './FormEditBusiness.module.css';
 
 interface IInitialValue {
   name: string;
-  image: Array<IUploadImage> | undefined;
+  image: Array<IUploadImage> | null;
 }
 
 type PropsType = {
   status: string | null | undefined;
   onSubmit: (values: FormikValues) => void;
-  fileName: Array<string>;
+  fileNames: Array<string>;
   initialValue: IInitialValue;
   validate: ((values: FormikValues) => IBusinessValidateError) | undefined;
 };
@@ -23,7 +23,7 @@ type PropsType = {
 const FormEditBusiness: React.FC<PropsType> = ({
   status,
   onSubmit,
-  fileName,
+  fileNames,
   initialValue,
   validate,
 }) => (
@@ -45,7 +45,8 @@ const FormEditBusiness: React.FC<PropsType> = ({
             }}
           />
         }
-        {fileName.map((item) => (
+        {console.log(fileNames)}
+        {fileNames.map((item, index) => (
           <ContainerField
             key={item}
             component={UploadFile}
@@ -53,7 +54,7 @@ const FormEditBusiness: React.FC<PropsType> = ({
             placeholder="image"
             props={{
               fileName: item,
-              id: 'business-upload-image',
+              id: `business-upload-image-${index}`,
               maxElem: 3,
             }}
           />

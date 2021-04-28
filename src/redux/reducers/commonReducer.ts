@@ -17,6 +17,7 @@ const initialState: stateCommon = {
   },
   isError: false,
   uploadImages: null,
+  countImages: 1,
   isSuccess: false,
   successMessage: '',
 };

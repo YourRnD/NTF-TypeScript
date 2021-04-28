@@ -43,20 +43,31 @@
 .container:hover .upload-file-label {
   box-shadow: -10px 10px 15px 0px rgba(0, 0, 0, 0.3);
 
+  width: 300px;
+
   transform: translate(5px, -5px);
 }
 
-.container:hover .close-btn {
+.container:hover .close-btn,
+.container:hover .add-btn {
   box-shadow: -10px 10px 15px 0px rgba(0, 0, 0, 0.3);
 
   opacity: 1;
 
+  right: -25px;
+
   transform: translate(5px, -5px);
 }
 
-.close-btn {
+.container:hover .add-btn {
+  right: 10px;
+}
+
+.close-btn,
+.add-btn {
   position: absolute;
-  right: -10px;
+
+  right: -45px;
 
   opacity: 0;
 
@@ -73,8 +84,14 @@
   transition: all 0.5s;
 }
 
+.add-btn {
+  right: -10px;
+}
+
 .close-btn::after,
-.close-btn::before {
+.close-btn::before,
+.add-btn::after,
+.add-btn::before {
   position: absolute;
   content: '';
 
@@ -89,16 +106,28 @@
   background-color: #000;
 }
 
-.close-btn::before {
+.close-btn::before,
+.add-btn::before {
   transform: rotate(-45deg);
 }
 
-.close-btn:hover {
+.add-btn::before {
+  transform: rotate(90deg);
+}
+
+.add-btn::after {
+  transform: rotate(180deg);
+}
+
+.close-btn:hover,
+.add-btn:hover {
   background-color: var(--blue);
 }
 
 .close-btn:hover::before,
-.close-btn:hover::after {
+.close-btn:hover::after,
+.add-btn:hover::before,
+.add-btn:hover::after {
   background-color: var(--white);
 }
 

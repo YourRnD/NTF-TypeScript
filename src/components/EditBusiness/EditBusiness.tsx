@@ -12,7 +12,6 @@ const EditBusiness: React.FC<PropsType> = ({ status }) => (
     <div className={Style.container}>
       <h1 className={Style.title}>
         {status === 'admin' ? 'Create new business' : 'Edit business'}
-        {console.log(status)}
       </h1>
       <FormEditBusiness />
       <NavLink

@@ -1,8 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setUploadImage } from '../../../../redux/actions/commonAction';
+import {
+  setError,
+  setUploadImage,
+} from '../../../../redux/actions/commonAction';
 import { RootState } from '../../../../redux/reducers';
-import { IUploadImage } from '../../../../types/commonReducerTypes';
+import {
+  CommonActionTypes,
+  IError,
+  IUploadImage,
+} from '../../../../types/commonReducerTypes';
 import { FormControlsType } from '../../../../types/componentsTypes';
 import UploadFile from './UploadFile';
 
@@ -11,7 +18,11 @@ type MapStatePropsType = {
 };
 
 interface MapDispatchPropsType {
-  setUploadImage: (uploadImages: Array<IUploadImage> | null) => void;
+  setUploadImage: (
+    uploadImages: Array<IUploadImage> | null,
+    countImages: number
+  ) => void;
+  setError: (error: IError, isError: boolean) => CommonActionTypes;
 }
 
 type PropsType = FormControlsType & MapDispatchPropsType & MapStatePropsType;
@@ -23,6 +34,7 @@ const UploadFileContainer: React.FC<PropsType> = ({
   form,
   setUploadImage,
   uploadImages,
+  setError,
 }) => {
   const uploadEvent = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e?.currentTarget !== null || e?.currentTarget !== undefined) {
@@ -34,14 +46,17 @@ const UploadFileContainer: React.FC<PropsType> = ({
         return;
       }
       reader.onloadend = () => {
-        if (uploadImages === null) {
-          setUploadImage([
-            {
-              name: image.name,
-              type: image.type,
-              imageInBase64: reader.result === null ? '' : reader.result,
-            },
-          ]);
+        if (uploadImages === null || uploadImages.length === 1) {
+          setUploadImage(
+            [
+              {
+                name: image.name,
+                type: image.type,
+                imageInBase64: reader.result === null ? '' : reader.result,
+              },
+            ],
+            1
+          );
           form.setFieldValue('image', [
             {
               name: image.name,
@@ -52,8 +67,10 @@ const UploadFileContainer: React.FC<PropsType> = ({
         } else {
           const uploadImagesCopy: Array<IUploadImage> = [];
 
+          console.log(1233123);
+
           uploadImages.forEach((item) => {
-            item?.name && item.name === anotherArg.fileName
+            item?.name !== undefined && item.name === anotherArg.fileName
               ? uploadImagesCopy.push({
                   name: image.name,
                   type: image.type,
@@ -61,7 +78,8 @@ const UploadFileContainer: React.FC<PropsType> = ({
                 })
               : uploadImagesCopy.push(item);
           });
-          setUploadImage(uploadImagesCopy);
+
+          setUploadImage(uploadImagesCopy, uploadImagesCopy.length);
           form.setFieldValue('image', uploadImagesCopy);
         }
       };
@@ -77,19 +95,91 @@ const UploadFileContainer: React.FC<PropsType> = ({
     const uploadImagesCopy: Array<IUploadImage> = [];
 
     uploadImages.forEach((item) => {
-      item?.name && item.name === anotherArg.fileName
+      item?.name !== undefined && item.name === anotherArg.fileName
         ? null
         : uploadImagesCopy.push(item);
     });
 
-    setUploadImage(uploadImagesCopy.length === 0 ? null : uploadImagesCopy);
+    console.log(uploadImages);
+    console.log(uploadImagesCopy);
+    console.log(anotherArg.fileName);
+
+    setUploadImage(
+      uploadImagesCopy.length === 0 ? null : uploadImagesCopy,
+      uploadImagesCopy.length === 0 ? 1 : uploadImagesCopy.length
+    );
 
     form.setFieldValue('image', uploadImagesCopy);
   };
 
+  const addField = (): void => {
+    if (
+      uploadImages !== null &&
+      anotherArg?.maxElem &&
+      uploadImages.length >= anotherArg.maxElem
+    ) {
+      setError(
+        {
+          status: 400,
+          message: 'Maximum number of photos reached!',
+        },
+        true
+      );
+      return;
+    }
+
+    if (anotherArg.fileName === undefined || anotherArg.fileName === '') {
+      setError(
+        {
+          status: 400,
+          message:
+            'Unable to add container for photo! Other containers are not full!',
+        },
+        true
+      );
+      return;
+    }
+
+    const uploadImagesCopy: Array<IUploadImage> | null = uploadImages;
+
+    uploadImagesCopy === null
+      ? null
+      : uploadImagesCopy.push({
+          name: '',
+          type: '',
+          imageInBase64: '',
+        });
+
+    setUploadImage(
+      uploadImagesCopy !== null
+        ? uploadImagesCopy
+        : [
+            {
+              name: '',
+              type: '',
+              imageInBase64: '',
+            },
+          ],
+      uploadImagesCopy === null ? 1 : uploadImagesCopy.length
+    );
+
+    form.setFieldValue(
+      'image',
+      uploadImagesCopy !== null
+        ? uploadImagesCopy
+        : [
+            {
+              name: '',
+              type: '',
+              imageInBase64: '',
+            },
+          ]
+    );
+  };
+
   if (
     anotherArg.maxElem === undefined ||
-    document.querySelectorAll(`input[name="${field.name}"]`).length >=
+    document.querySelectorAll(`input[name="${field.name}"]`).length >
       anotherArg.maxElem
   ) {
     return <></>;
@@ -102,9 +192,11 @@ const UploadFileContainer: React.FC<PropsType> = ({
         placeholder={placeholder}
         onChange={uploadEvent}
         clear={clearField}
+        add={addField}
         error={
           form.errors[`${field.name}`] ? form.errors[`${field.name}`] : null
         }
+        maxElem={anotherArg.maxElem}
       />
     );
   }
@@ -121,4 +213,5 @@ export default connect<
   RootState
 >(mapToStateProps, {
   setUploadImage,
+  setError,
 })(UploadFileContainer);
