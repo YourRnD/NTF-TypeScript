@@ -55,7 +55,11 @@ export const createBusinessValidate = (
 ): IBusinessValidateError => {
   const errors: IBusinessValidateError = {};
   // image
-  if (values.image !== undefined) {
+  if (
+    values.image !== undefined &&
+    values.image !== '' &&
+    values.image !== null
+  ) {
     const image = values.image;
     if (image.type === undefined) {
       errors.image = 'Required';
@@ -92,7 +96,11 @@ export const updateBusinessValidate = (
 ): IBusinessValidateError => {
   const errors: IBusinessValidateError = {};
   // image
-  if (values.image !== undefined && values.name !== '') {
+  if (
+    values.image !== undefined &&
+    values.image !== '' &&
+    values.image !== null
+  ) {
     const image = values.image;
     if (image.type === undefined) {
       errors.image = 'Required';

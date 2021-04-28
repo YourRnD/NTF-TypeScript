@@ -13,11 +13,13 @@ import {
   createBusinessValidate,
   updateBusinessValidate,
 } from '../../../common/validate';
+import { compose } from 'redux';
 
 type MapStatePropsType = {
   businessId: number | null | undefined;
   status: string | null | undefined;
   uploadImages: Array<IUploadImage> | null;
+  countImages: number;
 };
 
 type MapDispatchPropsType = {
@@ -33,6 +35,7 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
   createBusiness,
   status,
   uploadImages,
+  countImages,
 }) => {
   const onSubmit = (values: FormikValues): void => {
     if (status === 'manager') {
@@ -69,16 +72,23 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
 
   const initialValue = {
     name: '',
-    image: undefined,
+    image: uploadImages,
   };
+
+  const fileNames = [''];
+
+  if (uploadImages !== null) {
+    fileNames[0] = uploadImages[0].name;
+    for (let i = 1; i < countImages; i++) {
+      fileNames.push(uploadImages[i].name);
+    }
+  }
 
   return (
     <FormEditBusiness
       status={status}
       onSubmit={onSubmit}
-      fileName={
-        uploadImages === null ? [''] : uploadImages.map((item) => item.name)
-      }
+      fileNames={fileNames}
       validate={
         status === 'admin'
           ? createBusinessValidate
@@ -95,12 +105,15 @@ const mapStateToProps = (state: RootState): MapStatePropsType => ({
   businessId: state.auth.user.idBusiness,
   status: state.auth.user.status,
   uploadImages: state.common.uploadImages,
+  countImages: state.common.countImages,
 });
 
-export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootState>(
-  mapStateToProps,
-  {
-    createBusiness: createBusinessTh,
-    updateBusiness: updateBusinessTh,
-  }
+export default compose(
+  connect<MapStatePropsType, MapDispatchPropsType, {}, RootState>(
+    mapStateToProps,
+    {
+      createBusiness: createBusinessTh,
+      updateBusiness: updateBusinessTh,
+    }
+  )
 )(FormEditBusinessContainer);

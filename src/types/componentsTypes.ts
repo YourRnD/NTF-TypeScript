@@ -1,5 +1,7 @@
 // Input
 
+import { IUploadImage } from './commonReducerTypes';
+
 interface IFormComponentAdditionallyProps {
   name: string;
   value: string;
@@ -30,7 +32,7 @@ export type FormControlsType = {
     errors: any;
     setFieldValue: (
       field: string,
-      value: any,
+      value: string | null | number | undefined | Array<IUploadImage>,
       shouldValidate?: boolean
     ) => void;
   };
