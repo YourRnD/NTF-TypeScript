@@ -37,10 +37,10 @@ const PointsTable: React.FC<PropsType> = ({
   return (
     <div className={Style.root}>
       <div className={Style.container}>
-        <h1 className={Style.title}>Объекты бизнеса</h1>
-        <NavLink to="/edit-points/create">Создать новую точку</NavLink>
+        <h1 className={Style.title}>Business points</h1>
+        <NavLink to="/edit-points/create">Create new point</NavLink>
         <table className={Style.table}>
-          <TableLine id="Идент." name="Имя" address="Адресс" isTitle={true} />
+          <TableLine id="Id" name="Name" address="Address" isTitle={true} />
           {arrayPoints}
         </table>
         <div className={Style.bottom}>

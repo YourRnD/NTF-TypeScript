@@ -1,17 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { FormikValues } from 'formik';
 import FormEditFeedback from './FormEditFeedback';
 import { RootState } from '../../../redux/reducers';
 import { createFeedbackTh } from '../../../redux/actions/feedbackAction';
-import { createFeedbackSchema } from '../../../common/validate';
+import { createFeedbackValidate } from '../../../common/validate';
+import {
+  CommonActionTypes,
+  IUploadImage,
+} from '../../../types/commonReducerTypes';
+import { setUploadImage } from '../../../redux/actions/commonAction';
 
 type MapDispatchPropsType = {
   createFeedback: (
     rating: '1' | '2' | '3' | '4' | '5',
     notes: string,
-    idPoint: number
+    idPoint: number,
+    images: Array<string | ArrayBuffer> | null
   ) => void;
+  setUploadImage: (
+    uploadImages: Array<IUploadImage> | null,
+    countImages: number
+  ) => CommonActionTypes;
+};
+
+type MapStatePropsType = {
+  uploadImages: Array<IUploadImage> | null;
+  countImages: number;
 };
 
 type OwnPropsType = {
@@ -19,44 +34,74 @@ type OwnPropsType = {
   type: 'edit' | 'create' | null;
 };
 
-type PropsType = MapDispatchPropsType & OwnPropsType;
+type PropsType = MapDispatchPropsType & MapStatePropsType & OwnPropsType;
 
 const FormEditFeedbackContainer: React.FC<PropsType> = ({
   createFeedback,
   pointId,
   type,
+  uploadImages,
+  countImages,
+  setUploadImage,
 }) => {
+  useEffect(() => {
+    setUploadImage(null, 1);
+  }, [setUploadImage]);
+
   const onSubmit = (values: FormikValues): void => {
     if (type === 'edit') {
       return;
     } else if (type === 'create') {
-      return createFeedback(values.rating, values.notes, pointId);
+      return createFeedback(
+        values.rating,
+        values.notes,
+        pointId,
+        uploadImages !== null
+          ? uploadImages.map((item) => item.imageInBase64)
+          : null
+      );
     }
 
     return;
   };
 
-  const initialValues: {
-    rating: '1' | '2' | '3' | '4' | '5';
-    notes: string;
-  } = {
-    rating: '1',
+  const initialValues = {
+    rating: '',
     notes: '',
+    image: uploadImages,
   };
+
+  const fileNames = [''];
+
+  if (uploadImages !== null) {
+    fileNames[0] = uploadImages[0].name;
+    for (let i = 1; i < countImages; i++) {
+      fileNames.push(uploadImages[i].name);
+    }
+  }
 
   return (
     <FormEditFeedback
       onSubmit={onSubmit}
       initialValues={initialValues}
-      validateSchema={type === 'create' ? createFeedbackSchema : {}}
+      fileNames={fileNames}
+      validate={type === 'create' ? createFeedbackValidate : undefined}
       type={type}
     />
   );
 };
 
-export default connect<{}, MapDispatchPropsType, OwnPropsType, RootState>(
-  null,
-  {
-    createFeedback: createFeedbackTh,
-  }
-)(FormEditFeedbackContainer);
+const mapStateToProps = (state: RootState): MapStatePropsType => ({
+  uploadImages: state.common.uploadImages,
+  countImages: state.common.countImages,
+});
+
+export default connect<
+  MapStatePropsType,
+  MapDispatchPropsType,
+  OwnPropsType,
+  RootState
+>(mapStateToProps, {
+  createFeedback: createFeedbackTh,
+  setUploadImage,
+})(FormEditFeedbackContainer);

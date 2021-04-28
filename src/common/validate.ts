@@ -1,5 +1,7 @@
 import { FormikValues } from 'formik';
 import * as yup from 'yup';
+import { IUploadImage } from '../types/commonReducerTypes';
+import { IImageValidateError } from '../types/componentsTypes';
 
 export const signUpSchema = yup.object({
   name: yup
@@ -57,10 +59,10 @@ export const createBusinessValidate = (
   // image
   if (
     values.image !== undefined &&
-    values.image !== '' &&
+    values.image[0].name !== '' &&
     values.image !== null
   ) {
-    const image = values.image;
+    const image = values.image[0];
     if (image.type === undefined) {
       errors.image = 'Required';
     } else {
@@ -98,10 +100,10 @@ export const updateBusinessValidate = (
   // image
   if (
     values.image !== undefined &&
-    values.image !== '' &&
+    values.image[0].name !== '' &&
     values.image !== null
   ) {
-    const image = values.image;
+    const image = values.image[0];
     if (image.type === undefined) {
       errors.image = 'Required';
     } else {
@@ -122,6 +124,163 @@ export const updateBusinessValidate = (
     name.length > 50 ? (errors.name = 'Too long!') : null;
     name.search(/^([a-zA-ZА-Яа-я]\s*)+/i) === -1
       ? (errors.name = 'Name is incorrect!')
+      : null;
+  }
+
+  return errors;
+};
+
+export interface IFeedbackValidateError {
+  image?: Array<IImageValidateError>;
+  notes?: string;
+  rating?: string;
+}
+
+export const createFeedbackValidate = (
+  values: FormikValues
+): IFeedbackValidateError => {
+  const errors: IFeedbackValidateError = {};
+  // image
+  if (
+    values.image !== undefined &&
+    values.image !== null &&
+    values.image.length !== 0 &&
+    !(values.image.length === 1 && values.image[0].name === '')
+  ) {
+    const image = values.image;
+    image.forEach((element: IUploadImage) => {
+      if (
+        element.type === undefined ||
+        (element.type === '' && element.name.length === 0)
+      ) {
+        Array.isArray(errors.image)
+          ? errors.image.push({
+              id: element.id !== '' ? element.id : 'image',
+              message: 'Required',
+            })
+          : (errors.image = [
+              {
+                id: element.id !== '' ? element.id : 'image',
+                message: 'Required',
+              },
+            ]);
+      } else {
+        element.type.search(/jpeg|jpg|png/i) === -1
+          ? Array.isArray(errors.image)
+            ? errors.image.push({
+                id: element.id !== '' ? element.id : 'image',
+                message:
+                  'The file can only have the resolution of the jpeg, jpg, png format',
+              })
+            : (errors.image = [
+                {
+                  id: element.id !== '' ? element.id : 'image',
+                  message:
+                    'The file can only have the resolution of the jpeg, jpg, png format',
+                },
+              ])
+          : null;
+      }
+    });
+  }
+
+  // notes
+  if (values.notes !== undefined && values.notes !== '') {
+    const notes = values.notes;
+    typeof notes !== 'string'
+      ? (errors.notes = 'The feedback field can only be a string')
+      : null;
+    notes.length <= 2 ? (errors.notes = 'Too short!') : null;
+    notes.length > 1000 ? (errors.notes = 'Too long!') : null;
+    notes.search(/^([a-zA-ZА-Яа-я]\s*)+/i) === -1
+      ? (errors.notes = 'Feedback is incorrect!')
+      : null;
+  } else {
+    errors.notes = 'Required';
+  }
+
+  // rating
+  if (values.rating !== undefined && values.rating !== '') {
+    const rating = values.rating;
+    typeof rating !== 'string'
+      ? (errors.rating = 'The feedback field can only be a string')
+      : null;
+    rating.search(/[1-5]{1,1}/i) === -1
+      ? (errors.notes = 'Feedback is incorrect!')
+      : null;
+  } else {
+    errors.rating = 'Required';
+  }
+
+  return errors;
+};
+
+export const updateFeedbackValidate = (
+  values: FormikValues
+): IFeedbackValidateError => {
+  const errors: IFeedbackValidateError = {};
+  // image
+  if (
+    values.image !== undefined &&
+    values.image !== null &&
+    values.image.length !== 0 &&
+    !(values.image.length === 1 && values.image[0].name === '')
+  ) {
+    const image = values.image;
+    image.forEach((element: IUploadImage) => {
+      if (element.type === undefined) {
+        Array.isArray(errors.image)
+          ? errors.image.push({
+              id: element.id !== '' ? element.id : 'image',
+              message: 'Required',
+            })
+          : (errors.image = [
+              {
+                id: element.id !== '' ? element.id : 'image',
+                message: 'Required',
+              },
+            ]);
+      } else {
+        element.type.search(/jpeg|jpg|png/i) === -1
+          ? Array.isArray(errors.image)
+            ? errors.image.push({
+                id: element.id !== '' ? element.id : 'image',
+                message:
+                  'The file can only have the resolution of the jpeg, jpg, png format',
+              })
+            : (errors.image = [
+                {
+                  id: element.id !== '' ? element.id : 'image',
+                  message:
+                    'The file can only have the resolution of the jpeg, jpg, png format',
+                },
+              ])
+          : null;
+      }
+    });
+  }
+
+  // notes
+  if (values.notes !== undefined && values.notes !== '') {
+    const notes = values.notes;
+    typeof notes !== 'string'
+      ? (errors.notes = 'The feedback field can only be a string')
+      : null;
+    notes.length <= 2 ? (errors.notes = 'Too short!') : null;
+    notes.length > 1000 ? (errors.notes = 'Too long!') : null;
+    notes.search(/^([a-zA-ZА-Яа-я]\s*)+/i) === -1
+      ? (errors.notes = 'Feedback is incorrect!')
+      : null;
+  }
+
+  // rating
+  if (values.rating !== undefined && values.rating !== '') {
+    const rating = values.rating;
+    typeof rating !== 'string'
+      ? (errors.rating = 'The feedback field can only be a string')
+      : null;
+    rating.search(/[1-5]{1,1}/i) === -1
+      ? (errors.notes = 'Feedback is incorrect!')
       : null;
   }
 
@@ -158,11 +317,4 @@ export const updatePointSchema = yup.object({
     .min(3, 'Too short!')
     .max(100, 'Too long!')
     .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Address is incorrect!'),
-});
-
-export const createFeedbackSchema = yup.object().shape({
-  notes: yup
-    .string()
-    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Notes is incorrect!')
-    .required('Required!'),
 });

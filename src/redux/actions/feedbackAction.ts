@@ -7,13 +7,14 @@ import { changeLoaded, setError, setSuccess } from './commonAction';
 export const createFeedbackTh = (
   rating: '1' | '2' | '3' | '4' | '5',
   notes: string,
-  idPoint: number
+  idPoint: number,
+  images: Array<string | ArrayBuffer> | null = null
 ): ThunkAction<Promise<void>, RootState, unknown, CommonActionTypes> => async (
   dispatch
 ) => {
   dispatch(changeLoaded(true));
   const data = await feedbackAPI
-    .add(rating, notes, idPoint)
+    .add(rating, notes, idPoint, images)
     .then((result) => result.data);
   if (data.status === 200) {
     dispatch(setSuccess(data.message, true));

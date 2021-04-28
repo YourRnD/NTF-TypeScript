@@ -45,7 +45,6 @@ const FormEditBusiness: React.FC<PropsType> = ({
             }}
           />
         }
-        {console.log(fileNames)}
         {fileNames.map((item, index) => (
           <ContainerField
             key={item}
@@ -55,7 +54,7 @@ const FormEditBusiness: React.FC<PropsType> = ({
             props={{
               fileName: item,
               id: `business-upload-image-${index}`,
-              maxElem: 3,
+              maxElem: 1,
             }}
           />
         ))}

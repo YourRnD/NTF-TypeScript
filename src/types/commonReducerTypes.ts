@@ -16,6 +16,7 @@ export interface IUploadImage {
   name: string;
   type: string;
   imageInBase64: string | ArrayBuffer;
+  id: string;
 }
 
 export interface ICommon {
