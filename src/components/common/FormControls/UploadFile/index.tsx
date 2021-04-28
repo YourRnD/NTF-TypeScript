@@ -10,7 +10,10 @@ import {
   IError,
   IUploadImage,
 } from '../../../../types/commonReducerTypes';
-import { FormControlsType } from '../../../../types/componentsTypes';
+import {
+  FormControlsType,
+  IImageValidateError,
+} from '../../../../types/componentsTypes';
 import UploadFile from './UploadFile';
 
 type MapStatePropsType = {
@@ -53,6 +56,7 @@ const UploadFileContainer: React.FC<PropsType> = ({
                 name: image.name,
                 type: image.type,
                 imageInBase64: reader.result === null ? '' : reader.result,
+                id: anotherArg?.id ? anotherArg.id : '',
               },
             ],
             1
@@ -62,6 +66,7 @@ const UploadFileContainer: React.FC<PropsType> = ({
               name: image.name,
               type: image.type,
               imageInBase64: reader.result === null ? '' : reader.result,
+              id: anotherArg?.id ? anotherArg.id : '',
             },
           ]);
         } else {
@@ -75,6 +80,7 @@ const UploadFileContainer: React.FC<PropsType> = ({
                   name: image.name,
                   type: image.type,
                   imageInBase64: reader.result === null ? '' : reader.result,
+                  id: anotherArg?.id ? anotherArg.id : '',
                 })
               : uploadImagesCopy.push(item);
           });
@@ -148,6 +154,7 @@ const UploadFileContainer: React.FC<PropsType> = ({
           name: '',
           type: '',
           imageInBase64: '',
+          id: '',
         });
 
     setUploadImage(
@@ -158,6 +165,7 @@ const UploadFileContainer: React.FC<PropsType> = ({
               name: '',
               type: '',
               imageInBase64: '',
+              id: '',
             },
           ],
       uploadImagesCopy === null ? 1 : uploadImagesCopy.length
@@ -172,10 +180,25 @@ const UploadFileContainer: React.FC<PropsType> = ({
               name: '',
               type: '',
               imageInBase64: '',
+              id: '',
             },
           ]
     );
   };
+
+  let error: string | null = null;
+
+  if (form.errors[`${field.name}`]) {
+    if (anotherArg.fileName != '') {
+      form.errors[`${field.name}`].forEach((element: IImageValidateError) => {
+        element.id === anotherArg.id ? (error = element.message) : null;
+      });
+    } else {
+      form.errors[`${field.name}`].forEach((element: IImageValidateError) => {
+        element.id === 'image' ? (error = element.message) : null;
+      });
+    }
+  }
 
   if (
     anotherArg.maxElem === undefined ||
@@ -193,9 +216,7 @@ const UploadFileContainer: React.FC<PropsType> = ({
         onChange={uploadEvent}
         clear={clearField}
         add={addField}
-        error={
-          form.errors[`${field.name}`] ? form.errors[`${field.name}`] : null
-        }
+        error={error}
         maxElem={anotherArg.maxElem}
       />
     );

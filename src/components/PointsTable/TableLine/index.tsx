@@ -16,8 +16,8 @@ const TableLine: React.FC<PropsType> = ({ id, name, address, isTitle }) => (
         <th className={`${Style.ceil} ${Style.id}`}>{id}</th>
         <th className={`${Style.ceil} ${Style.name}`}>{name}</th>
         <th className={`${Style.ceil} ${Style.address}`}>{address}</th>
-        <td className={`${Style.ceil} ${Style.edit}`}>Редактировать</td>
-        <td className={`${Style.ceil} ${Style['qr-code']}`}>QR-коды точек</td>
+        <td className={`${Style.ceil} ${Style.edit}`}>Edit</td>
+        <td className={`${Style.ceil} ${Style['qr-code']}`}>Point QR-codes</td>
       </tr>
     ) : (
       <tr id={`points${id}`} className={Style.root}>
@@ -25,12 +25,12 @@ const TableLine: React.FC<PropsType> = ({ id, name, address, isTitle }) => (
         <td className={`${Style.ceil} ${Style.name}`}>{name}</td>
         <td className={`${Style.ceil} ${Style.address}`}>{address}</td>
         <td className={`${Style.ceil} ${Style.edit}`}>
-          <NavLink to={`/edit-points/edit/${id}`}>Редактировать</NavLink>
+          <NavLink to={`/edit-points/edit/${id}`}>Edit</NavLink>
         </td>
         <td className={`${Style.ceil} ${Style['qr-code']}`}>
           <img
             src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${window.location.origin}/feedback/create/${id}`}
-            alt="QR-код точки"
+            alt="Point QR-code"
           />
         </td>
       </tr>

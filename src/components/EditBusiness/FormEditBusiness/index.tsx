@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { FormikValues } from 'formik';
 import FormEditBusiness from './FormEditBusiness';
 import { RootState } from '../../../redux/reducers';
-import { IUploadImage } from '../../../types/commonReducerTypes';
+import {
+  CommonActionTypes,
+  IUploadImage,
+} from '../../../types/commonReducerTypes';
 import {
   createBusinessTh,
   updateBusinessTh,
@@ -14,6 +17,7 @@ import {
   updateBusinessValidate,
 } from '../../../common/validate';
 import { compose } from 'redux';
+import { setUploadImage } from '../../../redux/actions/commonAction';
 
 type MapStatePropsType = {
   businessId: number | null | undefined;
@@ -25,6 +29,10 @@ type MapStatePropsType = {
 type MapDispatchPropsType = {
   createBusiness: (name: string, image: Array<string | ArrayBuffer>) => void;
   updateBusiness: (id: number, obj: IUpdateBusinessObj) => void;
+  setUploadImage: (
+    uploadImages: Array<IUploadImage> | null,
+    countImages: number
+  ) => CommonActionTypes;
 };
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
@@ -36,7 +44,12 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
   status,
   uploadImages,
   countImages,
+  setUploadImage,
 }) => {
+  useEffect(() => {
+    setUploadImage(null, 1);
+  }, [setUploadImage]);
+
   const onSubmit = (values: FormikValues): void => {
     if (status === 'manager') {
       const obj: IUpdateBusinessObj = {};
@@ -114,6 +127,7 @@ export default compose(
     {
       createBusiness: createBusinessTh,
       updateBusiness: updateBusinessTh,
+      setUploadImage,
     }
   )
 )(FormEditBusinessContainer);

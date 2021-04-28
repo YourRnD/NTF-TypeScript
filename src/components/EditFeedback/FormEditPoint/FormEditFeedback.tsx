@@ -1,34 +1,39 @@
 import React from 'react';
 import Style from './FormEditFeedback.module.css';
 import { Form, Formik, FormikValues } from 'formik';
-import { createFeedbackSchema } from '../../../common/validate';
+import { IFeedbackValidateError } from '../../../common/validate';
 import ContainerField from '../../common/FormControls';
 import Textarea from '../../common/FormControls/Textarea';
 import Radio from '../../common/FormControls/Radio';
+import UploadFile from '../../common/FormControls/UploadFile';
+import { IUploadImage } from '../../../types/commonReducerTypes';
 
 interface IInitialValues {
-  rating: '1' | '2' | '3' | '4' | '5';
+  rating: string;
   notes: string;
+  image: Array<IUploadImage> | null;
 }
 
 type PropsType = {
   onSubmit: (values: FormikValues) => void;
   initialValues: IInitialValues;
-  validateSchema: typeof createFeedbackSchema | {};
+  validate: ((values: FormikValues) => IFeedbackValidateError) | undefined;
+  fileNames: Array<string>;
   type: 'edit' | 'create' | null;
 };
 
 const FormEditPoint: React.FC<PropsType> = ({
   onSubmit,
   initialValues,
-  validateSchema,
+  validate,
   type,
+  fileNames,
 }) => (
   <div className={Style.root}>
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
-      validationSchema={validateSchema}
+      validate={validate}
       className={Style['root-container']}
     >
       <Form className={Style.form}>
@@ -73,6 +78,19 @@ const FormEditPoint: React.FC<PropsType> = ({
             }}
           />
         }
+        {fileNames.map((item, index) => (
+          <ContainerField
+            key={item}
+            component={UploadFile}
+            name="image"
+            placeholder="image"
+            props={{
+              fileName: item,
+              id: `feedback-upload-image-${index}`,
+              maxElem: 3,
+            }}
+          />
+        ))}
         <button type="submit" className={Style.submit}>
           {type === 'create'
             ? 'Create new feedback'

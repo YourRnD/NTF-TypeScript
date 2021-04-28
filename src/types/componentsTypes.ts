@@ -38,3 +38,10 @@ export type FormControlsType = {
   };
   anotherArg: IFieldAdditionallyProps;
 };
+
+// uploadImage
+
+export interface IImageValidateError {
+  message: string;
+  id: string;
+}

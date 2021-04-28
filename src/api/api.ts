@@ -3,7 +3,7 @@ import { IBusiness, IUpdateBusinessObj } from '../types/businessReducerTypes';
 import { IUpdatePointsObj } from '../types/pointReducerTypes';
 
 const instance = axios.create({
-  baseURL: 'https://star-it-api.herokuapp.com/', // 'http://localhost:3500/',
+  baseURL: 'http://localhost:3500/', // 'https://star-it-api.herokuapp.com/',
 });
 
 instance.interceptors.response.use(
@@ -222,15 +222,24 @@ export const feedbackAPI = {
   add(
     rating: '1' | '2' | '3' | '4' | '5',
     notes: string,
-    idPoint: number
+    idPoint: number,
+    image: Array<string | ArrayBuffer> | null
   ): Promise<ResultType> {
+    const payload: {
+      rating: '1' | '2' | '3' | '4' | '5';
+      notes: string;
+      idPoint: number;
+      image?: Array<string | ArrayBuffer>;
+      mac: string;
+    } = {
+      rating,
+      notes,
+      idPoint,
+      mac: 'E1:8C:24:6D:F9:85',
+    };
+    image !== null ? (payload.image = image) : null;
     return instance.post(`${this.path}`, {
-      payload: {
-        rating,
-        notes,
-        idPoint,
-        mac: 'E1:8C:24:6D:F9:85',
-      },
+      payload,
     });
   },
 };
