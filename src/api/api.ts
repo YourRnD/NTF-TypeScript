@@ -3,7 +3,7 @@ import { IBusiness, IUpdateBusinessObj } from '../types/businessReducerTypes';
 import { IUpdatePointsObj } from '../types/pointReducerTypes';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3500/', // 'https://star-it-api.herokuapp.com/',
+  baseURL: 'https://star-it-api.herokuapp.com/', // 'http://localhost:3500/',
 });
 
 instance.interceptors.response.use(
