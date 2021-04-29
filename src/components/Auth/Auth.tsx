@@ -1,4 +1,4 @@
-import { Form, Formik, FormikValues } from 'formik';
+import { Field, Form, Formik, FormikValues } from 'formik';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { signInSchema, signUpSchema } from '../../common/validate';
@@ -11,6 +11,7 @@ interface IInitialValue {
   email: string;
   password: string;
   confirmPassword?: string;
+  rememberMe?: boolean;
 }
 
 type PropsType = {
@@ -85,14 +86,28 @@ const Auth: React.FC<PropsType> = ({
           />
         }
         {typeOperation === 'Regist' ? (
-          <ContainerField
-            component={Input}
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            props={{
-              type: 'password',
-            }}
-          />
+          <>
+            <ContainerField
+              component={Input}
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              props={{
+                type: 'password',
+              }}
+            />
+          </>
+        ) : null}
+
+        {typeOperation === 'Auth' ? (
+          <div className={Style['checkbox-container']}>
+            <label htmlFor="feedback-answer-checkbox">Remember me</label>
+            <Field
+              type="checkbox"
+              name="rememberMe"
+              placeholder="Remember me"
+              id="remember-me"
+            />
+          </div>
         ) : null}
         <button type="submit" className={Style.submit} data-testid="submit">
           {typeOperation == 'Auth'
