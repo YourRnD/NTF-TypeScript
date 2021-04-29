@@ -1,7 +1,5 @@
 .form {
-  background-color: var(--white);
-
-  min-width: 400px;
+  min-width: 720px;
 
   margin: 75px 0 30px;
 
@@ -9,6 +7,51 @@
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+}
+
+.line {
+  background-image: linear-gradient(-90deg, #6d8eb8 0%, #ffffff 100%);
+
+  width: 100%;
+  height: 2px;
+}
+
+.rating-title {
+  width: 100%;
+
+  padding: 39px 0px 0px 293px;
+
+  font-size: 36px;
+  letter-spacing: -0.8px;
+  font-weight: 400;
+}
+
+.checkbox-container {
+  margin-top: 25px;
+  padding-right: 50px;
+  margin-bottom: 75px;
+
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+  justify-items: center;
+}
+
+.checkbox-container input {
+  width: 40px;
+  height: 40px;
+}
+
+.checkbox-container label {
+  height: max-content;
+
+  margin: auto 17px auto 0;
+
+  font-size: 22px;
+  letter-spacing: -0.18px;
+
+  transform: translateY(1px);
 }
 
 .submit {

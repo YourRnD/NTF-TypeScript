@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Style from './App.module.css';
+// import { lib } from './common/lib';
 import Auth from './components/Auth';
 import ErrorMessage from './components/common/ErrorMessage';
 import Preloader from './components/common/Preloader';
@@ -39,6 +40,7 @@ const App: React.FC<PropsType> = ({
     if (!isInit) {
       if (localStorage.getItem('star_it_access_token')) {
         checkAuth();
+        // lib();
       } else {
         setInit(true);
       }

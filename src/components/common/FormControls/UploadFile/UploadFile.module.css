@@ -8,7 +8,7 @@
 
   margin-bottom: 50px;
 
-  min-width: 100%;
+  min-width: min-content;
 
   padding: 0px;
 }
@@ -27,7 +27,9 @@
   cursor: pointer;
 
   height: 50px;
-  width: 350px;
+  width: 300px;
+
+  margin: 0 75px;
 
   border-radius: 10px;
   border: 0;
@@ -43,8 +45,6 @@
 .container:hover .upload-file-label {
   box-shadow: -10px 10px 15px 0px rgba(0, 0, 0, 0.3);
 
-  width: 300px;
-
   transform: translate(5px, -5px);
 }
 
@@ -54,20 +54,20 @@
 
   opacity: 1;
 
-  right: -25px;
+  right: 0px;
 
   transform: translate(5px, -5px);
 }
 
 .container:hover .add-btn {
-  right: 10px;
+  right: 35px;
 }
 
 .close-btn,
 .add-btn {
   position: absolute;
 
-  right: -45px;
+  right: 15px;
 
   opacity: 0;
 
@@ -85,7 +85,7 @@
 }
 
 .add-btn {
-  right: -10px;
+  right: 50px;
 }
 
 .close-btn::after,

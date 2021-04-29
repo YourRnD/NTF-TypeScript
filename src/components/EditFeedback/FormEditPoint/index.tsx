@@ -10,6 +10,7 @@ import {
   IUploadImage,
 } from '../../../types/commonReducerTypes';
 import { setUploadImage } from '../../../redux/actions/commonAction';
+import { getPointTh } from '../../../redux/actions/pointAction';
 
 type MapDispatchPropsType = {
   createFeedback: (
@@ -22,6 +23,7 @@ type MapDispatchPropsType = {
     uploadImages: Array<IUploadImage> | null,
     countImages: number
   ) => CommonActionTypes;
+  getPoint: (id: number) => void;
 };
 
 type MapStatePropsType = {
@@ -43,10 +45,12 @@ const FormEditFeedbackContainer: React.FC<PropsType> = ({
   uploadImages,
   countImages,
   setUploadImage,
+  getPoint,
 }) => {
   useEffect(() => {
+    getPoint(pointId);
     setUploadImage(null, 1);
-  }, [setUploadImage]);
+  }, [getPoint, pointId, setUploadImage]);
 
   const onSubmit = (values: FormikValues): void => {
     if (type === 'edit') {
@@ -54,7 +58,7 @@ const FormEditFeedbackContainer: React.FC<PropsType> = ({
     } else if (type === 'create') {
       return createFeedback(
         values.rating,
-        values.notes,
+        values.feedback,
         pointId,
         uploadImages !== null
           ? uploadImages.map((item) => item.imageInBase64)
@@ -67,7 +71,7 @@ const FormEditFeedbackContainer: React.FC<PropsType> = ({
 
   const initialValues = {
     rating: '',
-    notes: '',
+    feedback: '',
     image: uploadImages,
   };
 
@@ -104,4 +108,5 @@ export default connect<
 >(mapStateToProps, {
   createFeedback: createFeedbackTh,
   setUploadImage,
+  getPoint: getPointTh,
 })(FormEditFeedbackContainer);

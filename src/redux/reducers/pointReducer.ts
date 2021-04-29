@@ -13,6 +13,8 @@ const initialState: statePoint = {
     id: null,
     name: null,
     address: null,
+    businessName: null,
+    path: null,
   },
   pageNumber: 0,
   countPages: 1,

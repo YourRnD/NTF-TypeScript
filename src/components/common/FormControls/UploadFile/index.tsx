@@ -72,8 +72,6 @@ const UploadFileContainer: React.FC<PropsType> = ({
         } else {
           const uploadImagesCopy: Array<IUploadImage> = [];
 
-          console.log(1233123);
-
           uploadImages.forEach((item) => {
             item?.name !== undefined && item.name === anotherArg.fileName
               ? uploadImagesCopy.push({
@@ -105,10 +103,6 @@ const UploadFileContainer: React.FC<PropsType> = ({
         ? null
         : uploadImagesCopy.push(item);
     });
-
-    console.log(uploadImages);
-    console.log(uploadImagesCopy);
-    console.log(anotherArg.fileName);
 
     setUploadImage(
       uploadImagesCopy.length === 0 ? null : uploadImagesCopy,
