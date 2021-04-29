@@ -71,7 +71,6 @@ export const signinTh = (
     };
 
     dispatch(setUserAction(user, true));
-    dispatch(setSuccess(data.message, true));
   } else {
     dispatch(setError(data, true));
   }

@@ -132,7 +132,7 @@ export const updateBusinessValidate = (
 
 export interface IFeedbackValidateError {
   image?: Array<IImageValidateError>;
-  notes?: string;
+  feedback?: string;
   rating?: string;
 }
 
@@ -184,19 +184,19 @@ export const createFeedbackValidate = (
     });
   }
 
-  // notes
-  if (values.notes !== undefined && values.notes !== '') {
-    const notes = values.notes;
-    typeof notes !== 'string'
-      ? (errors.notes = 'The feedback field can only be a string')
+  // feedback
+  if (values.feedback !== undefined && values.feedback !== '') {
+    const feedback = values.feedback;
+    typeof feedback !== 'string'
+      ? (errors.feedback = 'The feedback field can only be a string')
       : null;
-    notes.length <= 2 ? (errors.notes = 'Too short!') : null;
-    notes.length > 1000 ? (errors.notes = 'Too long!') : null;
-    notes.search(/^([a-zA-ZА-Яа-я]\s*)+/i) === -1
-      ? (errors.notes = 'Feedback is incorrect!')
+    feedback.length <= 2 ? (errors.feedback = 'Too short!') : null;
+    feedback.length > 1000 ? (errors.feedback = 'Too long!') : null;
+    feedback.search(/^([a-zA-ZА-Яа-я]\s*)+/i) === -1
+      ? (errors.feedback = 'Feedback is incorrect!')
       : null;
   } else {
-    errors.notes = 'Required';
+    errors.feedback = 'Required';
   }
 
   // rating
@@ -206,7 +206,7 @@ export const createFeedbackValidate = (
       ? (errors.rating = 'The feedback field can only be a string')
       : null;
     rating.search(/[1-5]{1,1}/i) === -1
-      ? (errors.notes = 'Feedback is incorrect!')
+      ? (errors.feedback = 'Feedback is incorrect!')
       : null;
   } else {
     errors.rating = 'Required';
@@ -260,16 +260,16 @@ export const updateFeedbackValidate = (
     });
   }
 
-  // notes
-  if (values.notes !== undefined && values.notes !== '') {
-    const notes = values.notes;
-    typeof notes !== 'string'
-      ? (errors.notes = 'The feedback field can only be a string')
+  // feedback
+  if (values.feedback !== undefined && values.feedback !== '') {
+    const feedback = values.feedback;
+    typeof feedback !== 'string'
+      ? (errors.feedback = 'The feedback field can only be a string')
       : null;
-    notes.length <= 2 ? (errors.notes = 'Too short!') : null;
-    notes.length > 1000 ? (errors.notes = 'Too long!') : null;
-    notes.search(/^([a-zA-ZА-Яа-я]\s*)+/i) === -1
-      ? (errors.notes = 'Feedback is incorrect!')
+    feedback.length <= 2 ? (errors.feedback = 'Too short!') : null;
+    feedback.length > 1000 ? (errors.feedback = 'Too long!') : null;
+    feedback.search(/^([a-zA-ZА-Яа-я]\s*)+/i) === -1
+      ? (errors.feedback = 'Feedback is incorrect!')
       : null;
   }
 
@@ -280,7 +280,7 @@ export const updateFeedbackValidate = (
       ? (errors.rating = 'The feedback field can only be a string')
       : null;
     rating.search(/[1-5]{1,1}/i) === -1
-      ? (errors.notes = 'Feedback is incorrect!')
+      ? (errors.feedback = 'Feedback is incorrect!')
       : null;
   }
 

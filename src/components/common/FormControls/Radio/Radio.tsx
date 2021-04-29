@@ -1,6 +1,7 @@
 import React from 'react';
 import { IRadioAdditionallyProps } from '../../../../types/componentsTypes';
 import Style from './Radio.module.css';
+import RadioInput from './RadioInput';
 
 type PropsType = {
   placeholder: string;
@@ -17,7 +18,6 @@ const Radio: React.FC<PropsType> = ({
   onChange,
   error,
   valuesArray,
-  selectedValue,
 }) => {
   if (valuesArray === undefined) return <></>;
 
@@ -34,29 +34,14 @@ const Radio: React.FC<PropsType> = ({
       HTMLDivElement
     > => {
       return (
-        <>
-          {selectedValue === item.value ? (
-            <input
-              type="radio"
-              id={item.id}
-              key={item.id}
-              value={item.value}
-              name={name}
-              onChange={onChange}
-              checked
-            />
-          ) : (
-            <input
-              type="radio"
-              id={item.id}
-              key={item.id}
-              value={item.value}
-              name={name}
-              onChange={onChange}
-            />
-          )}
-          <label htmlFor={item.id} title={placeholder}></label>
-        </>
+        <RadioInput
+          key={item.id}
+          id={item.id}
+          placeholder={placeholder}
+          name={name}
+          onChange={onChange}
+          value={item.value}
+        />
       );
     }
   );

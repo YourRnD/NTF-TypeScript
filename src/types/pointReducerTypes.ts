@@ -12,9 +12,17 @@ export interface IPoint {
   address: string | null | undefined;
 }
 
+export interface ISelectedPoint {
+  id: number | null | undefined;
+  name: string | null | undefined;
+  address: string | null | undefined;
+  path: string | null | undefined;
+  businessName: string | null | undefined;
+}
+
 export interface IPointState {
   points: Array<IPoint> | [];
-  selectedPoint: IPoint;
+  selectedPoint: ISelectedPoint;
   pageNumber: number;
   countPages: number;
 }
@@ -39,7 +47,7 @@ interface ISetPageNumberAction {
 interface ISetSelectedPointAction {
   type: typeof SET_SELECTED_POINT;
   payload: {
-    selectedPoint: IPoint;
+    selectedPoint: ISelectedPoint;
   };
 }
 

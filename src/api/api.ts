@@ -66,6 +66,8 @@ interface IPoint {
   id: number | null | undefined;
   name: string | null | undefined;
   address: string | null | undefined;
+  path?: Array<string> | null | undefined;
+  businessName?: string | null | undefined;
 }
 
 export interface IPointAPI {

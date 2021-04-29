@@ -2,6 +2,7 @@ import { ThunkAction } from 'redux-thunk';
 import { CommonActionTypes } from '../../types/commonReducerTypes';
 import {
   IPoint,
+  ISelectedPoint,
   IUpdatePointsObj,
   PointActionTypes,
 } from '../../types/pointReducerTypes';
@@ -27,7 +28,9 @@ export const setPoints = (
   },
 });
 
-export const setSelectedPoint = (selectedPoint: IPoint): PointActionTypes => ({
+export const setSelectedPoint = (
+  selectedPoint: ISelectedPoint
+): PointActionTypes => ({
   type: SET_SELECTED_POINT,
   payload: {
     selectedPoint,
@@ -182,6 +185,10 @@ export const getPointTh = (
       id: data?.point?.id ? data?.point?.id : null,
       address: data?.point?.address ? data?.point?.address : null,
       name: data?.point?.name ? data?.point?.name : null,
+      businessName: data?.point?.businessName
+        ? data?.point?.businessName
+        : null,
+      path: data?.point?.path ? data?.point?.path[0] : null,
     };
 
     dispatch(setSelectedPoint(point));

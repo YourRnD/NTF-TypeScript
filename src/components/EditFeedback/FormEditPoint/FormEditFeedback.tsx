@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './FormEditFeedback.module.css';
-import { Form, Formik, FormikValues } from 'formik';
+import { Field, Form, Formik, FormikValues } from 'formik';
 import { IFeedbackValidateError } from '../../../common/validate';
 import ContainerField from '../../common/FormControls';
 import Textarea from '../../common/FormControls/Textarea';
@@ -10,7 +10,7 @@ import { IUploadImage } from '../../../types/commonReducerTypes';
 
 interface IInitialValues {
   rating: string;
-  notes: string;
+  feedback: string;
   image: Array<IUploadImage> | null;
 }
 
@@ -37,6 +37,8 @@ const FormEditPoint: React.FC<PropsType> = ({
       className={Style['root-container']}
     >
       <Form className={Style.form}>
+        <div className={Style.line}></div>
+        <h2 className={Style['rating-title']}>Rating</h2>
         {
           <ContainerField
             component={Radio}
@@ -68,11 +70,22 @@ const FormEditPoint: React.FC<PropsType> = ({
             }}
           />
         }
+        <div className={Style.line}></div>
+        <div className={Style['checkbox-container']}>
+          <label htmlFor="feedback-answer-checkbox">I want to get answer</label>
+          <Field
+            type="checkbox"
+            name="answer"
+            placeholder="Answer"
+            id="feedback-answer-checkbox"
+          />
+        </div>
+
         {
           <ContainerField
             component={Textarea}
-            name="notes"
-            placeholder="Notes"
+            name="feedback"
+            placeholder="feedback"
             props={{
               type: 'text',
             }}

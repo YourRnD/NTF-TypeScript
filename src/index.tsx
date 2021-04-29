@@ -11,6 +11,12 @@ console.log(store.getState());
 ReactDOM.render(
   <Provider store={store}>
     <App />
+    <script
+      id="pixelPerfectLib"
+      data-src-to-imgs="/images/layoutFeedbackForm.png"
+      data-btns-description="layoutFeedbackForm"
+      data-enabled-layot="layoutFeedbackForm"
+    ></script>
   </Provider>,
   document.getElementById('root')
 );

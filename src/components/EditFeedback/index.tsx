@@ -1,5 +1,9 @@
-import React from 'react';
-import EditPoint from './EditFeedback';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getPointTh } from '../../redux/actions/pointAction';
+import { RootState } from '../../redux/reducers';
+import { ISelectedPoint } from '../../types/pointReducerTypes';
+import EditFeedback from './EditFeedback';
 
 interface IParams {
   id: number;
@@ -14,12 +18,45 @@ type OwnPropsType = {
   match: IMatch;
 };
 
-type PropsType = OwnPropsType;
+type MapDispatchPropsType = {
+  getPoint: (id: number) => void;
+};
 
-const EditFeedbackContainer: React.FC<PropsType> = ({ match }) => (
-  <>
-    <EditPoint pointId={match.params.id} type={match.params.type} />
-  </>
-);
+type MapStatePropsType = {
+  point: ISelectedPoint;
+};
 
-export default EditFeedbackContainer;
+type PropsType = OwnPropsType & MapDispatchPropsType & MapStatePropsType;
+
+const EditFeedbackContainer: React.FC<PropsType> = ({
+  match,
+  getPoint,
+  point,
+}) => {
+  useEffect(() => {
+    getPoint(match.params.id);
+  }, [getPoint, match.params.id]);
+
+  return (
+    <>
+      <EditFeedback
+        pointId={match.params.id}
+        type={match.params.type}
+        point={point}
+      />
+    </>
+  );
+};
+
+const mapStateToProps = (state: RootState): MapStatePropsType => ({
+  point: state.point.selectedPoint,
+});
+
+export default connect<
+  MapStatePropsType,
+  MapDispatchPropsType,
+  OwnPropsType,
+  RootState
+>(mapStateToProps, {
+  getPoint: getPointTh,
+})(EditFeedbackContainer);

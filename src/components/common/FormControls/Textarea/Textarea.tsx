@@ -4,8 +4,6 @@ import Style from './Textarea.module.css';
 type PropsType = {
   placeholder: string;
   name: string;
-  onFocus: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
-  onBlur: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
   onChange: () => void;
   error: string | null;
 };
@@ -13,19 +11,14 @@ type PropsType = {
 const Textarea: React.FC<PropsType> = ({
   placeholder,
   name,
-  onBlur,
-  onFocus,
   onChange,
   error,
 }) => {
   return (
     <div className={Style.container}>
-      <span className={Style.placeholder}>{placeholder}</span>
       <textarea
         placeholder={placeholder}
         className={Style.elem}
-        onFocus={onFocus}
-        onBlur={onBlur}
         name={name}
         onChange={onChange}
       />

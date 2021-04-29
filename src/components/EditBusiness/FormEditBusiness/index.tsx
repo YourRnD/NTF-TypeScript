@@ -70,8 +70,6 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
     }
 
     if (status === 'admin') {
-      console.log(values);
-
       if (values.name === null || uploadImages === null) {
         return;
       }
