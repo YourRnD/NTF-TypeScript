@@ -9,8 +9,26 @@ const instance = axios.create({
 instance.interceptors.response.use(
   async (response: AxiosResponse) => {
     if (response?.config?.url?.split('/')[2] === 'signin') {
-      localStorage.setItem('star_it_access_token', response.data.accessToken);
-      localStorage.setItem('star_it_refresh_token', response.data.refreshToken);
+      if (localStorage.getItem('star-it-remember-me') === 'true') {
+        sessionStorage.removeItem('star_it_access_token');
+        sessionStorage.removeItem('star_it_refresh_token');
+        localStorage.setItem('star_it_access_token', response.data.accessToken);
+        localStorage.setItem(
+          'star_it_refresh_token',
+          response.data.refreshToken
+        );
+      } else {
+        localStorage.removeItem('star_it_access_token');
+        localStorage.removeItem('star_it_refresh_token');
+        sessionStorage.setItem(
+          'star_it_access_token',
+          response.data.accessToken
+        );
+        sessionStorage.setItem(
+          'star_it_refresh_token',
+          response.data.refreshToken
+        );
+      }
     }
 
     return response;
@@ -27,13 +45,17 @@ instance.interceptors.request.use(
       config?.url?.split('/')[2] !== 'signup'
     ) {
       if (config?.url?.split('/')[2] === 'refresh') {
-        config.headers.Authorization = `${localStorage.getItem(
-          'star_it_refresh_token'
-        )}`;
+        config.headers.Authorization = `${
+          localStorage.getItem('star_it_refresh_token') !== undefined
+            ? localStorage.getItem('star_it_refresh_token')
+            : sessionStorage.getItem('star_it_refresh_token')
+        }`;
       } else {
-        config.headers.Authorization = `${localStorage.getItem(
-          'star_it_access_token'
-        )}`;
+        config.headers.Authorization = `${
+          localStorage.getItem('star_it_access_token') !== undefined
+            ? localStorage.getItem('star_it_access_token')
+            : sessionStorage.getItem('star_it_access_token')
+        }`;
       }
     }
 

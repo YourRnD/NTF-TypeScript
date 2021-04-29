@@ -34,6 +34,7 @@ const AuthContainer: React.FC<PropsType> = ({
 
   const onSubmit = (values: FormikValues) => {
     if (typeOperation === 'Auth') {
+      localStorage.setItem('star-it-remember-me', `${!!values.rememberMe}`);
       signin(values.email, values.password);
     } else if (typeOperation === 'Regist') {
       signup(values.name, values.email, values.password);
@@ -49,7 +50,7 @@ const AuthContainer: React.FC<PropsType> = ({
           confirmPassword: '',
         }
       : typeOperation === 'Auth'
-      ? { email: '', password: '' }
+      ? { email: '', password: '', rememberMe: false }
       : {};
 
   return (

@@ -68,6 +68,34 @@
   border-radius: 10px 0 10px 0;
 }
 
+.checkbox-container {
+  margin-top: 25px;
+  padding-right: 50px;
+  margin-bottom: 75px;
+
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+  justify-items: center;
+}
+
+.checkbox-container input {
+  width: 20px;
+  height: 20px;
+}
+
+.checkbox-container label {
+  height: max-content;
+
+  margin: auto 17px auto 0;
+
+  font-size: 18px;
+  letter-spacing: -0.18px;
+
+  transform: translateY(1px);
+}
+
 .submit {
   height: 50px;
   width: 300px;
