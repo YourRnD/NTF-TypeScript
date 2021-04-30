@@ -182,13 +182,17 @@ const UploadFileContainer: React.FC<PropsType> = ({
 
   let error: string | null = null;
 
-  if (form.errors[`${field.name}`]) {
+  const checkErrorType = form.errors[`${field.name}`];
+
+  const errorArray: IImageValidateError[] | undefined =
+    typeof checkErrorType !== 'string' ? checkErrorType : undefined;
+  if (errorArray !== undefined) {
     if (anotherArg.fileName != '') {
-      form.errors[`${field.name}`].forEach((element: IImageValidateError) => {
+      errorArray.forEach((element: IImageValidateError) => {
         element.id === anotherArg.id ? (error = element.message) : null;
       });
     } else {
-      form.errors[`${field.name}`].forEach((element: IImageValidateError) => {
+      errorArray.forEach((element: IImageValidateError) => {
         element.id === 'image' ? (error = element.message) : null;
       });
     }

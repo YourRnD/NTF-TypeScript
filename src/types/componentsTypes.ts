@@ -8,6 +8,13 @@ interface IFormComponentAdditionallyProps {
   onChange: () => void;
 }
 
+// uploadImage
+
+export interface IImageValidateError {
+  message: string;
+  id: string;
+}
+
 // Radio
 
 export interface IRadioAdditionallyProps {
@@ -16,6 +23,17 @@ export interface IRadioAdditionallyProps {
 }
 
 // Form controls
+
+export interface IFormControlsErrors {
+  [key: string]: string | IImageValidateError[] | undefined;
+  name?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+  image?: IImageValidateError[];
+  rating?: string;
+  feedback?: string;
+}
 
 export interface IFieldAdditionallyProps {
   type?: string;
@@ -29,7 +47,7 @@ export type FormControlsType = {
   field: IFormComponentAdditionallyProps;
   placeholder: string;
   form: {
-    errors: any;
+    errors: IFormControlsErrors;
     setFieldValue: (
       field: string,
       value: string | null | number | undefined | Array<IUploadImage>,
@@ -38,10 +56,3 @@ export type FormControlsType = {
   };
   anotherArg: IFieldAdditionallyProps;
 };
-
-// uploadImage
-
-export interface IImageValidateError {
-  message: string;
-  id: string;
-}

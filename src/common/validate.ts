@@ -1,7 +1,11 @@
 import { FormikValues } from 'formik';
 import * as yup from 'yup';
 import { IUploadImage } from '../types/commonReducerTypes';
-import { IImageValidateError } from '../types/componentsTypes';
+import {
+  IFormControlsErrors,
+  IImageValidateError,
+} from '../types/componentsTypes';
+import { getKeyValue } from './getKeyValue';
 
 export const signUpSchema = yup.object({
   name: yup
@@ -318,3 +322,19 @@ export const updatePointSchema = yup.object({
     .max(100, 'Too long!')
     .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Address is incorrect!'),
 });
+
+export const getErrorText = (
+  name: string,
+  errors: IFormControlsErrors
+): string | undefined => {
+  if (
+    typeof name === 'string' &&
+    typeof errors === 'object' &&
+    Object.prototype.hasOwnProperty.call(errors, name)
+  ) {
+    const value = getKeyValue<keyof IFormControlsErrors, IFormControlsErrors>(
+      `${name}`
+    )(errors);
+    return typeof value === 'string' ? value : '';
+  }
+};
