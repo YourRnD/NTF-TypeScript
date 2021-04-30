@@ -1,4 +1,5 @@
 import React from 'react';
+import { getErrorText } from '../../../../common/validate';
 import { FormControlsType } from '../../../../types/componentsTypes';
 import Radio from './Radio';
 
@@ -8,6 +9,8 @@ const InputContainer: React.FunctionComponent<FormControlsType> = ({
   placeholder,
   form,
 }) => {
+  const error = getErrorText(field.name, form.errors);
+
   return (
     <Radio
       name={field.name}
@@ -15,7 +18,7 @@ const InputContainer: React.FunctionComponent<FormControlsType> = ({
       valuesArray={anotherArg.valuesArray}
       selectedValue={field.value}
       onChange={field.onChange}
-      error={form.errors[`${field.name}`] ? form.errors[`${field.name}`] : null}
+      error={error !== undefined ? error : null}
     />
   );
 };

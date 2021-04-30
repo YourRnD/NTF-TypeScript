@@ -1,4 +1,5 @@
 import React from 'react';
+import { getErrorText } from '../../../../common/validate';
 import { FormControlsType } from '../../../../types/componentsTypes';
 import Textarea from './Textarea';
 
@@ -7,12 +8,14 @@ const TextareaContainer: React.FunctionComponent<FormControlsType> = ({
   placeholder,
   form,
 }) => {
+  const error = getErrorText(field.name, form.errors);
+
   return (
     <Textarea
       name={field.name}
       placeholder={placeholder}
       onChange={field.onChange}
-      error={form.errors[`${field.name}`] ? form.errors[`${field.name}`] : null}
+      error={error !== undefined ? error : null}
     />
   );
 };
