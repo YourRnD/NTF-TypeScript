@@ -13,9 +13,9 @@ const EditPoint: React.FC<PropsType> = ({ pointId, type }) => (
     <div className={Style.container}>
       <h1 className={Style.title}>
         {type === 'create'
-          ? 'Create new point'
+          ? 'Create new object'
           : type === 'edit'
-          ? 'Edit point'
+          ? 'Edit object'
           : null}
       </h1>
       <FormEditPoint pointId={pointId} type={type} />

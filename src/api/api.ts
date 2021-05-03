@@ -46,13 +46,13 @@ instance.interceptors.request.use(
     ) {
       if (config?.url?.split('/')[2] === 'refresh') {
         config.headers.Authorization = `${
-          localStorage.getItem('star_it_refresh_token') !== undefined
+          localStorage.getItem('star_it_refresh_token') !== null
             ? localStorage.getItem('star_it_refresh_token')
             : sessionStorage.getItem('star_it_refresh_token')
         }`;
       } else {
         config.headers.Authorization = `${
-          localStorage.getItem('star_it_access_token') !== undefined
+          localStorage.getItem('star_it_access_token') !== null
             ? localStorage.getItem('star_it_access_token')
             : sessionStorage.getItem('star_it_access_token')
         }`;
