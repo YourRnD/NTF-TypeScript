@@ -27,7 +27,7 @@ const UploadFile: React.FC<PropsType> = ({
   return (
     <div className={Style.container}>
       <label htmlFor={id} className={Style['upload-file-label']}>
-        {fileName !== '' ? `Файл: ${fileName}` : 'Загрузить файл'}
+        {fileName !== '' ? `File: ${fileName}` : 'Upload file'}
         <input
           type="file"
           id={id}

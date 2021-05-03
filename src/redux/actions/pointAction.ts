@@ -108,7 +108,7 @@ export const getPointsTh = (
 
     dispatch(setPoints(points, countPages));
   } else {
-    dispatch(setError(data, true));
+    if (data.message !== 'No records find!') dispatch(setError(data, true));
   }
   dispatch(changeLoaded(false));
 };
@@ -136,7 +136,7 @@ export const getPointsWithBusinessIdTh = (
 
     dispatch(setPoints(points, countPages));
   } else {
-    dispatch(setError(data, true));
+    if (data.message !== 'No records find!') dispatch(setError(data, true));
   }
   dispatch(changeLoaded(false));
 };
@@ -163,7 +163,7 @@ export const searchPointsTh = (
 
     dispatch(setPoints(points, countPages));
   } else {
-    dispatch(setError(data, true));
+    if (data.message !== 'No records find!') dispatch(setError(data, true));
   }
   dispatch(changeLoaded(false));
 };

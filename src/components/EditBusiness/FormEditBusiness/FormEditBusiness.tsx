@@ -39,7 +39,7 @@ const FormEditBusiness: React.FC<PropsType> = ({
           <ContainerField
             component={Input}
             name="name"
-            placeholder="Name"
+            placeholder="Company name"
             props={{
               type: 'text',
             }}

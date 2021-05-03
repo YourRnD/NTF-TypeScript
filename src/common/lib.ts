@@ -17,14 +17,8 @@ const drawImg = (src: string, id: string) => {
     `;
   document.body.appendChild(img);
 
-  img.addEventListener('click', (e: MouseEvent) => {
-    /*
-    const elem = e?.currentTarget;
-    if (elem !== undefined && elem !== null) {
-      elem.style.display = 'block';
-    }
-    */
-    console.log(e);
+  img.addEventListener('click', () => {
+    img.style.display = 'none';
   });
 };
 

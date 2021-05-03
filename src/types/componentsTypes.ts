@@ -33,6 +33,7 @@ export interface IFormControlsErrors {
   image?: IImageValidateError[];
   rating?: string;
   feedback?: string;
+  address?: string;
 }
 
 export interface IFieldAdditionallyProps {

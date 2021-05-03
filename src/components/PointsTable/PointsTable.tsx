@@ -37,19 +37,36 @@ const PointsTable: React.FC<PropsType> = ({
   return (
     <div className={Style.root}>
       <div className={Style.container}>
-        <h1 className={Style.title}>Business points</h1>
-        <NavLink to="/edit-points/create">Create new point</NavLink>
-        <table className={Style.table}>
-          <TableLine id="Id" name="Name" address="Address" isTitle={true} />
-          {arrayPoints}
-        </table>
-        <div className={Style.bottom}>
-          <PaginatorContainer
-            pageNumber={pageNumber}
-            countPages={countPages}
-            onPageChanged={onPageChanged}
-          />
-        </div>
+        <h1 className={Style.title}>Business objects</h1>
+        <NavLink className={Style['add-business-btn']} to="/edit-points/create">
+          Create new object
+        </NavLink>
+        {points.length === 0 ? (
+          <h6 className={Style.error}>
+            The business hasn{`'`}t added any objects yet! Add objects!
+          </h6>
+        ) : (
+          <>
+            <table className={Style.table}>
+              <thead>
+                <TableLine
+                  id="Id"
+                  name="Name"
+                  address="Address"
+                  isTitle={true}
+                />
+              </thead>
+              <tbody>{arrayPoints}</tbody>
+            </table>
+            <div className={Style.bottom}>
+              <PaginatorContainer
+                pageNumber={pageNumber}
+                countPages={countPages}
+                onPageChanged={onPageChanged}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
