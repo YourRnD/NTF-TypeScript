@@ -27,43 +27,41 @@ const FormEditBusiness: React.FC<PropsType> = ({
   initialValue,
   validate,
 }) => (
-  <div className={Style.root}>
-    <Formik
-      initialValues={initialValue}
-      onSubmit={onSubmit}
-      validate={validate}
-      className={Style['root-container']}
-    >
-      <Form className={Style.form}>
-        {
-          <ContainerField
-            component={Input}
-            name="name"
-            placeholder="Company name"
-            props={{
-              type: 'text',
-            }}
-          />
-        }
-        {fileNames.map((item, index) => (
-          <ContainerField
-            key={item}
-            component={UploadFile}
-            name="image"
-            placeholder="image"
-            props={{
-              fileName: item,
-              id: `business-upload-image-${index}`,
-              maxElem: 1,
-            }}
-          />
-        ))}
-        <button type="submit" className={Style.submit}>
-          {status === 'admin' ? 'Create new business' : 'Edit business'}
-        </button>
-      </Form>
-    </Formik>
-  </div>
+  <Formik
+    initialValues={initialValue}
+    onSubmit={onSubmit}
+    validate={validate}
+    className={Style['root-container']}
+  >
+    <Form className={Style.form}>
+      {
+        <ContainerField
+          component={Input}
+          name="name"
+          placeholder="Company name"
+          props={{
+            type: 'text',
+          }}
+        />
+      }
+      {fileNames.map((item, index) => (
+        <ContainerField
+          key={item}
+          component={UploadFile}
+          name="image"
+          placeholder="image"
+          props={{
+            fileName: item,
+            id: `business-upload-image-${index}`,
+            maxElem: 1,
+          }}
+        />
+      ))}
+      <button type="submit" className={Style.submit}>
+        {status === 'admin' ? 'Create new business' : 'Edit business'}
+      </button>
+    </Form>
+  </Formik>
 );
 
 export default FormEditBusiness;

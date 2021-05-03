@@ -84,10 +84,10 @@ export const checkAuthTh = (): ThunkAction<
   AuthActionTypes | CommonActionTypes
 > => async (dispatch) => {
   dispatch(changeLoaded(true));
-  const data: IUniversalResultData & IAuthAPI = await authAPI
-    .me()
-    .then((result) => result.data);
-  if (data.status === 200) {
+  const data:
+    | (IUniversalResultData & IAuthAPI)
+    | undefined = await authAPI.me().then((result) => result?.data);
+  if (data !== undefined && data.status === 200) {
     const user: IUser = {
       id: data.user?.id,
       name: data.user?.name,
