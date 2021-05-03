@@ -23,44 +23,42 @@ const FormEditPoint: React.FC<PropsType> = ({
   validateSchema,
   type,
 }) => (
-  <div className={Style.root}>
-    <Formik
-      initialValues={initialValues}
-      onSubmit={onSubmit}
-      validationSchema={validateSchema}
-      className={Style['root-container']}
-    >
-      <Form className={Style.form}>
-        {
-          <ContainerField
-            component={Input}
-            name="name"
-            placeholder="Name"
-            props={{
-              type: 'text',
-            }}
-          />
-        }
-        {
-          <ContainerField
-            component={Input}
-            name="address"
-            placeholder="Address"
-            props={{
-              type: 'text',
-            }}
-          />
-        }
-        <button type="submit" className={Style.submit}>
-          {type === 'create'
-            ? 'Create new point'
-            : type === 'edit'
-            ? 'Edit point'
-            : null}
-        </button>
-      </Form>
-    </Formik>
-  </div>
+  <Formik
+    initialValues={initialValues}
+    onSubmit={onSubmit}
+    validationSchema={validateSchema}
+    className={Style['root-container']}
+  >
+    <Form className={Style.form}>
+      {
+        <ContainerField
+          component={Input}
+          name="name"
+          placeholder="Name"
+          props={{
+            type: 'text',
+          }}
+        />
+      }
+      {
+        <ContainerField
+          component={Input}
+          name="address"
+          placeholder="Address"
+          props={{
+            type: 'text',
+          }}
+        />
+      }
+      <button type="submit" className={Style.submit}>
+        {type === 'create'
+          ? 'Create new point'
+          : type === 'edit'
+          ? 'Edit point'
+          : null}
+      </button>
+    </Form>
+  </Formik>
 );
 
 export default FormEditPoint;

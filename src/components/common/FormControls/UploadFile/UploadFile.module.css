@@ -59,7 +59,8 @@
   transform: translate(5px, -5px);
 }
 
-.container:hover .add-btn {
+.container:hover .add-btn,
+.container:hover .upload-file-label + .close-btn {
   right: 35px;
 }
 
@@ -84,7 +85,8 @@
   transition: all 0.5s;
 }
 
-.add-btn {
+.add-btn,
+.upload-file-label + .close-btn {
   right: 50px;
 }
 
