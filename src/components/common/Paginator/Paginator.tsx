@@ -11,7 +11,7 @@ type PropsType = {
 };
 
 const Paginator: React.FC<PropsType> = ({ pages }) => (
-  <div className={Style.usersNav}>{pages}</div>
+  <div className={Style['users-nav']}>{pages}</div>
 );
 
 export default Paginator;

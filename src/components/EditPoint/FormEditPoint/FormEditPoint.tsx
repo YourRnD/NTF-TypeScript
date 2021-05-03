@@ -52,9 +52,9 @@ const FormEditPoint: React.FC<PropsType> = ({
       }
       <button type="submit" className={Style.submit}>
         {type === 'create'
-          ? 'Create new point'
+          ? 'Create new object'
           : type === 'edit'
-          ? 'Edit point'
+          ? 'Edit object'
           : null}
       </button>
     </Form>

@@ -53,7 +53,7 @@ const PaginatorContainer: React.FC<PropsType> = ({
         role="button"
         tabIndex={0}
         onClick={() => onPageChanged(index)}
-        className={pageNumber === index ? Style.selectedPage : ''}
+        className={pageNumber === index ? Style['selected-page'] : ''}
         onKeyDown={(e) => {
           if (e.keyCode === 13) {
             onPageChanged(index);
