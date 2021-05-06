@@ -29,7 +29,7 @@ const TableLine: React.FC<PropsType> = ({ id, name, address, isTitle }) => (
         </td>
         <td className={`${Style.ceil} ${Style['qr-code']}`}>
           <img
-            src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${window.location.origin}/feedback/create/${id}`}
+            src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${window.location.origin}/edit-feedback/create/${id}`}
             alt="Point QR-code"
           />
         </td>
