@@ -1,5 +1,6 @@
 export const SET_USER = 'star_it/auth/SET-USER';
 export const SET_INIT = 'star_it/auth/SET-INIT';
+export const SET_TYPE_OP = 'star_it/auth/SET-TYPE-OP';
 
 export const CHANGE_LOADED = 'star_it/common/CHANGE-LOADED';
 export const SET_ERROR = 'star_it/common/SET-ERROR';

@@ -24,7 +24,7 @@ export const signUpSchema = yup.object({
     .min(2, 'Too short!')
     .max(50, 'Too long!')
     .matches(
-      /(?=.*[0-9])(?=.*[!@#$%^&_*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&_*]{6,}/g,
+      /^(?=.*[0-9])(?=.*[!@#$%^&_*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&_*]{6,}/g,
       'The password must contain numbers, special characters, lowercase and uppercase Latin letters!'
     )
     .required('Required!'),
@@ -45,14 +45,14 @@ export const signInSchema = yup.object({
     .min(2, 'Too short!')
     .max(50, 'Too long!')
     .matches(
-      /(?=.*[0-9])(?=.*[!@#$%^&_*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&_*]{6,}/g,
+      /^(?=.*[0-9])(?=.*[!@#$%^&_*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&_*]{6,}/g,
       'The password must contain numbers, special characters, lowercase and uppercase Latin letters!'
     )
     .required('Required!'),
 });
 
 export interface IBusinessValidateError {
-  image?: string;
+  image?: Array<IImageValidateError>;
   name?: string;
 }
 
@@ -68,15 +68,30 @@ export const createBusinessValidate = (
   ) {
     const image = values.image[0];
     if (image.type === undefined) {
-      errors.image = 'Required';
+      errors.image = [
+        {
+          id: image.id !== '' ? image.id : 'image',
+          message: 'Required',
+        },
+      ];
     } else {
       image.type.search(/jpeg|jpg|png/i) === -1
-        ? (errors.image =
-            'The file can only have the resolution of the jpeg, jpg, png format')
+        ? (errors.image = [
+            {
+              id: image.id !== '' ? image.id : 'image',
+              message:
+                'The file can only have the resolution of the jpeg, jpg, png format',
+            },
+          ])
         : null;
     }
   } else {
-    errors.image = 'Required';
+    errors.image = [
+      {
+        id: 'image',
+        message: 'Required',
+      },
+    ];
   }
 
   // name
@@ -109,11 +124,21 @@ export const updateBusinessValidate = (
   ) {
     const image = values.image[0];
     if (image.type === undefined) {
-      errors.image = 'Required';
+      errors.image = [
+        {
+          id: image.id !== '' ? image.id : 'image',
+          message: 'Required',
+        },
+      ];
     } else {
       image.type.search(/jpeg|jpg|png/i) === -1
-        ? (errors.image =
-            'The file can only have the resolution of the jpeg, jpg, png format')
+        ? (errors.image = [
+            {
+              id: image.id !== '' ? image.id : 'image',
+              message:
+                'The file can only have the resolution of the jpeg, jpg, png format',
+            },
+          ])
         : null;
     }
   }
@@ -199,8 +224,6 @@ export const createFeedbackValidate = (
     feedback.search(/^([a-zA-ZА-Яа-я]\s*)+/i) === -1
       ? (errors.feedback = 'Feedback is incorrect!')
       : null;
-  } else {
-    errors.feedback = 'Required';
   }
 
   // rating

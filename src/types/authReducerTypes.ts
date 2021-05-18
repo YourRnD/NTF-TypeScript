@@ -1,4 +1,4 @@
-import { SET_USER, SET_INIT } from '../redux/constants';
+import { SET_USER, SET_INIT, SET_TYPE_OP } from '../redux/constants';
 
 // State
 export interface IUser {
@@ -12,6 +12,7 @@ export interface IUser {
 export interface IAuthState {
   isAuth: boolean;
   isInit: boolean;
+  typeOperation: 'Regist' | 'Login' | 'Hide';
   user: IUser;
 }
 
@@ -31,4 +32,14 @@ interface ISetInitAction {
   };
 }
 
-export type AuthActionTypes = ISetUserAction | ISetInitAction;
+interface ISetTypeOperation {
+  type: typeof SET_TYPE_OP;
+  payload: {
+    typeOperation: 'Regist' | 'Login' | 'Hide';
+  };
+}
+
+export type AuthActionTypes =
+  | ISetUserAction
+  | ISetInitAction
+  | ISetTypeOperation;

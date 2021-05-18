@@ -1,6 +1,5 @@
 import { Field, Form, Formik, FormikValues } from 'formik';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import { signInSchema, signUpSchema } from '../../common/validate';
 import ContainerField from '../common/FormControls';
 import Input from '../common/FormControls/Input';
@@ -15,8 +14,10 @@ interface IInitialValue {
 }
 
 type PropsType = {
-  typeOperation: 'Auth' | 'Regist';
+  typeOperation: 'Login' | 'Regist';
   onSubmit: (values: FormikValues) => void;
+  invertTypeOperation: (typeOperation: 'Login' | 'Regist') => void;
+  closeForm: () => void;
   validateSchema: typeof signUpSchema | typeof signInSchema | {};
   initialValue: IInitialValue | {};
 };
@@ -26,6 +27,8 @@ const Auth: React.FC<PropsType> = ({
   typeOperation,
   validateSchema,
   initialValue,
+  invertTypeOperation,
+  closeForm,
 }) => (
   <div className={Style.root}>
     <Formik
@@ -38,20 +41,29 @@ const Auth: React.FC<PropsType> = ({
         <div className={Style['redirect-container']}>
           {typeOperation == 'Regist' ? (
             <>
-              <NavLink
+              <button
+                type="button"
                 className={`${Style['redirect-btn']} ${Style['redirect-btn_reverce-theme']}`}
-                to="/signin"
+                onClick={() => {
+                  invertTypeOperation(typeOperation);
+                }}
               >
                 Sign in
-              </NavLink>
+              </button>
               <h3 className={Style['choose-btn']}>Sign up</h3>
             </>
-          ) : typeOperation == 'Auth' ? (
+          ) : typeOperation == 'Login' ? (
             <>
               <h3 className={Style['choose-btn']}>Sign in</h3>
-              <NavLink className={Style['redirect-btn']} to="/signup">
+              <button
+                type="button"
+                className={Style['redirect-btn']}
+                onClick={() => {
+                  invertTypeOperation(typeOperation);
+                }}
+              >
                 Sign up
-              </NavLink>
+              </button>
             </>
           ) : null}
         </div>
@@ -98,7 +110,7 @@ const Auth: React.FC<PropsType> = ({
           </>
         ) : null}
 
-        {typeOperation === 'Auth' ? (
+        {typeOperation === 'Login' ? (
           <div className={Style['checkbox-container']}>
             <label htmlFor="feedback-answer-checkbox">Remember me</label>
             <Field
@@ -110,11 +122,14 @@ const Auth: React.FC<PropsType> = ({
           </div>
         ) : null}
         <button type="submit" className={Style.submit} data-testid="submit">
-          {typeOperation == 'Auth'
+          {typeOperation == 'Login'
             ? 'Sign in'
             : typeOperation == 'Regist'
             ? 'Sign up'
             : null}
+        </button>
+        <button type="button" className={Style.close} onClick={closeForm}>
+          Continue without authorization
         </button>
       </Form>
     </Formik>
