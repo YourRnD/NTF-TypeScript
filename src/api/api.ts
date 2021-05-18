@@ -3,7 +3,7 @@ import { IBusiness, IUpdateBusinessObj } from '../types/businessReducerTypes';
 import { IUpdatePointsObj } from '../types/pointReducerTypes';
 
 const instance = axios.create({
-  baseURL: 'https://star-it-api.herokuapp.com/', // 'http://localhost:3500/' ,
+  baseURL: 'https://star-it-api.herokuapp.com/', // 'http://localhost:3500/',
 });
 
 instance.interceptors.response.use(
@@ -113,7 +113,6 @@ export const authAPI = {
   signin(email: string, password: string): Promise<ResultType> {
     return instance.get(`${this.path}signin`, {
       params: {
-        mac: 'E1:8C:24:6D:F9:85',
         email,
         password,
       },
@@ -122,7 +121,6 @@ export const authAPI = {
   signup(name: string, email: string, password: string): Promise<ResultType> {
     return instance.post(`${this.path}signup`, {
       payload: {
-        mac: 'E1:8C:24:6D:F9:85',
         name,
         email,
         password,
@@ -130,18 +128,10 @@ export const authAPI = {
     });
   },
   me(): Promise<ResultType> {
-    return instance.get(`${this.path}me`, {
-      params: {
-        mac: 'E1:8C:24:6D:F9:85',
-      },
-    });
+    return instance.get(`${this.path}me`);
   },
   refresh(): Promise<ResultType> {
-    return instance.get(`${this.path}refresh`, {
-      params: {
-        mac: 'E1:8C:24:6D:F9:85',
-      },
-    });
+    return instance.get(`${this.path}refresh`);
   },
 };
 
@@ -149,15 +139,12 @@ export const businessAPI = {
   path: 'api/business/',
   get(id: number): Promise<ResultType> {
     return instance.get(`${this.path}${id}`, {
-      params: {
-        mac: 'E1:8C:24:6D:F9:85',
-      },
+      params: {},
     });
   },
   add(name: string, image: Array<string | ArrayBuffer>): Promise<ResultType> {
     return instance.post(`${this.path}`, {
       payload: {
-        mac: 'E1:8C:24:6D:F9:85',
         name,
         image,
       },
@@ -166,7 +153,6 @@ export const businessAPI = {
   update(id: number, obj: IUpdateBusinessObj): Promise<ResultType> {
     return instance.put(`${this.path}${id}`, {
       payload: {
-        mac: 'E1:8C:24:6D:F9:85',
         ...obj,
       },
     });
@@ -178,7 +164,6 @@ export const pointAPI = {
   search(pageNumber: number, value: string): Promise<ResultType> {
     return instance.get(`${this.path}search`, {
       params: {
-        mac: 'E1:8C:24:6D:F9:85',
         pageNumber,
         value,
       },
@@ -186,15 +171,12 @@ export const pointAPI = {
   },
   get(id: number): Promise<ResultType> {
     return instance.get(`${this.path}${id}`, {
-      params: {
-        mac: 'E1:8C:24:6D:F9:85',
-      },
+      params: {},
     });
   },
   getAll(pageNumber: number): Promise<ResultType> {
     return instance.get(`${this.path}`, {
       params: {
-        mac: 'E1:8C:24:6D:F9:85',
         pageNumber,
       },
     });
@@ -205,7 +187,6 @@ export const pointAPI = {
   ): Promise<ResultType> {
     return instance.get(`${this.path}group-by-business`, {
       params: {
-        mac: 'E1:8C:24:6D:F9:85',
         pageNumber,
         businessId,
       },
@@ -220,11 +201,9 @@ export const pointAPI = {
       name: string;
       address: string;
       idbusiness?: number | null;
-      mac: string;
     } = {
       name,
       address,
-      mac: 'E1:8C:24:6D:F9:85',
     };
     idbusiness !== null ? (payload.idbusiness = idbusiness) : null;
     return instance.post(`${this.path}`, {
@@ -234,7 +213,6 @@ export const pointAPI = {
   update(id: number, obj: IUpdatePointsObj): Promise<ResultType> {
     return instance.put(`${this.path}${id}`, {
       payload: {
-        mac: 'E1:8C:24:6D:F9:85',
         ...obj,
       },
     });
@@ -254,12 +232,10 @@ export const feedbackAPI = {
       notes: string;
       idPoint: number;
       image?: Array<string | ArrayBuffer>;
-      mac: string;
     } = {
       rating,
       notes,
       idPoint,
-      mac: 'E1:8C:24:6D:F9:85',
     };
     image !== null ? (payload.image = image) : null;
     return instance.post(`${this.path}`, {

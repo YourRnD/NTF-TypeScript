@@ -58,9 +58,13 @@
   background-color: var(--lightGrey);
   color: var(--fontBlue);
 
+  border: 0px;
+
   border-left: 1px solid var(--lightBlack);
   border-bottom: 1px solid var(--lightBlack);
   border-radius: 0 10px 0 10px;
+
+  cursor: pointer;
 }
 
 .redirect-btn.redirect-btn_reverce-theme {
@@ -110,13 +114,32 @@
 
   transition: all 0.5s;
 
-  margin-bottom: 100px;
+  margin-bottom: 20px;
 }
 
 .submit:hover {
   box-shadow: -10px 10px 15px 0px rgba(0, 0, 0, 0.3);
 
   transform: translate(5px, -5px);
+}
+
+.close {
+  border: 0px;
+
+  cursor: pointer;
+
+  background-color: var(--white);
+  color: var(--blue);
+
+  font-size: 16px;
+
+  margin-bottom: 90px;
+
+  transition: all 0.5s;
+}
+
+.close:hover {
+  color: var(--fontBlue);
 }
 
 @media (max-width: 768px) {

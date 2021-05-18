@@ -20,6 +20,7 @@ type MapStatePropsType = {
   isLoaded: boolean;
   isAuth: boolean;
   isInit: boolean;
+  typeOperation: 'Regist' | 'Login' | 'Hide';
 };
 
 type MapDispatchPropsType = {
@@ -35,6 +36,7 @@ const App: React.FC<PropsType> = ({
   isInit,
   checkAuth,
   setInit,
+  typeOperation,
 }) => {
   useEffect(() => {
     if (!isInit) {
@@ -54,6 +56,9 @@ const App: React.FC<PropsType> = ({
         <ErrorMessage />
         <SuccessMessage />
         <BrowserRouter>
+          {!isAuth && typeOperation !== 'Hide' ? (
+            <Auth typeOperation={typeOperation} />
+          ) : null}
           {isAuth ? (
             <>
               <Header />
@@ -69,21 +74,7 @@ const App: React.FC<PropsType> = ({
                 <Redirect to="/home" />
               </Switch>
             </>
-          ) : (
-            <Switch>
-              <Route
-                exact
-                path="/signin"
-                render={() => <Auth typeOperation="Auth" />}
-              />
-              <Route
-                exact
-                path="/signup"
-                render={() => <Auth typeOperation="Regist" />}
-              />
-              <Redirect to="/signin" />
-            </Switch>
-          )}
+          ) : null}
         </BrowserRouter>
       </div>
     );
@@ -96,6 +87,7 @@ const mapToStateProps = (state: RootState): MapStatePropsType => ({
   isLoaded: state.common.isLoaded,
   isAuth: state.auth.isAuth,
   isInit: state.auth.isInit,
+  typeOperation: state.auth.typeOperation,
 });
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootState>(

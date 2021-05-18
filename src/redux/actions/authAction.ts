@@ -1,4 +1,4 @@
-import { SET_USER, SET_INIT } from '../constants';
+import { SET_USER, SET_INIT, SET_TYPE_OP } from '../constants';
 import { IUser, AuthActionTypes } from '../../types/authReducerTypes';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../reducers';
@@ -21,6 +21,15 @@ export const setInitAction = (isInit: boolean): AuthActionTypes => ({
   type: SET_INIT,
   payload: {
     isInit,
+  },
+});
+
+export const setTypeOpAction = (
+  typeOperation: 'Regist' | 'Login' | 'Hide'
+): AuthActionTypes => ({
+  type: SET_TYPE_OP,
+  payload: {
+    typeOperation,
   },
 });
 
