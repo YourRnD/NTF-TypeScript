@@ -1,17 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setUserAction } from '../../redux/actions/authAction';
+import { setTypeOpAction, setUserAction } from '../../redux/actions/authAction';
 import { RootState } from '../../redux/reducers';
 import { IUser } from '../../types/authReducerTypes';
 import Header from './Header';
 
-type MapDispatchPropsType = {
-  setUser: (user: IUser, isAuth: boolean) => void;
+type MapStatePropsType = {
+  isAuth: boolean;
 };
 
-type PropsType = MapDispatchPropsType;
+type MapDispatchPropsType = {
+  setUser: (user: IUser, isAuth: boolean) => void;
+  setTypeOperation: (typeOperation: 'Regist' | 'Login' | 'Hide') => void;
+};
 
-const HeaderContainer: React.FC<PropsType> = ({ setUser }) => {
+type PropsType = MapStatePropsType & MapDispatchPropsType;
+
+const HeaderContainer: React.FC<PropsType> = ({
+  setUser,
+  setTypeOperation,
+  isAuth,
+}) => {
   const exist = () => {
     setUser(
       {
@@ -27,9 +36,32 @@ const HeaderContainer: React.FC<PropsType> = ({ setUser }) => {
     localStorage.removeItem('star_it_refresh_token');
   };
 
-  return <Header exist={exist} />;
+  const redirectToRegist = () => {
+    setTypeOperation('Regist');
+  };
+
+  const redirectToLogin = () => {
+    setTypeOperation('Login');
+  };
+
+  return (
+    <Header
+      exist={exist}
+      redirectToRegist={redirectToRegist}
+      redirectToLogin={redirectToLogin}
+      isAuth={isAuth}
+    />
+  );
 };
 
-export default connect<{}, MapDispatchPropsType, {}, RootState>(null, {
-  setUser: setUserAction,
-})(HeaderContainer);
+const mapToStateProps = (state: RootState): MapStatePropsType => ({
+  isAuth: state.auth.isAuth,
+});
+
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootState>(
+  mapToStateProps,
+  {
+    setUser: setUserAction,
+    setTypeOperation: setTypeOpAction,
+  }
+)(HeaderContainer);

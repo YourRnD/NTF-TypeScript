@@ -15,7 +15,7 @@ const EditBusinessContainer: React.FC<PropsType> = ({ status }) => (
     {status === 'admin' || status === 'manager' ? (
       <EditBusiness status={status} />
     ) : (
-      <Redirect to="/" />
+      <Redirect to="/home" />
     )}
   </>
 );

@@ -55,27 +55,32 @@ const App: React.FC<PropsType> = ({
         <Preloader isLoader={isLoaded || !isInit} />
         <ErrorMessage />
         <SuccessMessage />
-        <BrowserRouter>
-          {!isAuth && typeOperation !== 'Hide' ? (
-            <Auth typeOperation={typeOperation} />
-          ) : null}
-          {isAuth ? (
-            <>
-              <Header />
-              <Switch>
-                <Route exact path="/home" component={Home} />
-                <Route exact path="/edit-business" component={EditBusiness} />
-                <Route exact path="/table-points" component={PointsTable} />
-                <Route path="/edit-points/:type?/:id?" component={EditPoint} />
-                <Route
-                  path="/edit-feedback/:type?/:id?"
-                  component={EditFeedback}
-                />
-                <Redirect to="/home" />
-              </Switch>
-            </>
-          ) : null}
-        </BrowserRouter>
+        {!isAuth && typeOperation !== 'Hide' ? (
+          <Auth typeOperation={typeOperation} />
+        ) : null}
+        {typeOperation === 'Hide' ? (
+          <BrowserRouter>
+            <Header />
+            <Switch>
+              {isAuth ? (
+                <>
+                  <Route exact path="/edit-business" component={EditBusiness} />
+                  <Route exact path="/table-points" component={PointsTable} />
+                  <Route
+                    path="/edit-points/:type?/:id?"
+                    component={EditPoint}
+                  />
+                </>
+              ) : null}
+              <Route exact path="/home" component={Home} />
+              <Route
+                path="/edit-feedback/:type?/:id?"
+                component={EditFeedback}
+              />
+              <Redirect from="/" to="/home" />
+            </Switch>
+          </BrowserRouter>
+        ) : null}
       </div>
     );
   }

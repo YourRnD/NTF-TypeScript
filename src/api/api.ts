@@ -54,7 +54,9 @@ instance.interceptors.request.use(
         config.headers.Authorization = `${
           localStorage.getItem('star_it_access_token') !== null
             ? localStorage.getItem('star_it_access_token')
-            : sessionStorage.getItem('star_it_access_token')
+            : sessionStorage.getItem('star_it_access_token') !== null
+            ? sessionStorage.getItem('star_it_access_token')
+            : 'Anonim'
         }`;
       }
     }
