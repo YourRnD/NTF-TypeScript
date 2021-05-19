@@ -21,7 +21,7 @@ export const signUpSchema = yup.object({
     .required('Required!'),
   password: yup
     .string()
-    .min(2, 'Too short!')
+    .min(8, 'Too short!')
     .max(50, 'Too long!')
     .matches(
       /^(?=.*[0-9])(?=.*[!@#$%^&_*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&_*]{6,}/g,
@@ -42,7 +42,7 @@ export const signInSchema = yup.object({
     .required('Required!'),
   password: yup
     .string()
-    .min(2, 'Too short!')
+    .min(8, 'Too short!')
     .max(50, 'Too long!')
     .matches(
       /^(?=.*[0-9])(?=.*[!@#$%^&_*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&_*]{6,}/g,
@@ -63,8 +63,8 @@ export const createBusinessValidate = (
   // image
   if (
     values.image !== undefined &&
-    values.image[0].name !== '' &&
-    values.image !== null
+    values.image !== null &&
+    values.image[0].name !== ''
   ) {
     const image = values.image[0];
     if (image.type === undefined) {
@@ -119,8 +119,8 @@ export const updateBusinessValidate = (
   // image
   if (
     values.image !== undefined &&
-    values.image[0].name !== '' &&
-    values.image !== null
+    values.image !== null &&
+    values.image[0].name !== ''
   ) {
     const image = values.image[0];
     if (image.type === undefined) {
