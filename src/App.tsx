@@ -78,8 +78,6 @@ const App: React.FC<PropsType> = ({
     />,
   ];
 
-  console.log(isAuth, isInit, typeOperation);
-
   if (isInit) {
     return (
       <div className={Style.root}>
