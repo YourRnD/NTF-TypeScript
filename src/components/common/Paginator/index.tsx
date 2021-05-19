@@ -13,7 +13,6 @@ const PaginatorContainer: React.FC<PropsType> = ({
   pageNumber,
   onPageChanged,
 }) => {
-  console.log(countPages, pageNumber);
   const pages = [];
   if (countPages >= 15) {
     if (pageNumber < 8) {

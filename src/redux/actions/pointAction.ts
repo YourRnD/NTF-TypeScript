@@ -134,8 +134,6 @@ export const getPointsWithBusinessIdTh = (
         ? 0
         : data.countPages;
 
-    console.log(data);
-
     dispatch(setPoints(points, countPages));
   } else {
     if (data.message !== 'No records find!') dispatch(setError(data, true));

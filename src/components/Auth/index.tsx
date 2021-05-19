@@ -35,7 +35,7 @@ const AuthContainer: React.FC<PropsType> = ({
   setTypeOperation,
 }) => {
   if (isAuth) {
-    return <Redirect to="/" />;
+    return <Redirect to="/home" />;
   }
 
   const onSubmit = (values: FormikValues) => {
@@ -48,7 +48,6 @@ const AuthContainer: React.FC<PropsType> = ({
   };
 
   const invertTypeOperation = (typeOperation: 'Login' | 'Regist') => {
-    console.log(typeOperation);
     typeOperation === 'Login'
       ? setTypeOperation('Regist')
       : typeOperation === 'Regist'
@@ -57,6 +56,11 @@ const AuthContainer: React.FC<PropsType> = ({
   };
 
   const closeForm = () => {
+    localStorage.removeItem('star_it_access_token');
+    localStorage.removeItem('star_it_refresh_token');
+    sessionStorage.removeItem('star_it_access_token');
+    sessionStorage.removeItem('star_it_refresh_token');
+
     setTypeOperation('Hide');
   };
 

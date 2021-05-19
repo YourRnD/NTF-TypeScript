@@ -13,7 +13,11 @@ import EditPoint from './components/EditPoint';
 import Header from './components/Header';
 import Home from './components/Home';
 import PointsTable from './components/PointsTable';
-import { checkAuthTh, setInitAction } from './redux/actions/authAction';
+import {
+  checkAuthTh,
+  setInitAction,
+  setTypeOpAction,
+} from './redux/actions/authAction';
 import { RootState } from './redux/reducers';
 
 type MapStatePropsType = {
@@ -26,6 +30,7 @@ type MapStatePropsType = {
 type MapDispatchPropsType = {
   checkAuth: () => void;
   setInit: (init: boolean) => void;
+  setTypeOperation: (typeOperation: 'Regist' | 'Login' | 'Hide') => void;
 };
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
@@ -36,6 +41,7 @@ const App: React.FC<PropsType> = ({
   isInit,
   checkAuth,
   setInit,
+  setTypeOperation,
   typeOperation,
 }) => {
   useEffect(() => {
@@ -47,7 +53,32 @@ const App: React.FC<PropsType> = ({
         setInit(true);
       }
     }
-  }, [isInit, checkAuth, setInit]);
+    if (isAuth) {
+      setTypeOperation('Hide');
+    }
+  }, [isInit, checkAuth, setInit, isAuth, setTypeOperation]);
+
+  const routeWithRegist = [
+    <Route
+      key="edit-business"
+      exact
+      path="/edit-business"
+      component={EditBusiness}
+    />,
+    <Route
+      key="table-points"
+      exact
+      path="/table-points"
+      component={PointsTable}
+    />,
+    <Route
+      key="edit-points"
+      path="/edit-points/:type?/:id?"
+      component={EditPoint}
+    />,
+  ];
+
+  console.log(isAuth, isInit, typeOperation);
 
   if (isInit) {
     return (
@@ -55,27 +86,23 @@ const App: React.FC<PropsType> = ({
         <Preloader isLoader={isLoaded || !isInit} />
         <ErrorMessage />
         <SuccessMessage />
-        <BrowserRouter>
-          {!isAuth && typeOperation !== 'Hide' ? (
-            <Auth typeOperation={typeOperation} />
-          ) : null}
-          {isAuth ? (
-            <>
-              <Header />
-              <Switch>
-                <Route exact path="/home" component={Home} />
-                <Route exact path="/edit-business" component={EditBusiness} />
-                <Route exact path="/table-points" component={PointsTable} />
-                <Route path="/edit-points/:type?/:id?" component={EditPoint} />
-                <Route
-                  path="/edit-feedback/:type?/:id?"
-                  component={EditFeedback}
-                />
-                <Redirect to="/home" />
-              </Switch>
-            </>
-          ) : null}
-        </BrowserRouter>
+        {!isAuth && typeOperation !== 'Hide' ? (
+          <Auth typeOperation={typeOperation} />
+        ) : null}
+        {typeOperation === 'Hide' ? (
+          <BrowserRouter>
+            <Header />
+            <Switch>
+              {isAuth ? routeWithRegist : null}
+              <Route exact path="/home" component={Home} />
+              <Route
+                path="/edit-feedback/:type?/:id?"
+                component={EditFeedback}
+              />
+              <Redirect from="/" to="/home" />
+            </Switch>
+          </BrowserRouter>
+        ) : null}
       </div>
     );
   }
@@ -95,5 +122,6 @@ export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootState>(
   {
     checkAuth: checkAuthTh,
     setInit: setInitAction,
+    setTypeOperation: setTypeOpAction,
   }
 )(App);
