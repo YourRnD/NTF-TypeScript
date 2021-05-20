@@ -100,6 +100,18 @@ export interface IPointAPI {
   countPages?: number | null | undefined;
 }
 
+interface IFeedback {
+  id: number | null | undefined;
+  rating: number | null | undefined;
+  point: IPoint;
+}
+
+export interface IFeedbackAPI {
+  feedback?: IFeedback;
+  feedbacks?: Array<IFeedback> | [];
+  countPages?: number | null | undefined;
+}
+
 export interface IUniversalResultData {
   message: string;
   status: number;
@@ -107,7 +119,8 @@ export interface IUniversalResultData {
 }
 
 export type ResultType = {
-  data: IUniversalResultData & (IAuthAPI | IBusinessAPI | IPointAPI);
+  data: IUniversalResultData &
+    (IAuthAPI | IBusinessAPI | IPointAPI | IFeedbackAPI);
 };
 
 export const authAPI = {

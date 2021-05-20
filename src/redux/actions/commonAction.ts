@@ -1,12 +1,14 @@
 import {
   CommonActionTypes,
   IError,
+  IThankInfo,
   IUploadImage,
 } from '../../types/commonReducerTypes';
 import {
   CHANGE_LOADED,
   SET_ERROR,
   SET_SUCCESS,
+  SET_THANK_INFO,
   SET_UPLOAD_IMAGE,
 } from '../constants';
 
@@ -29,6 +31,17 @@ export const setError = (
       param: error.param ? error.param : '',
     },
     isError,
+  },
+});
+
+export const setThankInfo = (
+  thankInfo: IThankInfo,
+  isThank: boolean
+): CommonActionTypes => ({
+  type: SET_THANK_INFO,
+  payload: {
+    thankInfo,
+    isThank,
   },
 });
 
