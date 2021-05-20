@@ -3,6 +3,7 @@ import {
   CHANGE_LOADED,
   SET_ERROR,
   SET_SUCCESS,
+  SET_THANK_INFO,
   SET_UPLOAD_IMAGE,
 } from '../constants';
 
@@ -20,6 +21,11 @@ const initialState: stateCommon = {
   countImages: 1,
   isSuccess: false,
   successMessage: '',
+  isThank: false,
+  thankInfo: {
+    score: undefined,
+    path: undefined,
+  },
 };
 
 const commonReducer = (
@@ -33,6 +39,11 @@ const commonReducer = (
         ...action.payload,
       };
     case SET_ERROR:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case SET_THANK_INFO:
       return {
         ...state,
         ...action.payload,

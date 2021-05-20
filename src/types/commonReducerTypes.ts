@@ -2,6 +2,7 @@ import {
   CHANGE_LOADED,
   SET_ERROR,
   SET_SUCCESS,
+  SET_THANK_INFO,
   SET_UPLOAD_IMAGE,
 } from '../redux/constants';
 
@@ -10,6 +11,11 @@ export interface IError {
   status: number | undefined;
   param?: string | undefined;
   message: string | undefined;
+}
+
+export interface IThankInfo {
+  score: number | undefined;
+  path: string | undefined;
 }
 
 export interface IUploadImage {
@@ -27,6 +33,8 @@ export interface ICommon {
   countImages: number;
   isSuccess: boolean;
   successMessage: string;
+  isThank: boolean;
+  thankInfo: IThankInfo;
 }
 
 // Actions
@@ -43,6 +51,14 @@ export interface ISetErrorAction {
   payload: {
     error: IError;
     isError: boolean;
+  };
+}
+
+export interface ISetThankInfo {
+  type: typeof SET_THANK_INFO;
+  payload: {
+    thankInfo: IThankInfo;
+    isThank: boolean;
   };
 }
 
@@ -64,6 +80,7 @@ interface ISetUploadImageAction {
 
 export type CommonActionTypes =
   | IChangeLoadAction
+  | ISetThankInfo
   | ISetErrorAction
   | ISetSuccessAction
   | ISetUploadImageAction;

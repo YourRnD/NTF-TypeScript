@@ -7,6 +7,7 @@ import Auth from './components/Auth';
 import ErrorMessage from './components/common/ErrorMessage';
 import Preloader from './components/common/Preloader';
 import SuccessMessage from './components/common/SuccessMessage';
+import ThanksPage from './components/common/ThanksPage';
 import EditBusiness from './components/EditBusiness';
 import EditFeedback from './components/EditFeedback';
 import EditPoint from './components/EditPoint';
@@ -84,6 +85,7 @@ const App: React.FC<PropsType> = ({
         <Preloader isLoader={isLoaded || !isInit} />
         <ErrorMessage />
         <SuccessMessage />
+        <ThanksPage />
         {!isAuth && typeOperation !== 'Hide' ? (
           <Auth typeOperation={typeOperation} />
         ) : null}

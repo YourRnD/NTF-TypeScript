@@ -146,8 +146,10 @@
   font-size: 14px;
 }
 
-@media (max-width: 415px) {
+@media (max-width: 476px) {
   .upload-file-label {
-    width: 250px;
+    width: 200px;
+
+    margin: 0 55px;
   }
 }

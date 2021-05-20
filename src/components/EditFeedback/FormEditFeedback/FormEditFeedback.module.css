@@ -75,8 +75,45 @@
   transform: translate(5px, -5px);
 }
 
-@media (max-width: 415px) {
+@media (max-width: 820px) {
+  .form {
+    min-width: 415px;
+    width: 415px;
+  }
+
+  .rating-title {
+    padding: 39px 0px 0px;
+
+    font-size: 30px;
+
+    text-align: center;
+  }
+
+  .checkbox-container {
+    padding-right: 10px;
+  }
+
+  .checkbox-container input {
+    width: 30px;
+    height: 30px;
+  }
+
+  .checkbox-container label {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 476px) {
+  .form {
+    min-width: 315px;
+    width: 315px;
+  }
+
+  .rating-title {
+    padding: 20px 0px 0px;
+  }
+
   .submit {
-    width: 250px;
+    width: 200px;
   }
 }
