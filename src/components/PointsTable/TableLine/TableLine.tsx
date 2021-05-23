@@ -24,7 +24,7 @@ const TableLine: React.FC<PropsType> = ({
         <th className={`${Style.ceil} ${Style.name}`}>{name}</th>
         <th className={`${Style.ceil} ${Style.address}`}>{address}</th>
         <th className={`${Style.ceil} ${Style.edit}`}>Edit</th>
-        <th className={`${Style.ceil} ${Style['qr-code']}`}>Point QR-codes</th>
+        <th className={`${Style.ceil} ${Style['qr-code']}`}>Object QR-codes</th>
       </tr>
     ) : (
       <tr id={`points${id}`} className={Style.root}>

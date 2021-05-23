@@ -9,7 +9,7 @@ const Navbar: React.FC = () => (
         <NavMenuItem route="/home" text="Home" />
       </li>
       <li className={Style['list-item']}>
-        <NavMenuItem route="/table-points" text="Point table" />
+        <NavMenuItem route="/table-points" text="My objects" />
       </li>
       <li className={Style['list-item']}>
         <NavMenuItem route="/edit-business" text="Edit business" />
