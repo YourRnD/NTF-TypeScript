@@ -12,7 +12,7 @@ export const signUpSchema = yup.object({
     .string()
     .min(3, 'Too short!')
     .max(50, 'Too long!')
-    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Name is incorrect!')
+    .matches(/^[a-zA-Z\s]*$/, 'Name is incorrect!')
     .required('Required!'),
   email: yup
     .string()
@@ -24,8 +24,8 @@ export const signUpSchema = yup.object({
     .min(8, 'Too short!')
     .max(50, 'Too long!')
     .matches(
-      /^(?=.*[0-9])(?=.*[!@#$%^&_*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&_*]{6,}/g,
-      'The password must contain numbers, special characters, lowercase and uppercase Latin letters!'
+      /^(?=.*[0-9])(?=.*[!@#$%^&_*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&_*]*$/,
+      'The password must contain numbers, special characters (!@#$%^&_*), lowercase and uppercase Latin letters!'
     )
     .required('Required!'),
   confirmPassword: yup
@@ -45,8 +45,8 @@ export const signInSchema = yup.object({
     .min(8, 'Too short!')
     .max(50, 'Too long!')
     .matches(
-      /^(?=.*[0-9])(?=.*[!@#$%^&_*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&_*]{6,}/g,
-      'The password must contain numbers, special characters, lowercase and uppercase Latin letters!'
+      /^(?=.*[0-9])(?=.*[!@#$%^&_*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&_*]*$/,
+      'The password must contain numbers, special characters (!@#$%^&_*), lowercase and uppercase Latin letters!'
     )
     .required('Required!'),
 });
@@ -102,7 +102,7 @@ export const createBusinessValidate = (
       : null;
     name.length <= 2 ? (errors.name = 'Too short!') : null;
     name.length > 50 ? (errors.name = 'Too long!') : null;
-    name.search(/^([a-zA-ZА-Яа-я]\s*)+/i) === -1
+    name.search(/^[a-zA-ZА-Яа-я\s]*$/) === -1
       ? (errors.name = 'Name is incorrect!')
       : null;
   } else {
@@ -151,7 +151,7 @@ export const updateBusinessValidate = (
       : null;
     name.length <= 2 ? (errors.name = 'Too short!') : null;
     name.length > 50 ? (errors.name = 'Too long!') : null;
-    name.search(/^([a-zA-ZА-Яа-я]\s*)+/i) === -1
+    name.search(/^[a-zA-ZА-Яа-я\s]*$/) === -1
       ? (errors.name = 'Name is incorrect!')
       : null;
   }
@@ -221,7 +221,7 @@ export const createFeedbackValidate = (
       : null;
     feedback.length <= 2 ? (errors.feedback = 'Too short!') : null;
     feedback.length > 1000 ? (errors.feedback = 'Too long!') : null;
-    feedback.search(/^([a-zA-ZА-Яа-я]\s*)+/i) === -1
+    feedback.search(/^[a-zA-ZА-Яа-я\s\d]*$/) === -1
       ? (errors.feedback = 'Feedback is incorrect!')
       : null;
   }
@@ -295,7 +295,7 @@ export const updateFeedbackValidate = (
       : null;
     feedback.length <= 2 ? (errors.feedback = 'Too short!') : null;
     feedback.length > 1000 ? (errors.feedback = 'Too long!') : null;
-    feedback.search(/^([a-zA-ZА-Яа-я]\s*)+/i) === -1
+    feedback.search(/^[a-zA-ZА-Яа-я\s\d]*$/) === -1
       ? (errors.feedback = 'Feedback is incorrect!')
       : null;
   }
@@ -319,13 +319,13 @@ export const createPointSchema = yup.object({
     .string()
     .min(3, 'Too short!')
     .max(50, 'Too long!')
-    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Name is incorrect!')
+    .matches(/^[a-zA-ZА-Яа-я\s\d]*$/, 'Name is incorrect!')
     .required('Required!'),
   address: yup
     .string()
     .min(3, 'Too short!')
     .max(100, 'Too long!')
-    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Address is incorrect!')
+    .matches(/^[a-zA-ZА-Яа-я\s\d]*$/, 'Address is incorrect!')
     .required('Required!'),
 });
 
@@ -336,14 +336,14 @@ export const updatePointSchema = yup.object({
     .nullable()
     .min(3, 'Too short!')
     .max(50, 'Too long!')
-    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Name is incorrect!'),
+    .matches(/^[a-zA-ZА-Яа-я\s\d]*$/, 'Name is incorrect!'),
   address: yup
     .string()
     .default(null)
     .nullable()
     .min(3, 'Too short!')
     .max(100, 'Too long!')
-    .matches(/^([a-zA-ZА-Яа-я]\s*)+/i, 'Address is incorrect!'),
+    .matches(/^[a-zA-ZА-Яа-я\s\d]*$/, 'Address is incorrect!'),
 });
 
 export const getErrorText = (
