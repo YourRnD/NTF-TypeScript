@@ -6,6 +6,7 @@ import Style from './App.module.css';
 import Auth from './components/Auth';
 import ErrorMessage from './components/common/ErrorMessage';
 import Preloader from './components/common/Preloader';
+import QRModal from './components/common/QRModal';
 import SuccessMessage from './components/common/SuccessMessage';
 import ThanksPage from './components/common/ThanksPage';
 import EditBusiness from './components/EditBusiness';
@@ -74,7 +75,7 @@ const App: React.FC<PropsType> = ({
     />,
     <Route
       key="edit-points"
-      path="/edit-points/:type?/:id?"
+      path="/edit-points/:type?/:id?/:name?/:address?"
       component={EditPoint}
     />,
   ];
@@ -86,6 +87,7 @@ const App: React.FC<PropsType> = ({
         <ErrorMessage />
         <SuccessMessage />
         <ThanksPage />
+        <QRModal />
         {!isAuth && typeOperation !== 'Hide' ? (
           <Auth typeOperation={typeOperation} />
         ) : null}

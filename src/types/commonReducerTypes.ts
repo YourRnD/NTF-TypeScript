@@ -4,6 +4,7 @@ import {
   SET_SUCCESS,
   SET_THANK_INFO,
   SET_UPLOAD_IMAGE,
+  SET_HIDE_QR,
 } from '../redux/constants';
 
 // Store
@@ -11,6 +12,11 @@ export interface IError {
   status: number | undefined;
   param?: string | undefined;
   message: string | undefined;
+}
+
+export interface IQRModal {
+  hide: boolean;
+  path: string | undefined;
 }
 
 export interface IThankInfo {
@@ -35,6 +41,7 @@ export interface ICommon {
   successMessage: string;
   isThank: boolean;
   thankInfo: IThankInfo;
+  QRModal: IQRModal;
 }
 
 // Actions
@@ -62,6 +69,13 @@ export interface ISetThankInfo {
   };
 }
 
+export interface ISetHideQR {
+  type: typeof SET_HIDE_QR;
+  payload: {
+    QRModal: IQRModal;
+  };
+}
+
 export interface ISetSuccessAction {
   type: typeof SET_SUCCESS;
   payload: {
@@ -83,4 +97,5 @@ export type CommonActionTypes =
   | ISetThankInfo
   | ISetErrorAction
   | ISetSuccessAction
+  | ISetHideQR
   | ISetUploadImageAction;

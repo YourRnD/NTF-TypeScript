@@ -2,6 +2,7 @@ import { CommonActionTypes, ICommon } from '../../types/commonReducerTypes';
 import {
   CHANGE_LOADED,
   SET_ERROR,
+  SET_HIDE_QR,
   SET_SUCCESS,
   SET_THANK_INFO,
   SET_UPLOAD_IMAGE,
@@ -26,6 +27,10 @@ const initialState: stateCommon = {
     score: undefined,
     path: undefined,
   },
+  QRModal: {
+    hide: true,
+    path: undefined,
+  },
 };
 
 const commonReducer = (
@@ -39,6 +44,11 @@ const commonReducer = (
         ...action.payload,
       };
     case SET_ERROR:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case SET_HIDE_QR:
       return {
         ...state,
         ...action.payload,

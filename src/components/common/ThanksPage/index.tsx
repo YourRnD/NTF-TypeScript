@@ -45,7 +45,7 @@ const ThanksPageContainer: React.FC<PropsType> = ({
 
   useEffect(() => {
     if (isThank) {
-      /* setTimeout(() => {
+      setTimeout(() => {
         setThankInfo(
           {
             path: undefined,
@@ -53,7 +53,7 @@ const ThanksPageContainer: React.FC<PropsType> = ({
           },
           false
         );
-      }, 5000); */
+      }, 5000);
     }
   }, [isThank, setThankInfo]);
 

@@ -27,6 +27,8 @@ type MapDispatchPropsType = {
 type OwnPropsType = {
   pointId: number;
   type: 'edit' | 'create' | null;
+  name: string | undefined;
+  address: string | undefined;
 };
 
 type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType;
@@ -37,6 +39,8 @@ const FormEditPointContainer: React.FC<PropsType> = ({
   status,
   pointId,
   type,
+  name,
+  address,
 }) => {
   const onSubmit = (values: FormikValues): void => {
     if (status === 'manager') {
@@ -60,9 +64,11 @@ const FormEditPointContainer: React.FC<PropsType> = ({
     return;
   };
 
+  console.log(name);
+
   const initialValues = {
-    name: '',
-    address: '',
+    name,
+    address,
   };
 
   return (

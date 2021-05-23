@@ -1,6 +1,4 @@
 .root {
-  background-color: rgba(70, 70, 70, 0.6);
-
   position: fixed;
   right: 0;
   top: 0;
@@ -15,6 +13,19 @@
   align-items: center;
 }
 
+.background {
+  background-color: rgba(70, 70, 70, 0.6);
+
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  min-width: 100vw;
+  min-height: 100vh;
+
+  z-index: 8998;
+}
+
 .container {
   position: relative;
 
@@ -25,7 +36,7 @@
 
   padding: 30px 50px;
 
-  max-width: 600px;
+  max-width: 400px;
   width: 100%;
 
   min-height: 200px;
@@ -34,10 +45,8 @@
 
   border: 2px solid var(--green);
   border-radius: 10px;
-}
 
-.title {
-  margin-bottom: 10px;
+  z-index: 8999;
 }
 
 .close {
@@ -88,11 +97,5 @@
     text-align: center;
 
     font-size: 25px;
-  }
-
-  .description {
-    text-align: center;
-
-    font-size: 18px;
   }
 }

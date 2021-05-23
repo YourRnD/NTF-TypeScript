@@ -13,7 +13,7 @@ const initialState: stateAuth = {
   },
   isAuth: false,
   isInit: false,
-  typeOperation: 'Login',
+  typeOperation: 'Hide',
 };
 
 const authReducer = (

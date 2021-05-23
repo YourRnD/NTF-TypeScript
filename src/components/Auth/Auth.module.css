@@ -63,8 +63,6 @@
   border-left: 1px solid var(--lightBlack);
   border-bottom: 1px solid var(--lightBlack);
   border-radius: 0 10px 0 10px;
-
-  cursor: pointer;
 }
 
 .redirect-btn.redirect-btn_reverce-theme {
@@ -125,8 +123,6 @@
 
 .close {
   border: 0px;
-
-  cursor: pointer;
 
   background-color: var(--white);
   color: var(--blue);

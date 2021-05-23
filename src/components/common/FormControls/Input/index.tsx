@@ -45,6 +45,7 @@ const InputContainer: React.FunctionComponent<FormControlsType> = ({
       name={field.name}
       placeholder={placeholder}
       type={anotherArg.type !== undefined ? anotherArg.type : 'text'}
+      value={field.value}
       onFocus={onFocus}
       onBlur={onBlur}
       onChange={field.onChange}

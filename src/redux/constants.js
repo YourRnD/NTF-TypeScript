@@ -7,6 +7,7 @@ export const SET_ERROR = 'star_it/common/SET-ERROR';
 export const SET_THANK_INFO = 'star_it/common/SET-THANK-INFO';
 export const SET_UPLOAD_IMAGE = 'star_it/common/SET-UPLOAD-IMAGE';
 export const SET_SUCCESS = 'star_it/common/SET-SUCCESS';
+export const SET_HIDE_QR = 'star_it/common/SET-HIDE-QR';
 
 export const SET_BUSINESSES = 'star_it/business/SET-BUSINESSES';
 export const SET_SELECTED_BUSINESS = 'star_it/business/SET-SELECTED-BUSINESS';

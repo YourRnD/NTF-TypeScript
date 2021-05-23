@@ -30,3 +30,11 @@
 .qr-code {
   flex-basis: 15%;
 }
+
+.link {
+  text-decoration: underline;
+
+  border: 0px;
+
+  background-color: var(--white);
+}
