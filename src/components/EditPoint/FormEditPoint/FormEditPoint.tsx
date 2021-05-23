@@ -6,8 +6,8 @@ import ContainerField from '../../common/FormControls';
 import Input from '../../common/FormControls/Input';
 
 interface IInitialValues {
-  name: string;
-  address: string;
+  name: string | undefined;
+  address: string | undefined;
 }
 
 type PropsType = {

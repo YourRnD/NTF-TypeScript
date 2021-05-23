@@ -9,6 +9,7 @@ type PropsType = {
   onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
   onChange: () => void;
   error: string | null;
+  value: string;
 };
 
 const Input: React.FC<PropsType> = ({
@@ -19,6 +20,7 @@ const Input: React.FC<PropsType> = ({
   onFocus,
   onChange,
   error,
+  value,
 }) => {
   return (
     <div className={Style.container}>
@@ -31,6 +33,7 @@ const Input: React.FC<PropsType> = ({
         onBlur={onBlur}
         name={name}
         onChange={onChange}
+        value={value}
       />
       {error !== null ? <p className={Style.error}>{error}</p> : null}
     </div>

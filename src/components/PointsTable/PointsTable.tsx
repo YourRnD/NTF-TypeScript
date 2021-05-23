@@ -1,9 +1,9 @@
 import React from 'react';
-import TableLine from './TableLine';
 import Style from './PointsTable.module.css';
 import { NavLink } from 'react-router-dom';
 import PaginatorContainer from '../common/Paginator';
 import { IPoint } from '../../types/pointReducerTypes';
+import TableLine from './TableLine';
 
 type PropsType = {
   pageNumber: number;

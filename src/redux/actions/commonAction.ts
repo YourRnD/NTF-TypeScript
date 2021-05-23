@@ -1,12 +1,14 @@
 import {
   CommonActionTypes,
   IError,
+  IQRModal,
   IThankInfo,
   IUploadImage,
 } from '../../types/commonReducerTypes';
 import {
   CHANGE_LOADED,
   SET_ERROR,
+  SET_HIDE_QR,
   SET_SUCCESS,
   SET_THANK_INFO,
   SET_UPLOAD_IMAGE,
@@ -42,6 +44,13 @@ export const setThankInfo = (
   payload: {
     thankInfo,
     isThank,
+  },
+});
+
+export const setHideQR = (QRModal: IQRModal): CommonActionTypes => ({
+  type: SET_HIDE_QR,
+  payload: {
+    QRModal,
   },
 });
 

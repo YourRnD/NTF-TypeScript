@@ -11,6 +11,8 @@ type MapStatePropsType = {
 interface IParams {
   id: number;
   type: 'edit' | 'create' | null;
+  name?: string;
+  address?: string;
 }
 
 interface IMatch {
@@ -26,7 +28,12 @@ type PropsType = MapStatePropsType & OwnPropsType;
 const EditPointContainer: React.FC<PropsType> = ({ status, match }) => (
   <>
     {status === 'admin' || status === 'manager' ? (
-      <EditPoint pointId={match.params.id} type={match.params.type} />
+      <EditPoint
+        name={match.params.name}
+        address={match.params.address}
+        pointId={match.params.id}
+        type={match.params.type}
+      />
     ) : (
       <Redirect to="/home" />
     )}

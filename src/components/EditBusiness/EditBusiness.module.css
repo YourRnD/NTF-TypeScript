@@ -1,87 +1,85 @@
 .root {
-	background-color: var(--white);
+  background-color: var(--white);
 
-	max-width: 100vw;
+  max-width: 100vw;
 
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .container {
-	max-width: 1280px;
-	width: 100%;
-	min-height: calc(100vh - 80px);
+  max-width: 1280px;
+  width: 100%;
+  min-height: calc(100vh - 80px);
 
-	border-right: 2px solid var(--blue);
-	border-left: 2px solid var(--blue);
+  border-right: 2px solid var(--blue);
+  border-left: 2px solid var(--blue);
 
-	position: relative;
+  position: relative;
 
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	flex-direction: column;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
 }
 
 .title {
-	margin-top: 35px;
+  margin-top: 35px;
 }
 
 .close-btn {
-	position: absolute;
-	top: 20px;
-	right: 20px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
 
-	cursor: pointer;
+  width: 30px;
+  height: 30px;
 
-	width: 30px;
-	height: 30px;
+  background-color: var(--white);
 
-	background-color: var(--white);
+  border: 2px solid var(--blue);
+  border-radius: 50%;
 
-	border: 2px solid var(--blue);
-	border-radius: 50%;
-
-	transition: all 0.5s;
+  transition: all 0.5s;
 }
 
 .close-btn::after,
 .close-btn::before {
-	position: absolute;
-	content: "";
+  position: absolute;
+  content: '';
 
-	top: 12px;
-	left: 6px;
+  top: 12px;
+  left: 6px;
 
-	width: 15px;
-	height: 2px;
+  width: 15px;
+  height: 2px;
 
-	transform: rotate(45deg);
+  transform: rotate(45deg);
 
-	background-color: #000;
+  background-color: #000;
 }
 
 .close-btn::before {
-	transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }
 
 .close-btn:hover {
-	background-color: var(--blue);
+  background-color: var(--blue);
 }
 
 .close-btn:hover::before,
 .close-btn:hover::after {
-	background-color: var(--white);
+  background-color: var(--white);
 }
 
 @media (max-width: 768px) {
-	.title {
-		margin-top: 75px;
-	}
+  .title {
+    margin-top: 75px;
+  }
 }
 
 @media (max-width: 415px) {
-	.title {
-		font-size: 26px;
-	}
+  .title {
+    font-size: 26px;
+  }
 }
