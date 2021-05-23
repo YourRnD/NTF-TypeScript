@@ -19,7 +19,7 @@ const BurgerMenu: React.FC<PropsType> = ({ onClick, exist, hideMenu }) => (
           <NavMenuItem route="/home" text="Home" />
         </li>
         <li className={Style.item}>
-          <NavMenuItem route="/table-points" text="Point table" />
+          <NavMenuItem route="/table-points" text="My objects" />
         </li>
         <li className={Style.item}>
           <NavMenuItem route="/edit-business" text="Edit business" />
