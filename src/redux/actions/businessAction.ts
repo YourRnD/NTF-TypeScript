@@ -51,7 +51,10 @@ export const createBusinessTh = (
   BusinessActionTypes | CommonActionTypes
 > => async (dispatch) => {
   dispatch(changeLoaded(true));
-  const data = await businessAPI.add(name, logo).then((result) => result.data);
+  const nameNew = name.replace(/\s+/g, ' ').trim();
+  const data = await businessAPI
+    .add(nameNew, logo)
+    .then((result) => result.data);
   if (data.status === 200) {
     dispatch(setSuccess(data.message, true));
   } else {

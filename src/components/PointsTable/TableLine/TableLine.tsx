@@ -20,17 +20,29 @@ const TableLine: React.FC<PropsType> = ({
   <>
     {isTitle == true ? (
       <tr id={`points-title`} className={Style.root}>
-        <th className={`${Style.ceil} ${Style.id}`}>{id}</th>
-        <th className={`${Style.ceil} ${Style.name}`}>{name}</th>
-        <th className={`${Style.ceil} ${Style.address}`}>{address}</th>
+        <th className={`${Style.ceil} ${Style.id}`}>
+          <p className={Style.text}>{id}</p>
+        </th>
+        <th className={`${Style.ceil} ${Style.name}`}>
+          <p className={Style.text}>{name}</p>
+        </th>
+        <th className={`${Style.ceil} ${Style.address}`}>
+          <p className={Style.text}>{address}</p>
+        </th>
         <th className={`${Style.ceil} ${Style.edit}`}>Edit</th>
         <th className={`${Style.ceil} ${Style['qr-code']}`}>Object QR-codes</th>
       </tr>
     ) : (
       <tr id={`points${id}`} className={Style.root}>
-        <td className={`${Style.ceil} ${Style.id}`}>{id}</td>
-        <td className={`${Style.ceil} ${Style.name}`}>{name}</td>
-        <td className={`${Style.ceil} ${Style.address}`}>{address}</td>
+        <td className={`${Style.ceil} ${Style.id}`}>
+          <p className={Style.text}>{id}</p>
+        </td>
+        <td className={`${Style.ceil} ${Style.name}`}>
+          <p className={Style.text}>{name}</p>
+        </td>
+        <td className={`${Style.ceil} ${Style.address}`}>
+          <p className={Style.text}>{address}</p>
+        </td>
         <td className={`${Style.ceil} ${Style.edit}`}>
           <NavLink
             className={Style.link}
