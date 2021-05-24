@@ -54,6 +54,15 @@
   transform: translateY(1px);
 }
 
+.photos-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+
+  min-width: 100%;
+}
+
 .submit {
   height: 50px;
   width: 300px;

@@ -91,19 +91,21 @@ const FormEditPoint: React.FC<PropsType> = ({
             }}
           />
         }
-        {fileNames.map((item, index) => (
-          <ContainerField
-            key={item}
-            component={UploadFile}
-            name="image"
-            placeholder="image"
-            props={{
-              fileName: item,
-              id: `feedback-upload-image-${index}`,
-              maxElem: 3,
-            }}
-          />
-        ))}
+        <div className={Style['photos-container']}>
+          {fileNames.map((item, index) => (
+            <ContainerField
+              key={item}
+              component={UploadFile}
+              name="image"
+              placeholder="image"
+              props={{
+                fileName: item,
+                id: `feedback-upload-image-${index}`,
+                maxElem: 3,
+              }}
+            />
+          ))}
+        </div>
         <button type="submit" className={Style.submit}>
           {type === 'create'
             ? 'Create new feedback'

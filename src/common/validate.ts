@@ -24,7 +24,7 @@ export const signUpSchema = yup.object({
     .min(8, 'Too short!')
     .max(50, 'Too long!')
     .matches(
-      /^(?=.*[0-9])(?=.*[\\`~!@#$%^&*()-=_+{};|’:”,.<>/?[\]])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\\`~!@#$%^&*()-=_+{};|’:”,.<>/?[\]]*$/,
+      /^(?=.*[0-9])(?=.*[\\`~!@#$%^&*()=_/\-/+{};|:,.<>/?[\]'"])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\\`~!@#$%^&*()=_/\-/+{};|:,.<>/?[\]'"]*$/i,
       'The password must contain numbers, special characters (`~!@#$%^&*()-=_+[]{}\\|;’:”,.<>/? ), lowercase and uppercase Latin letters!'
     )
     .required('Required!'),
@@ -45,7 +45,7 @@ export const signInSchema = yup.object({
     .min(8, 'Too short!')
     .max(50, 'Too long!')
     .matches(
-      /^(?=.*[0-9])(?=.*[\\`~!@#$%^&*()-=_+{};|’:”,.<>/?[\]])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\\`~!@#$%^&*()-=_+{};|’:”,.<>/?[\]]*$/,
+      /^(?=.*[0-9])(?=.*[\\`~!@#$%^&*()=_/\-/+{};|:,.<>/?[\]'"])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\\`~!@#$%^&*()=_/\-/+{};|:,.<>/?[\]'"]*$/i,
       'The password must contain numbers, special characters (`~!@#$%^&*()-=_+[]{}\\|;’:”,.<>/? ), lowercase and uppercase Latin letters!'
     )
     .required('Required!'),

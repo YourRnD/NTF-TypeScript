@@ -15,6 +15,7 @@ import {
   IImageValidateError,
 } from '../../../../types/componentsTypes';
 import UploadFile from './UploadFile';
+import noFile from './assets/no_file.jpg';
 
 type MapStatePropsType = {
   uploadImages: Array<IUploadImage> | null;
@@ -198,6 +199,14 @@ const UploadFileContainer: React.FC<PropsType> = ({
     }
   }
 
+  let imageView: string | null | ArrayBuffer = null;
+
+  uploadImages?.forEach((item) => {
+    if (item.id === anotherArg.id) {
+      imageView = item.imageInBase64;
+    }
+  });
+
   if (
     anotherArg.maxElem === undefined ||
     document.querySelectorAll(`input[name="${field.name}"]`).length >
@@ -216,6 +225,7 @@ const UploadFileContainer: React.FC<PropsType> = ({
         add={addField}
         error={error}
         maxElem={anotherArg.maxElem}
+        image={imageView !== null ? imageView : noFile}
       />
     );
   }
