@@ -1,3 +1,7 @@
+.root {
+  margin-bottom: 50px;
+}
+
 .container {
   position: relative;
 
@@ -6,11 +10,17 @@
   align-items: center;
   flex-direction: column;
 
-  margin-bottom: 50px;
-
   min-width: min-content;
 
   padding: 0px;
+
+  transition: all 0.5s;
+
+  color: var(--white);
+  background-color: var(--blue);
+
+  border-radius: 10px;
+  border: 0;
 }
 
 .upload-file {
@@ -21,54 +31,45 @@
 
 .upload-file-label {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
+  flex-direction: column;
 
-  height: 50px;
-  width: 300px;
+  height: 230px;
+  width: 160px;
 
-  margin: 0 75px;
-
-  border-radius: 10px;
-  border: 0;
+  padding: 10px;
 
   font-size: 16px;
-
-  color: var(--white);
-  background-color: var(--blue);
-
-  transition: all 0.5s;
 }
 
-.container:hover .upload-file-label {
+.bottom {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+
+  max-width: 130px;
+
+  margin-top: 25px;
+}
+
+.container:hover {
   box-shadow: -10px 10px 15px 0px rgba(0, 0, 0, 0.3);
 
   transform: translate(5px, -5px);
-}
-
-.container:hover .close-btn,
-.container:hover .add-btn {
-  box-shadow: -10px 10px 15px 0px rgba(0, 0, 0, 0.3);
-
-  opacity: 1;
-
-  right: 0px;
-
-  transform: translate(5px, -5px);
-}
-
-.container:hover .add-btn,
-.container:hover .upload-file-label + .close-btn {
-  right: 35px;
 }
 
 .close-btn,
 .add-btn {
   position: absolute;
 
-  right: 15px;
+  cursor: pointer;
 
-  opacity: 0;
+  top: 15px;
+  right: 10px;
+
+  opacity: 1;
 
   width: 30px;
   height: 30px;
@@ -83,7 +84,7 @@
 
 .add-btn,
 .upload-file-label + .close-btn {
-  right: 50px;
+  right: 120px;
 }
 
 .close-btn::after,
@@ -132,7 +133,7 @@
 .error {
   color: var(--red);
 
-  width: 350px;
+  max-width: 160px;
 
   text-align: center;
 

@@ -11,6 +11,7 @@ type PropsType = {
   add: () => void;
   error: string | null;
   maxElem: number;
+  image: string;
 };
 
 const UploadFile: React.FC<PropsType> = ({
@@ -23,27 +24,32 @@ const UploadFile: React.FC<PropsType> = ({
   error,
   id,
   maxElem,
+  image,
 }) => {
   return (
-    <div className={Style.container}>
-      <label htmlFor={id} className={Style['upload-file-label']}>
-        {fileName !== '' ? `File: ${fileName}` : 'Upload file'}
-        <input
-          type="file"
-          id={id}
-          name={name}
-          placeholder={placeholder}
-          className={Style['upload-file']}
-          onChange={onChange}
-        />
-      </label>
-      {maxElem === 1 ? (
-        <></>
-      ) : (
-        <div onClick={add} className={Style['add-btn']} />
-      )}
-
-      <div onClick={clear} className={Style['close-btn']} />
+    <div className={Style.root}>
+      <div className={Style.container}>
+        {maxElem === 1 ? (
+          <></>
+        ) : (
+          <div onClick={add} className={Style['add-btn']} />
+        )}
+        <div onClick={clear} className={Style['close-btn']} />
+        <label htmlFor={id} className={Style['upload-file-label']}>
+          <input
+            type="file"
+            id={id}
+            name={name}
+            placeholder={placeholder}
+            className={Style['upload-file']}
+            onChange={onChange}
+          />
+          <img src={image} alt="Image for upload" />
+          <p className={Style.bottom}>
+            {fileName !== '' ? `File: ${fileName}` : 'Upload file'}
+          </p>
+        </label>
+      </div>
       {error !== null ? <p className={Style.error}>{error}</p> : null}
     </div>
   );
