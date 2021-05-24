@@ -57,8 +57,10 @@ export const createPointTh = (
   PointActionTypes | CommonActionTypes
 > => async (dispatch) => {
   dispatch(changeLoaded(true));
+  const addressNew = address.replace(/\s+/g, ' ').trim();
+  const nameNew = name.replace(/\s+/g, ' ').trim();
   const data = await pointAPI
-    .add(name, address, businessId)
+    .add(nameNew, addressNew, businessId)
     .then((result) => result.data);
   if (data.status === 200) {
     dispatch(setSuccess(data.message, true));

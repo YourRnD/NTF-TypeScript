@@ -102,7 +102,7 @@ export const createBusinessValidate = (
       : null;
     name.length <= 2 ? (errors.name = 'Too short!') : null;
     name.length > 50 ? (errors.name = 'Too long!') : null;
-    name.search(/^[a-zA-ZА-Яа-я\s]*$/) === -1
+    name.search(/^[a-zA-ZА-Яа-я№()#&:.,\s\d_-]*$/) === -1
       ? (errors.name = 'Name is incorrect!')
       : null;
   } else {
@@ -151,7 +151,7 @@ export const updateBusinessValidate = (
       : null;
     name.length <= 2 ? (errors.name = 'Too short!') : null;
     name.length > 50 ? (errors.name = 'Too long!') : null;
-    name.search(/^[a-zA-ZА-Яа-я\s]*$/) === -1
+    name.search(/^[a-zA-ZА-Яа-я№()#&:.,\s\d_-]*$/) === -1
       ? (errors.name = 'Name is incorrect!')
       : null;
   }
@@ -221,7 +221,7 @@ export const createFeedbackValidate = (
       : null;
     feedback.length <= 2 ? (errors.feedback = 'Too short!') : null;
     feedback.length > 1000 ? (errors.feedback = 'Too long!') : null;
-    feedback.search(/^[a-zA-ZА-Яа-я\s\d]*$/) === -1
+    feedback.search(/^[a-zA-ZА-Яа-я№()#&:.,\s\d_-]*$/) === -1
       ? (errors.feedback = 'Feedback is incorrect!')
       : null;
   }
@@ -295,7 +295,7 @@ export const updateFeedbackValidate = (
       : null;
     feedback.length <= 2 ? (errors.feedback = 'Too short!') : null;
     feedback.length > 1000 ? (errors.feedback = 'Too long!') : null;
-    feedback.search(/^[a-zA-ZА-Яа-я\s\d]*$/) === -1
+    feedback.search(/^[a-zA-ZА-Яа-я№()#&:.,\s\d_-]*$/) === -1
       ? (errors.feedback = 'Feedback is incorrect!')
       : null;
   }
@@ -319,13 +319,13 @@ export const createPointSchema = yup.object({
     .string()
     .min(3, 'Too short!')
     .max(50, 'Too long!')
-    .matches(/^[a-zA-ZА-Яа-я\s\d]*$/, 'Name is incorrect!')
+    .matches(/^[a-zA-ZА-Яа-я№()#&:.,\s\d_-]*$/, 'Name is incorrect!')
     .required('Required!'),
   address: yup
     .string()
     .min(3, 'Too short!')
     .max(100, 'Too long!')
-    .matches(/^[a-zA-ZА-Яа-я\s\d]*$/, 'Address is incorrect!')
+    .matches(/^[a-zA-ZА-Яа-я№()#&:.,\s\d_-]*$/, 'Address is incorrect!')
     .required('Required!'),
 });
 
@@ -336,14 +336,14 @@ export const updatePointSchema = yup.object({
     .nullable()
     .min(3, 'Too short!')
     .max(50, 'Too long!')
-    .matches(/^[a-zA-ZА-Яа-я\s\d]*$/, 'Name is incorrect!'),
+    .matches(/^[a-zA-ZА-Яа-я№()#&:.,\s\d_-]*$/, 'Name is incorrect!!!'),
   address: yup
     .string()
     .default(null)
     .nullable()
     .min(3, 'Too short!')
     .max(100, 'Too long!')
-    .matches(/^[a-zA-ZА-Яа-я\s\d]*$/, 'Address is incorrect!'),
+    .matches(/^[a-zA-ZА-Яа-я№()#&:.,\s\d_-]*$/, 'Address is incorrect!'),
 });
 
 export const getErrorText = (

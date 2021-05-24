@@ -4,7 +4,7 @@
 }
 
 .ceil {
-  padding: 20px;
+  padding: 20px 10px;
 
   margin: 1px;
 
@@ -13,24 +13,41 @@
   text-align: center;
 }
 
+.text {
+  max-width: 100%;
+  width: 100%;
+
+  overflow: hidden;
+}
+
 .id {
   flex-basis: 10%;
+
+  max-width: calc(10% - 2px);
 }
 
 .name {
   flex-basis: 20%;
+
+  max-width: calc(20% - 2px);
 }
 
 .address {
   flex-basis: 45%;
+
+  max-width: calc(45% - 2px);
 }
 
 .edit {
   flex-basis: 10%;
+
+  max-width: calc(10% - 2px);
 }
 
 .qr-code {
   flex-basis: 15%;
+
+  max-width: calc(15% - 2px);
 }
 
 .link {
