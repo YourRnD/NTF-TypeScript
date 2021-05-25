@@ -22,7 +22,11 @@ const Textarea: React.FC<PropsType> = ({
         name={name}
         onChange={onChange}
       />
-      {error !== null ? <p className={Style.error}>{error}</p> : null}
+      {error !== null ? (
+        <p data-testid="error" className={Style.error}>
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 };

@@ -2,166 +2,173 @@ import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import Auth from '../components/Auth/Auth';
 import { signInSchema, signUpSchema } from '../common/validate';
-import { Router } from 'react-router';
-import { createMemoryHistory } from 'history';
 
-const onSubmit = jest.fn();
+describe('Auth', () => {
+  const onSubmit = jest.fn();
+  const invertTypeOperation = jest.fn();
+  const closeForm = jest.fn();
 
-test('Render signup', () => {
-  const { unmount } = render(
-    <Router history={createMemoryHistory()}>
+  const initialValuesForRegist = {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  };
+
+  const initialValuesForLogin = {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  };
+
+  it('Render component as registration page', () => {
+    const { unmount } = render(
       <Auth
         typeOperation="Regist"
         onSubmit={onSubmit}
         validateSchema={signUpSchema}
-        initialValue={{
-          name: '',
-          email: '',
-          password: '',
-          confirmPassword: '',
-        }}
+        initialValue={initialValuesForRegist}
+        invertTypeOperation={invertTypeOperation}
+        closeForm={closeForm}
       />
-    </Router>
-  );
-  const inputName = screen.getByPlaceholderText('Name');
-  expect(inputName).toBeInTheDocument();
-  unmount();
-});
+    );
 
-test('Regist: submit success', async () => {
-  const { container, unmount } = render(
-    <Router history={createMemoryHistory()}>
+    expect(screen.getByPlaceholderText('Name')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Confirm Password')).toBeInTheDocument();
+    unmount();
+  });
+
+  it('Render component as registration page and submit form', async () => {
+    const { container, unmount } = render(
       <Auth
         typeOperation="Regist"
         onSubmit={onSubmit}
         validateSchema={signUpSchema}
-        initialValue={{
-          name: '',
-          email: '',
-          password: '',
-          confirmPassword: '',
-        }}
+        initialValue={initialValuesForRegist}
+        invertTypeOperation={invertTypeOperation}
+        closeForm={closeForm}
       />
-    </Router>
-  );
-  const inputName: HTMLInputElement | null = container.querySelector(
-    'input[name="name"]'
-  );
+    );
 
-  if (inputName === null) throw Error;
+    const inputName: HTMLInputElement | null = container.querySelector(
+      'input[name="name"]'
+    );
 
-  fireEvent.change(inputName, { target: { value: 'Alex' } });
-  expect(inputName.value).toBe('Alex');
+    if (inputName === null) throw Error;
 
-  const inputEmail: HTMLInputElement | null = container.querySelector(
-    'input[name="email"]'
-  );
+    fireEvent.change(inputName, { target: { value: 'Alex' } });
+    expect(inputName.value).toBe('Alex');
 
-  if (inputEmail === null) throw Error;
+    const inputEmail: HTMLInputElement | null = container.querySelector(
+      'input[name="email"]'
+    );
 
-  fireEvent.change(inputEmail, { target: { value: 'test@gmail.com' } });
-  expect(inputEmail.value).toBe('test@gmail.com');
+    if (inputEmail === null) throw Error;
 
-  const inputPassword: HTMLInputElement | null = container.querySelector(
-    'input[name="password"]'
-  );
+    fireEvent.change(inputEmail, { target: { value: 'test@gmail.com' } });
+    expect(inputEmail.value).toBe('test@gmail.com');
 
-  if (inputPassword === null) throw Error;
+    const inputPassword: HTMLInputElement | null = container.querySelector(
+      'input[name="password"]'
+    );
 
-  fireEvent.change(inputPassword, { target: { value: 'Qwerty_322' } });
-  expect(inputPassword.value).toBe('Qwerty_322');
+    if (inputPassword === null) throw Error;
 
-  const inputPasswordConfirm: HTMLInputElement | null = container.querySelector(
-    'input[name="confirmPassword"]'
-  );
+    fireEvent.change(inputPassword, { target: { value: 'Qwerty_322' } });
+    expect(inputPassword.value).toBe('Qwerty_322');
 
-  if (inputPasswordConfirm === null) throw Error;
+    const inputPasswordConfirm: HTMLInputElement | null = container.querySelector(
+      'input[name="confirmPassword"]'
+    );
 
-  fireEvent.change(inputPasswordConfirm, { target: { value: 'Qwerty_322' } });
-  expect(inputPasswordConfirm.value).toBe('Qwerty_322');
+    if (inputPasswordConfirm === null) throw Error;
 
-  const submit = container.querySelector('button.submit');
+    fireEvent.change(inputPasswordConfirm, { target: { value: 'Qwerty_322' } });
+    expect(inputPasswordConfirm.value).toBe('Qwerty_322');
 
-  expect(submit).toBeInTheDocument();
-  expect(submit).not.toBeNull();
+    const submit = container.querySelector('button.submit');
 
-  if (submit === null) throw Error;
+    expect(submit).toBeInTheDocument();
+    expect(submit).not.toBeNull();
 
-  fireEvent.click(screen.getByTestId('submit'));
+    if (submit === null) throw Error;
 
-  await waitFor(() => {
-    expect(onSubmit).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByTestId('submit'));
+
+    await waitFor(() => {
+      expect(onSubmit).toHaveBeenCalledTimes(1);
+    });
+
+    unmount();
   });
 
-  unmount();
-});
-
-test('Render signin', () => {
-  const { unmount } = render(
-    <Router history={createMemoryHistory()}>
+  it('Render component as login page', () => {
+    const { unmount } = render(
       <Auth
-        typeOperation="Auth"
+        typeOperation="Login"
         onSubmit={onSubmit}
         validateSchema={signInSchema}
-        initialValue={{
-          name: '',
-          email: '',
-          password: '',
-          confirmPassword: '',
-        }}
+        initialValue={initialValuesForLogin}
+        invertTypeOperation={invertTypeOperation}
+        closeForm={closeForm}
       />
-    </Router>
-  );
-  const inputName = screen.queryByPlaceholderText('Name');
-  expect(inputName).not.toBeInTheDocument();
-  unmount();
-});
+    );
 
-test('Auth: submit success', async () => {
-  const { container, unmount } = render(
-    <Router history={createMemoryHistory()}>
-      <Auth
-        typeOperation="Auth"
-        onSubmit={onSubmit}
-        validateSchema={signInSchema}
-        initialValue={{
-          email: '',
-          password: '',
-        }}
-      />
-    </Router>
-  );
-
-  const inputEmail: HTMLInputElement | null = container.querySelector(
-    'input[name="email"]'
-  );
-
-  if (inputEmail === null) throw Error;
-
-  fireEvent.change(inputEmail, { target: { value: 'test@gmail.com' } });
-  expect(inputEmail.value).toBe('test@gmail.com');
-
-  const inputPassword: HTMLInputElement | null = container.querySelector(
-    'input[name="password"]'
-  );
-
-  if (inputPassword === null) throw Error;
-
-  fireEvent.change(inputPassword, { target: { value: 'Qwerty_322' } });
-  expect(inputPassword.value).toBe('Qwerty_322');
-
-  const submit = container.querySelector('button.submit');
-
-  expect(submit).toBeInTheDocument();
-  expect(submit).not.toBeNull();
-
-  if (submit === null) throw Error;
-
-  fireEvent.click(screen.getByTestId('submit'));
-
-  await waitFor(() => {
-    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(screen.queryByPlaceholderText('Name')).not.toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+    expect(
+      screen.queryByPlaceholderText('Confirm Password')
+    ).not.toBeInTheDocument();
+    unmount();
   });
 
-  unmount();
+  it('Render component as login page and submit form', async () => {
+    const { container, unmount } = render(
+      <Auth
+        typeOperation="Login"
+        onSubmit={onSubmit}
+        validateSchema={signInSchema}
+        initialValue={initialValuesForLogin}
+        invertTypeOperation={invertTypeOperation}
+        closeForm={closeForm}
+      />
+    );
+
+    const inputEmail: HTMLInputElement | null = container.querySelector(
+      'input[name="email"]'
+    );
+
+    if (inputEmail === null) throw Error;
+
+    fireEvent.change(inputEmail, { target: { value: 'test@gmail.com' } });
+    expect(inputEmail.value).toBe('test@gmail.com');
+
+    const inputPassword: HTMLInputElement | null = container.querySelector(
+      'input[name="password"]'
+    );
+
+    if (inputPassword === null) throw Error;
+
+    fireEvent.change(inputPassword, { target: { value: 'Qwerty_322' } });
+    expect(inputPassword.value).toBe('Qwerty_322');
+
+    const submit = container.querySelector('button.submit');
+
+    expect(submit).toBeInTheDocument();
+    expect(submit).not.toBeNull();
+
+    if (submit === null) throw Error;
+
+    fireEvent.click(screen.getByTestId('submit'));
+
+    await waitFor(() => {
+      expect(onSubmit).toHaveBeenCalledTimes(1);
+    });
+
+    unmount();
+  });
 });

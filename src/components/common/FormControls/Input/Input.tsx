@@ -35,7 +35,11 @@ const Input: React.FC<PropsType> = ({
         onChange={onChange}
         value={value}
       />
-      {error !== null ? <p className={Style.error}>{error}</p> : null}
+      {error !== null ? (
+        <p data-testid="error" className={Style.error}>
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 };

@@ -16,7 +16,6 @@ const InputContainer: React.FunctionComponent<FormControlsType> = ({
       name={field.name}
       placeholder={placeholder}
       valuesArray={anotherArg.valuesArray}
-      selectedValue={field.value}
       onChange={field.onChange}
       error={error !== undefined ? error : null}
     />
