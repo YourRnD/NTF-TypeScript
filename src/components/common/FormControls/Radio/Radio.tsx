@@ -7,7 +7,6 @@ type PropsType = {
   placeholder: string;
   name: string;
   onChange: () => void;
-  selectedValue: string;
   error: string | null;
   valuesArray: Array<IRadioAdditionallyProps> | undefined;
 };
@@ -47,9 +46,13 @@ const Radio: React.FC<PropsType> = ({
   );
 
   return (
-    <div className={Style['rating-area']}>
+    <div data-testid="elem" className={Style['rating-area']}>
       {RadioElements}
-      {error !== null ? <p className={Style.error}>{error}</p> : null}
+      {error !== null ? (
+        <p data-testid="error" className={Style.error}>
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 };

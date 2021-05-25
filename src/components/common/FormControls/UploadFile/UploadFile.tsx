@@ -32,9 +32,13 @@ const UploadFile: React.FC<PropsType> = ({
         {maxElem === 1 ? (
           <></>
         ) : (
-          <div onClick={add} className={Style['add-btn']} />
+          <div onClick={add} data-testid="add" className={Style['add-btn']} />
         )}
-        <div onClick={clear} className={Style['close-btn']} />
+        <div
+          onClick={clear}
+          data-testid="clear"
+          className={Style['close-btn']}
+        />
         <label htmlFor={id} className={Style['upload-file-label']}>
           <input
             type="file"
@@ -50,7 +54,11 @@ const UploadFile: React.FC<PropsType> = ({
           </p>
         </label>
       </div>
-      {error !== null ? <p className={Style.error}>{error}</p> : null}
+      {error !== null ? (
+        <p data-testid="error" className={Style.error}>
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 };

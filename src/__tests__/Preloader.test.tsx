@@ -2,14 +2,14 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Preloader from '../components/common/Preloader';
 
-test('Render preloader', () => {
-  render(<Preloader isLoader={true} />);
-  const preloaderElem = screen.getByAltText(/Preloader/i);
-  expect(preloaderElem).toBeInTheDocument();
-});
+describe('Preloader', () => {
+  it('Render component', () => {
+    render(<Preloader isLoader={true} />);
+    expect(screen.getByAltText(/Preloader/i)).toBeInTheDocument();
+  });
 
-test('Non render preloader', () => {
-  render(<Preloader isLoader={false} />);
-  const preloaderElem = screen.queryByAltText(/Preloader/i);
-  expect(preloaderElem).not.toBeInTheDocument();
+  it('Hide component', () => {
+    render(<Preloader isLoader={false} />);
+    expect(screen.queryByAltText(/Preloader/i)).not.toBeInTheDocument();
+  });
 });
