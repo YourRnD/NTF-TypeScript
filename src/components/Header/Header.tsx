@@ -36,25 +36,38 @@ const Header: React.FC<PropsType> = ({
               </button>
             </div>
             <div className={Style.mobile}>
-              <BurgerMenu exist={exist} />
+              <BurgerMenu
+                exist={exist}
+                redirectToLogin={redirectToLogin}
+                redirectToRegist={redirectToRegist}
+              />
             </div>
           </>
         ) : (
           <>
-            <button
-              type="button"
-              onClick={redirectToLogin}
-              className={`${Style.btn} ${Style['btn_first-child']}`}
-            >
-              Sign in
-            </button>
-            <button
-              type="button"
-              onClick={redirectToRegist}
-              className={Style.btn}
-            >
-              Sign up
-            </button>
+            <div className={Style.pc}>
+              <button
+                type="button"
+                onClick={redirectToLogin}
+                className={`${Style.btn} ${Style['btn_first-child']}`}
+              >
+                Sign in
+              </button>
+              <button
+                type="button"
+                onClick={redirectToRegist}
+                className={Style.btn}
+              >
+                Sign up
+              </button>
+            </div>
+            <div className={Style.mobile}>
+              <BurgerMenu
+                exist={exist}
+                redirectToLogin={redirectToLogin}
+                redirectToRegist={redirectToRegist}
+              />
+            </div>
           </>
         )}
       </div>

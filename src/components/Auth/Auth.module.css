@@ -194,4 +194,8 @@
 
     font-size: 15px;
   }
+
+  .close {
+    margin-bottom: 0px;
+  }
 }
