@@ -42,7 +42,7 @@ describe('Auth', () => {
   });
 
   it('Render component as registration page and submit form', async () => {
-    const { container, unmount } = render(
+    const { unmount } = render(
       <Auth
         typeOperation="Regist"
         onSubmit={onSubmit}
@@ -53,50 +53,32 @@ describe('Auth', () => {
       />
     );
 
-    const inputName: HTMLInputElement | null = container.querySelector(
-      'input[name="name"]'
-    );
+    const name = screen.getByPlaceholderText('Name');
 
-    if (inputName === null) throw Error;
+    fireEvent.change(name, { target: { value: 'Alex' } });
+    expect(name).toHaveAttribute('value', 'Alex');
 
-    fireEvent.change(inputName, { target: { value: 'Alex' } });
-    expect(inputName.value).toBe('Alex');
+    const email = screen.getByPlaceholderText('Email');
 
-    const inputEmail: HTMLInputElement | null = container.querySelector(
-      'input[name="email"]'
-    );
+    fireEvent.change(email, { target: { value: 'test@gmail.com' } });
+    expect(email).toHaveAttribute('value', 'test@gmail.com');
 
-    if (inputEmail === null) throw Error;
+    const password = screen.getByPlaceholderText('Password');
 
-    fireEvent.change(inputEmail, { target: { value: 'test@gmail.com' } });
-    expect(inputEmail.value).toBe('test@gmail.com');
+    fireEvent.change(password, { target: { value: 'Qwerty_322' } });
+    expect(password).toHaveAttribute('value', 'Qwerty_322');
 
-    const inputPassword: HTMLInputElement | null = container.querySelector(
-      'input[name="password"]'
-    );
+    const confirmPassword = screen.getByPlaceholderText('Confirm Password');
 
-    if (inputPassword === null) throw Error;
+    fireEvent.change(confirmPassword, { target: { value: 'Qwerty_322' } });
+    expect(confirmPassword).toHaveAttribute('value', 'Qwerty_322');
 
-    fireEvent.change(inputPassword, { target: { value: 'Qwerty_322' } });
-    expect(inputPassword.value).toBe('Qwerty_322');
-
-    const inputPasswordConfirm: HTMLInputElement | null = container.querySelector(
-      'input[name="confirmPassword"]'
-    );
-
-    if (inputPasswordConfirm === null) throw Error;
-
-    fireEvent.change(inputPasswordConfirm, { target: { value: 'Qwerty_322' } });
-    expect(inputPasswordConfirm.value).toBe('Qwerty_322');
-
-    const submit = container.querySelector('button.submit');
+    const submit = screen.getByTestId('submit');
 
     expect(submit).toBeInTheDocument();
     expect(submit).not.toBeNull();
 
-    if (submit === null) throw Error;
-
-    fireEvent.click(screen.getByTestId('submit'));
+    fireEvent.click(submit);
 
     await waitFor(() => {
       expect(onSubmit).toHaveBeenCalledTimes(1);
@@ -127,7 +109,7 @@ describe('Auth', () => {
   });
 
   it('Render component as login page and submit form', async () => {
-    const { container, unmount } = render(
+    const { unmount } = render(
       <Auth
         typeOperation="Login"
         onSubmit={onSubmit}
@@ -138,37 +120,26 @@ describe('Auth', () => {
       />
     );
 
-    const inputEmail: HTMLInputElement | null = container.querySelector(
-      'input[name="email"]'
-    );
+    const email = screen.getByPlaceholderText('Email');
 
-    if (inputEmail === null) throw Error;
+    fireEvent.change(email, { target: { value: 'test@gmail.com' } });
+    expect(email).toHaveAttribute('value', 'test@gmail.com');
 
-    fireEvent.change(inputEmail, { target: { value: 'test@gmail.com' } });
-    expect(inputEmail.value).toBe('test@gmail.com');
+    const password = screen.getByPlaceholderText('Password');
 
-    const inputPassword: HTMLInputElement | null = container.querySelector(
-      'input[name="password"]'
-    );
+    fireEvent.change(password, { target: { value: 'Qwerty_322' } });
+    expect(password).toHaveAttribute('value', 'Qwerty_322');
 
-    if (inputPassword === null) throw Error;
-
-    fireEvent.change(inputPassword, { target: { value: 'Qwerty_322' } });
-    expect(inputPassword.value).toBe('Qwerty_322');
-
-    const submit = container.querySelector('button.submit');
+    const submit = screen.getByTestId('submit');
 
     expect(submit).toBeInTheDocument();
     expect(submit).not.toBeNull();
 
-    if (submit === null) throw Error;
-
-    fireEvent.click(screen.getByTestId('submit'));
+    fireEvent.click(submit);
 
     await waitFor(() => {
       expect(onSubmit).toHaveBeenCalledTimes(1);
     });
-
     unmount();
   });
 });

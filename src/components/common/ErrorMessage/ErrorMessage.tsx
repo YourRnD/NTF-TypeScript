@@ -8,7 +8,7 @@ type PropsType = {
 };
 
 const ErrorMessage: React.FC<PropsType> = ({ error, onClick }) => (
-  <div className={Style.root} data-type="close" role="button" onClick={onClick}>
+  <div className={Style.root}>
     <div className={Style.container}>
       <span
         data-type="close"
@@ -26,6 +26,12 @@ const ErrorMessage: React.FC<PropsType> = ({ error, onClick }) => (
       </h1>
       <p className={Style.description}>{error.message}</p>
     </div>
+    <div
+      className={Style.background}
+      data-type="close"
+      role="button"
+      onClick={onClick}
+    ></div>
   </div>
 );
 

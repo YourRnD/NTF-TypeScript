@@ -7,7 +7,7 @@ type PropsType = {
 };
 
 const SuccessMessage: React.FC<PropsType> = ({ successMessage, onClick }) => (
-  <div className={Style.root} data-type="close" role="button" onClick={onClick}>
+  <div className={Style.root}>
     <div className={Style.container}>
       <span
         data-type="close"
@@ -20,6 +20,12 @@ const SuccessMessage: React.FC<PropsType> = ({ successMessage, onClick }) => (
       <h1 className={Style.title}>Success</h1>
       <p className={Style.description}>{successMessage}</p>
     </div>
+    <div
+      className={Style.background}
+      data-type="close"
+      role="button"
+      onClick={onClick}
+    ></div>
   </div>
 );
 

@@ -1,6 +1,4 @@
 .root {
-  background-color: rgba(70, 70, 70, 0.6);
-
   position: fixed;
   right: 0;
   top: 0;
@@ -13,6 +11,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.background {
+  background-color: rgba(70, 70, 70, 0.6);
+
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  min-width: 100vw;
+  min-height: 100vh;
+
+  z-index: 8998;
 }
 
 .container {

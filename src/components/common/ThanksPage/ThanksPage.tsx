@@ -11,12 +11,7 @@ const ThanksPage: React.FC<PropsType> = ({ thankInfo, onClick }) => {
   const starsArray = [1, 1, 1, 1, 1];
 
   return (
-    <div
-      className={Style.root}
-      data-type="close"
-      role="button"
-      onClick={onClick}
-    >
+    <div className={Style.root}>
       <div className={Style.container}>
         <h1 className={Style.title}>Thank you for your review of our work!</h1>
         <img
@@ -35,6 +30,7 @@ const ThanksPage: React.FC<PropsType> = ({ thankInfo, onClick }) => {
             if (thankInfo.score && index + 1 <= thankInfo.score) {
               return (
                 <div
+                  data-testid="change-star"
                   key={`star-${index}`}
                   className={`${Style.star} ${Style['change-star']}`}
                 ></div>
@@ -45,6 +41,12 @@ const ThanksPage: React.FC<PropsType> = ({ thankInfo, onClick }) => {
           })}
         </div>
       </div>
+      <div
+        className={Style.background}
+        data-type="close"
+        role="button"
+        onClick={onClick}
+      ></div>
     </div>
   );
 };
