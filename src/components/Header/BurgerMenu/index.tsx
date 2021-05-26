@@ -1,12 +1,27 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { RootState } from '../../../redux/reducers';
 import BurgerMenu from './BurgerMenu';
 import Style from './BurgerMenu.module.css';
 
-type PropsType = {
-  exist: () => void;
+type MapStatePropsType = {
+  isAuth: boolean;
 };
 
-const BurgerMenuContainer: React.FC<PropsType> = ({ exist }) => {
+type OwnPropsType = {
+  exist: () => void;
+  redirectToRegist: () => void;
+  redirectToLogin: () => void;
+};
+
+type PropsType = MapStatePropsType & OwnPropsType;
+
+const BurgerMenuContainer: React.FC<PropsType> = ({
+  exist,
+  redirectToRegist,
+  redirectToLogin,
+  isAuth,
+}) => {
   const onClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     e?.currentTarget.classList.toggle(Style['open-menu']);
     const parent = e?.currentTarget?.parentNode
@@ -33,9 +48,23 @@ const BurgerMenuContainer: React.FC<PropsType> = ({ exist }) => {
 
   return (
     <>
-      <BurgerMenu exist={exist} onClick={onClick} hideMenu={hideMenu} />
+      <BurgerMenu
+        isAuth={isAuth}
+        exist={exist}
+        onClick={onClick}
+        hideMenu={hideMenu}
+        redirectToRegist={redirectToRegist}
+        redirectToLogin={redirectToLogin}
+      />
     </>
   );
 };
 
-export default BurgerMenuContainer;
+const mapToStateProps = (state: RootState): MapStatePropsType => ({
+  isAuth: state.auth.isAuth,
+});
+
+export default connect<MapStatePropsType, {}, {}, RootState>(
+  mapToStateProps,
+  {}
+)(BurgerMenuContainer);
