@@ -46,49 +46,100 @@ const UploadFileContainer: React.FC<PropsType> = ({
       const elem = e.currentTarget;
       const image: File | null | undefined =
         elem.files !== null && elem.files[0] !== null ? elem.files[0] : null;
+
       if (image === null || image === undefined) {
         return;
       }
-      reader.onloadend = () => {
-        if (uploadImages === null || uploadImages.length === 1) {
-          setUploadImage(
-            [
-              {
-                name: image.name,
-                type: image.type,
-                imageInBase64: reader.result === null ? '' : reader.result,
-                id: anotherArg?.id ? anotherArg.id : '',
-              },
-            ],
-            1
-          );
-          form.setFieldValue('image', [
-            {
-              name: image.name,
-              type: image.type,
-              imageInBase64: reader.result === null ? '' : reader.result,
-              id: anotherArg?.id ? anotherArg.id : '',
-            },
-          ]);
-        } else {
-          const uploadImagesCopy: Array<IUploadImage> = [];
 
-          uploadImages.forEach((item) => {
-            item?.name !== undefined && item.name === anotherArg.fileName
-              ? uploadImagesCopy.push({
-                  name: image.name,
-                  type: image.type,
-                  imageInBase64: reader.result === null ? '' : reader.result,
-                  id: anotherArg?.id ? anotherArg.id : '',
-                })
-              : uploadImagesCopy.push(item);
-          });
-
-          setUploadImage(uploadImagesCopy, uploadImagesCopy.length);
-          form.setFieldValue('image', uploadImagesCopy);
-        }
-      };
+      console.log(image);
       reader.readAsDataURL(image);
+      reader.onloadend = () => {
+        const compressImg = new Image();
+
+        compressImg.src = reader.result === null ? '' : `${reader.result}`;
+
+        compressImg.onload = () => {
+          const width = 600;
+          const scaleFactor = width / compressImg.width;
+
+          const canvas = document.createElement('canvas');
+
+          canvas.width = width;
+          canvas.height = compressImg.height * scaleFactor;
+
+          const ctx = canvas.getContext('2d');
+
+          if (ctx !== null) {
+            ctx.drawImage(
+              compressImg,
+              0,
+              0,
+              width,
+              compressImg.height * scaleFactor
+            );
+
+            ctx.canvas.toBlob(
+              (blob) => {
+                if (blob !== null) {
+                  const file = new File([blob], image.name, {
+                    type: 'image/jpeg',
+                    lastModified: Date.now(),
+                  });
+
+                  if (uploadImages === null || uploadImages.length === 1) {
+                    setUploadImage(
+                      [
+                        {
+                          name: image.name,
+                          type: image.type,
+                          imageInBase64:
+                            reader.result === null ? '' : reader.result,
+                          id: anotherArg?.id ? anotherArg.id : '',
+                          size: image.size,
+                        },
+                      ],
+                      1
+                    );
+                    form.setFieldValue('image', [
+                      {
+                        name: image.name,
+                        type: image.type,
+                        imageInBase64:
+                          reader.result === null ? '' : reader.result,
+                        id: anotherArg?.id ? anotherArg.id : '',
+                        size: image.size,
+                      },
+                    ]);
+                  } else {
+                    const uploadImagesCopy: Array<IUploadImage> = [];
+
+                    uploadImages.forEach((item) => {
+                      item?.name !== undefined &&
+                      item.name === anotherArg.fileName
+                        ? uploadImagesCopy.push({
+                            name: image.name,
+                            type: image.type,
+                            imageInBase64:
+                              reader.result === null ? '' : reader.result,
+                            id: anotherArg?.id ? anotherArg.id : '',
+                            size: image.size,
+                          })
+                        : uploadImagesCopy.push(item);
+                    });
+
+                    setUploadImage(uploadImagesCopy, uploadImagesCopy.length);
+                    form.setFieldValue('image', uploadImagesCopy);
+                  }
+
+                  console.log(file);
+                }
+              },
+              'image/jpeg',
+              1
+            );
+          }
+        };
+      };
     }
   };
 
@@ -150,6 +201,7 @@ const UploadFileContainer: React.FC<PropsType> = ({
           type: '',
           imageInBase64: '',
           id: '',
+          size: 0,
         });
 
     setUploadImage(
@@ -161,6 +213,7 @@ const UploadFileContainer: React.FC<PropsType> = ({
               type: '',
               imageInBase64: '',
               id: '',
+              size: 0,
             },
           ],
       uploadImagesCopy === null ? 1 : uploadImagesCopy.length
@@ -176,6 +229,7 @@ const UploadFileContainer: React.FC<PropsType> = ({
               type: '',
               imageInBase64: '',
               id: '',
+              size: 0,
             },
           ]
     );

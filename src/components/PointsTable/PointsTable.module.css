@@ -70,7 +70,8 @@
 }
 
 .bottom {
-  min-width: 100%;
+  max-width: 100%;
+  width: 100%;
 
   position: absolute;
   bottom: 0;
@@ -79,5 +80,11 @@
 @media (max-width: 1280px) {
   .container {
     max-width: 1028px;
+  }
+}
+
+@media (max-width: 1044px) {
+  .container {
+    max-width: 768px;
   }
 }

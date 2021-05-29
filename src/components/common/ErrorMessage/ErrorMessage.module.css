@@ -45,6 +45,8 @@
 
   border: 2px solid var(--red);
   border-radius: 10px;
+
+  z-index: 8999;
 }
 
 .title {
@@ -63,6 +65,8 @@
 
   border: 2px solid var(--red);
   border-radius: 50%;
+
+  cursor: pointer;
 }
 
 .close::after,
