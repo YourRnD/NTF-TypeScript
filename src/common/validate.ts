@@ -209,6 +209,19 @@ export const createFeedbackValidate = (
                 },
               ])
           : null;
+        element.size / 1000000 > 5
+          ? Array.isArray(errors.image)
+            ? errors.image.push({
+                id: element.id !== '' ? element.id : 'image',
+                message: 'The file is too large!',
+              })
+            : (errors.image = [
+                {
+                  id: element.id !== '' ? element.id : 'image',
+                  message: 'The file is too large!',
+                },
+              ])
+          : null;
       }
     });
   }

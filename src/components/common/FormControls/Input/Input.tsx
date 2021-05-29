@@ -33,7 +33,7 @@ const Input: React.FC<PropsType> = ({
         onBlur={onBlur}
         name={name}
         onChange={onChange}
-        value={value}
+        value={value ? value : ''}
       />
       {error !== null ? (
         <p data-testid="error" className={Style.error}>

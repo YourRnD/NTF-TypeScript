@@ -47,8 +47,13 @@ const UploadFile: React.FC<PropsType> = ({
             placeholder={placeholder}
             className={Style['upload-file']}
             onChange={onChange}
+            accept="image/*"
           />
-          <img src={image} alt="Image for upload" />
+          <img
+            className={Style['view-image']}
+            src={image}
+            alt="Image for upload"
+          />
           <p className={Style.bottom}>
             {fileName !== '' ? `File: ${fileName}` : 'Upload file'}
           </p>

@@ -80,11 +80,23 @@ export const updatePointTh = (
   PointActionTypes | CommonActionTypes
 > => async (dispatch) => {
   dispatch(changeLoaded(true));
-  const data = await pointAPI.update(id, obj).then((result) => result.data);
-  if (data.status === 200) {
-    dispatch(setSuccess(data.message, true));
+  if (obj.address !== undefined && obj.name !== undefined) {
+    const data = await pointAPI.update(id, obj).then((result) => result.data);
+    if (data.status === 200) {
+      dispatch(setSuccess(data.message, true));
+    } else {
+      dispatch(setError(data, true));
+    }
   } else {
-    dispatch(setError(data, true));
+    dispatch(
+      setError(
+        {
+          status: 400,
+          message: 'None of the fields are filled',
+        },
+        true
+      )
+    );
   }
   dispatch(changeLoaded(false));
 };
