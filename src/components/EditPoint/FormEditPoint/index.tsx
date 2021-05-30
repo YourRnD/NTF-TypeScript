@@ -48,16 +48,16 @@ const FormEditPointContainer: React.FC<PropsType> = ({
         const obj: IUpdatePointsObj = {};
 
         if (values.name !== '') {
-          obj.name = values.name;
+          obj.name = values.name.trim();
         }
 
         if (values.address !== '') {
-          obj.address = values.address;
+          obj.address = values.address.trim();
         }
 
         return updatePoint(pointId, obj);
       } else if (type === 'create') {
-        return createPoint(values.name, values.address, null);
+        return createPoint(values.name.trim(), values.address.trim(), null);
       }
     }
 
