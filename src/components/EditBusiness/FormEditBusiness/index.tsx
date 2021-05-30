@@ -55,7 +55,7 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
       const obj: IUpdateBusinessObj = {};
 
       if (values.name !== '') {
-        obj.name = values.name;
+        obj.name = values.name.trim();
       }
 
       if (uploadImages !== null) {
@@ -75,7 +75,7 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
       }
 
       return createBusiness(
-        values.name,
+        values.name.trim(),
         uploadImages.map((item) => item.imageInBase64)
       );
     }
