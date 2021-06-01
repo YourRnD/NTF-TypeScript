@@ -7,6 +7,7 @@ import { createFeedbackTh } from '../../../redux/actions/feedbackAction';
 import { createFeedbackValidate } from '../../../common/validate';
 import { IUploadImages } from '../../../types/commonReducerTypes';
 import { getPointTh } from '../../../redux/actions/pointAction';
+import { setUploadImage } from '../../../redux/actions/commonAction';
 
 type MapDispatchPropsType = {
   createFeedback: (
@@ -16,6 +17,7 @@ type MapDispatchPropsType = {
     images: Array<string | ArrayBuffer> | null
   ) => void;
   getPoint: (id: number) => void;
+  setImage: (uploadImages: IUploadImages) => void;
 };
 
 type MapStatePropsType = {
@@ -38,21 +40,30 @@ const FormEditFeedbackContainer: React.FC<PropsType> = ({
 }) => {
   useEffect(() => {
     getPoint(pointId);
-    // setUploadImage(null, 1);
   }, [getPoint, pointId]);
 
   const onSubmit = (values: FormikValues): void => {
     if (type === 'edit') {
       return;
     } else if (type === 'create') {
-      /*  return createFeedback(
+      const images: Array<string> = [];
+
+      for (const key in uploadImages) {
+        if ({}.hasOwnProperty.call(uploadImages, key)) {
+          const obj = uploadImages[key];
+
+          if (typeof obj !== 'boolean' && obj?.imageInBase64 !== undefined) {
+            images.push(`${obj.imageInBase64}`);
+          }
+        }
+      }
+
+      return createFeedback(
         values.rating,
         values.feedback,
         pointId,
-        uploadImages !== null
-          ? uploadImages.map((item) => item.imageInBase64)
-          : null
-      );*/
+        images.length > 0 ? images : null
+      );
     }
 
     return;
@@ -63,15 +74,6 @@ const FormEditFeedbackContainer: React.FC<PropsType> = ({
     feedback: '',
     image: uploadImages,
   };
-
-  /*
-  if (uploadImages !== null) {
-    fileNames[0] = uploadImages[0].name;
-    for (let i = 1; i < countImages; i++) {
-      fileNames.push(uploadImages[i].name);
-    }
-  }
-  */
 
   return (
     <FormEditFeedback
@@ -95,4 +97,5 @@ export default connect<
 >(mapStateToProps, {
   createFeedback: createFeedbackTh,
   getPoint: getPointTh,
+  setImage: setUploadImage,
 })(FormEditFeedbackContainer);

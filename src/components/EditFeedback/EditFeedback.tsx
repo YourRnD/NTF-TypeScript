@@ -14,21 +14,15 @@ const EditFeedback: React.FC<PropsType> = ({ pointId, type, point }) => (
     <div className={Style.container}>
       <div className={Style['info-container']}>
         <div className={Style['left-col']}>
-          <h6 className={Style.info}>
-            <span className={Style['category-name']}>Name: </span>
-            {point.businessName}
-          </h6>
-          <h6 className={Style.info}>
-            <span className={Style['category-name']}>Adress: </span>
-            {point.address}
-          </h6>
-          <h6 className={Style.info}>
-            <span className={Style['category-name']}>Object name: </span>
-            {point.name}
-          </h6>
+          <img
+            className={Style.logo}
+            src={point?.path ? point.path : ''}
+            alt="Business logo"
+          />
         </div>
         <div className={Style['right-col']}>
-          <img src={point?.path ? point.path : ''} alt="Business logo" />
+          <h6 className={Style.info}>{point.businessName}</h6>
+          <h6 className={Style.info}>{point.address}</h6>
         </div>
       </div>
       <FormEditFeedback pointId={pointId} type={type} />
