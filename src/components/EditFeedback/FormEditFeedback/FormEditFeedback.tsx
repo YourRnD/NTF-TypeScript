@@ -36,7 +36,6 @@ const FormEditPoint: React.FC<PropsType> = ({
     >
       <Form className={Style.form}>
         <div className={Style.line}></div>
-        <h2 className={Style['rating-title']}>Rating</h2>
         {
           <ContainerField
             component={Radio}
