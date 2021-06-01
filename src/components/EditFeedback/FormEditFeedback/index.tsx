@@ -5,11 +5,7 @@ import FormEditFeedback from './FormEditFeedback';
 import { RootState } from '../../../redux/reducers';
 import { createFeedbackTh } from '../../../redux/actions/feedbackAction';
 import { createFeedbackValidate } from '../../../common/validate';
-import {
-  CommonActionTypes,
-  IUploadImage,
-} from '../../../types/commonReducerTypes';
-import { setUploadImage } from '../../../redux/actions/commonAction';
+import { IUploadImages } from '../../../types/commonReducerTypes';
 import { getPointTh } from '../../../redux/actions/pointAction';
 
 type MapDispatchPropsType = {
@@ -19,16 +15,11 @@ type MapDispatchPropsType = {
     idPoint: number,
     images: Array<string | ArrayBuffer> | null
   ) => void;
-  setUploadImage: (
-    uploadImages: Array<IUploadImage> | null,
-    countImages: number
-  ) => CommonActionTypes;
   getPoint: (id: number) => void;
 };
 
 type MapStatePropsType = {
-  uploadImages: Array<IUploadImage> | null;
-  countImages: number;
+  uploadImages: IUploadImages | null;
 };
 
 type OwnPropsType = {
@@ -43,27 +34,25 @@ const FormEditFeedbackContainer: React.FC<PropsType> = ({
   pointId,
   type,
   uploadImages,
-  countImages,
-  setUploadImage,
   getPoint,
 }) => {
   useEffect(() => {
     getPoint(pointId);
-    setUploadImage(null, 1);
-  }, [getPoint, pointId, setUploadImage]);
+    // setUploadImage(null, 1);
+  }, [getPoint, pointId]);
 
   const onSubmit = (values: FormikValues): void => {
     if (type === 'edit') {
       return;
     } else if (type === 'create') {
-      return createFeedback(
+      /*  return createFeedback(
         values.rating,
         values.feedback,
         pointId,
         uploadImages !== null
           ? uploadImages.map((item) => item.imageInBase64)
           : null
-      );
+      );*/
     }
 
     return;
@@ -75,20 +64,19 @@ const FormEditFeedbackContainer: React.FC<PropsType> = ({
     image: uploadImages,
   };
 
-  const fileNames = [''];
-
+  /*
   if (uploadImages !== null) {
     fileNames[0] = uploadImages[0].name;
     for (let i = 1; i < countImages; i++) {
       fileNames.push(uploadImages[i].name);
     }
   }
+  */
 
   return (
     <FormEditFeedback
       onSubmit={onSubmit}
       initialValues={initialValues}
-      fileNames={fileNames}
       validate={type === 'create' ? createFeedbackValidate : undefined}
       type={type}
     />
@@ -97,7 +85,6 @@ const FormEditFeedbackContainer: React.FC<PropsType> = ({
 
 const mapStateToProps = (state: RootState): MapStatePropsType => ({
   uploadImages: state.common.uploadImages,
-  countImages: state.common.countImages,
 });
 
 export default connect<
@@ -107,6 +94,5 @@ export default connect<
   RootState
 >(mapStateToProps, {
   createFeedback: createFeedbackTh,
-  setUploadImage,
   getPoint: getPointTh,
 })(FormEditFeedbackContainer);

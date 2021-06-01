@@ -6,19 +6,18 @@ import ContainerField from '../../common/FormControls';
 import Textarea from '../../common/FormControls/Textarea';
 import Radio from '../../common/FormControls/Radio';
 import UploadFile from '../../common/FormControls/UploadFile';
-import { IUploadImage } from '../../../types/commonReducerTypes';
+import { IUploadImages } from '../../../types/commonReducerTypes';
 
 interface IInitialValues {
   rating: string;
   feedback: string;
-  image: Array<IUploadImage> | null;
+  image: IUploadImages | null;
 }
 
 type PropsType = {
   onSubmit: (values: FormikValues) => void;
   initialValues: IInitialValues;
   validate: ((values: FormikValues) => IFeedbackValidateError) | undefined;
-  fileNames: Array<string>;
   type: 'edit' | 'create' | null;
 };
 
@@ -27,7 +26,6 @@ const FormEditPoint: React.FC<PropsType> = ({
   initialValues,
   validate,
   type,
-  fileNames,
 }) => (
   <div className={Style.root}>
     <Formik
@@ -91,28 +89,27 @@ const FormEditPoint: React.FC<PropsType> = ({
             }}
           />
         }
-        <div className={Style['photos-container']}>
-          {fileNames.map((item, index) => (
+        <div className={Style.bottom}>
+          <div className={Style['upload-file-container']}>
             <ContainerField
-              key={item}
               component={UploadFile}
               name="image"
               placeholder="image"
               props={{
-                fileName: item,
-                id: `feedback-upload-image-${index}`,
+                fileName: 'Test',
+                id: `feedback-upload-image-1`,
                 maxElem: 3,
               }}
             />
-          ))}
+          </div>
+          <button type="submit" className={Style.submit}>
+            {type === 'create'
+              ? 'Create new feedback'
+              : type === 'edit'
+              ? 'Edit feedback'
+              : null}
+          </button>
         </div>
-        <button type="submit" className={Style.submit}>
-          {type === 'create'
-            ? 'Create new feedback'
-            : type === 'edit'
-            ? 'Edit feedback'
-            : null}
-        </button>
       </Form>
     </Formik>
   </div>

@@ -1,6 +1,5 @@
 import { FormikValues } from 'formik';
 import * as yup from 'yup';
-import { IUploadImage } from '../types/commonReducerTypes';
 import {
   IFormControlsErrors,
   IImageValidateError,
@@ -176,6 +175,7 @@ export const createFeedbackValidate = (
     values.image.length !== 0 &&
     !(values.image.length === 1 && values.image[0].name === '')
   ) {
+    /*
     const image = values.image;
     image.forEach((element: IUploadImage) => {
       if (
@@ -224,6 +224,7 @@ export const createFeedbackValidate = (
           : null;
       }
     });
+    */
   }
 
   // feedback
@@ -266,6 +267,7 @@ export const updateFeedbackValidate = (
     values.image.length !== 0 &&
     !(values.image.length === 1 && values.image[0].name === '')
   ) {
+    /*
     const image = values.image;
     image.forEach((element: IUploadImage) => {
       if (element.type === undefined) {
@@ -298,6 +300,7 @@ export const updateFeedbackValidate = (
           : null;
       }
     });
+    */
   }
 
   // feedback

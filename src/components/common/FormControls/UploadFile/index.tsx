@@ -1,288 +1,214 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  setError,
+  changeUploadModal,
   setUploadImage,
 } from '../../../../redux/actions/commonAction';
 import { RootState } from '../../../../redux/reducers';
 import {
   CommonActionTypes,
-  IError,
-  IUploadImage,
+  IUploadImages,
 } from '../../../../types/commonReducerTypes';
 import {
   FormControlsType,
-  IImageValidateError,
+  IUploadModalImages,
 } from '../../../../types/componentsTypes';
 import UploadFile from './UploadFile';
-import noFile from './assets/no_file.jpg';
 
 type MapStatePropsType = {
-  uploadImages: Array<IUploadImage> | null;
+  uploadImages: IUploadImages;
 };
 
 interface MapDispatchPropsType {
-  setUploadImage: (
-    uploadImages: Array<IUploadImage> | null,
-    countImages: number
-  ) => void;
-  setError: (error: IError, isError: boolean) => CommonActionTypes;
+  changeModal: (isUploadModal: boolean) => CommonActionTypes;
+  setImage: (uploadImages: IUploadImages) => void;
 }
 
 type PropsType = FormControlsType & MapDispatchPropsType & MapStatePropsType;
 
 const UploadFileContainer: React.FC<PropsType> = ({
-  anotherArg,
-  field,
-  placeholder,
-  form,
-  setUploadImage,
+  changeModal,
   uploadImages,
-  setError,
+  setImage,
+  form,
+  anotherArg,
 }) => {
+  const openModal = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    await e.currentTarget?.parentNode?.querySelector('input')?.click();
+  };
+
+  const hideModal = () => {
+    changeModal(false);
+  };
+
+  const images: Array<IUploadModalImages> = [];
+
+  for (const key in uploadImages) {
+    if ({}.hasOwnProperty.call(uploadImages, key)) {
+      const obj = uploadImages[key];
+
+      if (typeof obj !== 'boolean' && obj?.imageInBase64 !== undefined) {
+        images.push({
+          image: `${obj.imageInBase64}`,
+          id: key,
+        });
+      }
+    }
+  }
+
   const uploadEvent = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e?.currentTarget !== null || e?.currentTarget !== undefined) {
-      const reader = new FileReader();
       const elem = e.currentTarget;
-      const image: File | null | undefined =
+      const reader = new FileReader();
+      let image: File | null | undefined =
         elem.files !== null && elem.files[0] !== null ? elem.files[0] : null;
 
       if (image === null || image === undefined) {
         return;
       }
 
-      console.log(image);
+      let isOptimized = false;
+
       reader.readAsDataURL(image);
       reader.onloadend = () => {
-        const compressImg = new Image();
+        if (!isOptimized) {
+          const compressImg = new Image();
 
-        compressImg.src = reader.result === null ? '' : `${reader.result}`;
+          compressImg.src = reader.result === null ? '' : `${reader.result}`;
 
-        compressImg.onload = () => {
-          const width = 600;
-          const scaleFactor = width / compressImg.width;
+          compressImg.onload = () => {
+            const width = 1600;
+            const scaleFactor = width / compressImg.width;
 
-          const canvas = document.createElement('canvas');
+            const canvas = document.createElement('canvas');
 
-          canvas.width = width;
-          canvas.height = compressImg.height * scaleFactor;
+            canvas.width = width;
+            canvas.height = compressImg.height * scaleFactor;
 
-          const ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext('2d');
 
-          if (ctx !== null) {
-            ctx.drawImage(
-              compressImg,
-              0,
-              0,
-              width,
-              compressImg.height * scaleFactor
-            );
+            if (ctx !== null) {
+              ctx.fillStyle = '#fff';
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.canvas.toBlob(
-              (blob) => {
-                if (blob !== null) {
-                  const file = new File([blob], image.name, {
-                    type: 'image/jpeg',
-                    lastModified: Date.now(),
-                  });
+              ctx.drawImage(
+                compressImg,
+                0,
+                0,
+                width,
+                compressImg.height * scaleFactor
+              );
 
-                  if (uploadImages === null || uploadImages.length === 1) {
-                    setUploadImage(
-                      [
-                        {
-                          name: image.name,
-                          type: image.type,
-                          imageInBase64:
-                            reader.result === null ? '' : reader.result,
-                          id: anotherArg?.id ? anotherArg.id : '',
-                          size: image.size,
-                        },
-                      ],
-                      1
-                    );
-                    form.setFieldValue('image', [
-                      {
-                        name: image.name,
-                        type: image.type,
-                        imageInBase64:
-                          reader.result === null ? '' : reader.result,
-                        id: anotherArg?.id ? anotherArg.id : '',
-                        size: image.size,
-                      },
-                    ]);
-                  } else {
-                    const uploadImagesCopy: Array<IUploadImage> = [];
-
-                    uploadImages.forEach((item) => {
-                      item?.name !== undefined &&
-                      item.name === anotherArg.fileName
-                        ? uploadImagesCopy.push({
-                            name: image.name,
-                            type: image.type,
-                            imageInBase64:
-                              reader.result === null ? '' : reader.result,
-                            id: anotherArg?.id ? anotherArg.id : '',
-                            size: image.size,
-                          })
-                        : uploadImagesCopy.push(item);
+              ctx.canvas.toBlob(
+                (blob) => {
+                  if (blob !== null) {
+                    image = new File([blob], 'Новый файлик', {
+                      type: 'image/jpeg',
+                      lastModified: Date.now(),
                     });
 
-                    setUploadImage(uploadImagesCopy, uploadImagesCopy.length);
-                    form.setFieldValue('image', uploadImagesCopy);
-                  }
+                    if (image === null || image === undefined) {
+                      return;
+                    }
 
-                  console.log(file);
-                }
-              },
-              'image/jpeg',
-              1
-            );
+                    isOptimized = true;
+                    reader.readAsDataURL(image);
+                  }
+                },
+                'image/jpeg',
+                0.7
+              );
+            }
+          };
+        } else {
+          if (image === null || image === undefined) {
+            return;
           }
-        };
+
+          const unicId = Date.now();
+
+          const uploadImagesCopy = uploadImages;
+          uploadImagesCopy[`image-${unicId}`] = {
+            name: image.name,
+            type: image.type,
+            imageInBase64: reader.result === null ? '' : reader.result,
+            id: `image-${unicId}`,
+            size: image.size,
+          };
+
+          setImage(uploadImagesCopy);
+          form.setFieldValue('image', {
+            name: image.name,
+            type: image.type,
+            imageInBase64: reader.result === null ? '' : reader.result,
+            id: `image-${unicId}`,
+            size: image.size,
+          });
+
+          changeModal(true);
+        }
       };
     }
   };
 
-  const clearField = (): void => {
-    if (uploadImages === null) {
-      return;
+  const deleteImg = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const imgId = e.currentTarget.parentNode
+      ?.querySelector('img')
+      ?.getAttribute('id');
+
+    if (imgId !== undefined && imgId !== null) {
+      const uploadImagesCopy: IUploadImages = {
+        isUploadModal: uploadImages.isUploadModal,
+      };
+
+      for (const key in uploadImages) {
+        if ({}.hasOwnProperty.call(uploadImages, key)) {
+          const obj = uploadImages[key];
+
+          if (
+            typeof obj !== 'boolean' &&
+            obj?.id !== undefined &&
+            obj.id !== imgId
+          ) {
+            uploadImagesCopy[`${obj.id}`] = obj;
+          }
+        }
+      }
+
+      setImage(uploadImagesCopy);
+
+      if (Object.keys(uploadImagesCopy).length <= 1) {
+        changeModal(false);
+      }
     }
+  };
 
-    const uploadImagesCopy: Array<IUploadImage> = [];
+  const addImg = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget
+      .closest('div[data-parent$="true"]')
+      ?.querySelector('input')
+      ?.click();
+  };
 
-    uploadImages.forEach((item) => {
-      item?.name !== undefined && item.name === anotherArg.fileName
-        ? null
-        : uploadImagesCopy.push(item);
+  const clearAllImg = () => {
+    setImage({
+      isUploadModal: false,
     });
-
-    setUploadImage(
-      uploadImagesCopy.length === 0 ? null : uploadImagesCopy,
-      uploadImagesCopy.length === 0 ? 1 : uploadImagesCopy.length
-    );
-
-    form.setFieldValue('image', uploadImagesCopy);
   };
 
-  const addField = (): void => {
-    if (
-      uploadImages !== null &&
-      anotherArg?.maxElem &&
-      uploadImages.length >= anotherArg.maxElem
-    ) {
-      setError(
-        {
-          status: 400,
-          message: 'Maximum number of photos reached!',
-        },
-        true
-      );
-      return;
-    }
-
-    if (anotherArg.fileName === undefined || anotherArg.fileName === '') {
-      setError(
-        {
-          status: 400,
-          message:
-            'Unable to add container for photo! Other containers are not full!',
-        },
-        true
-      );
-      return;
-    }
-
-    const uploadImagesCopy: Array<IUploadImage> | null = uploadImages;
-
-    uploadImagesCopy === null
-      ? null
-      : uploadImagesCopy.push({
-          name: '',
-          type: '',
-          imageInBase64: '',
-          id: '',
-          size: 0,
-        });
-
-    setUploadImage(
-      uploadImagesCopy !== null
-        ? uploadImagesCopy
-        : [
-            {
-              name: '',
-              type: '',
-              imageInBase64: '',
-              id: '',
-              size: 0,
-            },
-          ],
-      uploadImagesCopy === null ? 1 : uploadImagesCopy.length
-    );
-
-    form.setFieldValue(
-      'image',
-      uploadImagesCopy !== null
-        ? uploadImagesCopy
-        : [
-            {
-              name: '',
-              type: '',
-              imageInBase64: '',
-              id: '',
-              size: 0,
-            },
-          ]
-    );
-  };
-
-  let error: string | null = null;
-
-  const checkErrorType = form.errors[`${field.name}`];
-
-  const errorArray: IImageValidateError[] | undefined =
-    typeof checkErrorType !== 'string' ? checkErrorType : undefined;
-  if (errorArray !== undefined) {
-    if (anotherArg.fileName != '') {
-      errorArray.forEach((element: IImageValidateError) => {
-        element.id === anotherArg.id ? (error = element.message) : null;
-      });
-    } else {
-      errorArray.forEach((element: IImageValidateError) => {
-        element.id === 'image' ? (error = element.message) : null;
-      });
-    }
-  }
-
-  let imageView: string | null | ArrayBuffer = null;
-
-  uploadImages?.forEach((item) => {
-    if (item.id === anotherArg.id) {
-      imageView = item.imageInBase64;
-    }
-  });
-
-  if (
-    anotherArg.maxElem === undefined ||
-    document.querySelectorAll(`input[name="${field.name}"]`).length >
-      anotherArg.maxElem
-  ) {
-    return <></>;
-  } else {
-    return (
-      <UploadFile
-        name={field.name}
-        id={anotherArg.id !== undefined ? anotherArg.id : ''}
-        fileName={anotherArg.fileName !== undefined ? anotherArg.fileName : ''}
-        placeholder={placeholder}
-        onChange={uploadEvent}
-        clear={clearField}
-        add={addField}
-        error={error}
-        maxElem={anotherArg.maxElem}
-        image={imageView !== null ? imageView : noFile}
-      />
-    );
-  }
+  return (
+    <UploadFile
+      images={images.length === 0 ? null : images}
+      hideModal={hideModal}
+      openModal={openModal}
+      isModal={uploadImages.isUploadModal}
+      onChange={uploadEvent}
+      deleteImg={deleteImg}
+      addImg={addImg}
+      clearAllImg={clearAllImg}
+      maxElem={anotherArg?.maxElem === undefined ? 1 : anotherArg.maxElem}
+    />
+  );
 };
 
 const mapToStateProps = (state: RootState): MapStatePropsType => ({
@@ -295,6 +221,6 @@ export default connect<
   FormControlsType,
   RootState
 >(mapToStateProps, {
-  setUploadImage,
-  setError,
+  changeModal: changeUploadModal,
+  setImage: setUploadImage,
 })(UploadFileContainer);

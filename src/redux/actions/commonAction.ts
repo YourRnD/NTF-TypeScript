@@ -3,10 +3,11 @@ import {
   IError,
   IQRModal,
   IThankInfo,
-  IUploadImage,
+  IUploadImages,
 } from '../../types/commonReducerTypes';
 import {
   CHANGE_LOADED,
+  CHANGE_UPLOAD_MODAL,
   SET_ERROR,
   SET_HIDE_QR,
   SET_SUCCESS,
@@ -65,13 +66,20 @@ export const setSuccess = (
   },
 });
 
+export const changeUploadModal = (
+  isUploadModal: boolean
+): CommonActionTypes => ({
+  type: CHANGE_UPLOAD_MODAL,
+  payload: {
+    isUploadModal,
+  },
+});
+
 export const setUploadImage = (
-  uploadImages: Array<IUploadImage> | null,
-  countImages: number
+  uploadImages: IUploadImages
 ): CommonActionTypes => ({
   type: SET_UPLOAD_IMAGE,
   payload: {
     uploadImages,
-    countImages,
   },
 });
