@@ -5,6 +5,7 @@ import {
   SET_THANK_INFO,
   SET_UPLOAD_IMAGE,
   SET_HIDE_QR,
+  CHANGE_UPLOAD_MODAL,
 } from '../redux/constants';
 
 // Store
@@ -24,7 +25,7 @@ export interface IThankInfo {
   path: string | undefined;
 }
 
-export interface IUploadImage {
+export interface IImage {
   name: string;
   type: string;
   imageInBase64: string | ArrayBuffer;
@@ -32,12 +33,16 @@ export interface IUploadImage {
   size: number;
 }
 
+export interface IUploadImages {
+  [key: string]: IImage | boolean;
+  isUploadModal: boolean;
+}
+
 export interface ICommon {
   isLoaded: boolean;
   error: IError;
   isError: boolean;
-  uploadImages: Array<IUploadImage> | null;
-  countImages: number;
+  uploadImages: IUploadImages;
   isSuccess: boolean;
   successMessage: string;
   isThank: boolean;
@@ -85,11 +90,17 @@ export interface ISetSuccessAction {
   };
 }
 
-interface ISetUploadImageAction {
+export interface ISetUploadImageAction {
   type: typeof SET_UPLOAD_IMAGE;
   payload: {
-    uploadImages: Array<IUploadImage> | null;
-    countImages: number;
+    uploadImages: IUploadImages;
+  };
+}
+
+export interface IChangeUploadModal {
+  type: typeof CHANGE_UPLOAD_MODAL;
+  payload: {
+    isUploadModal: boolean;
   };
 }
 
@@ -99,4 +110,5 @@ export type CommonActionTypes =
   | ISetErrorAction
   | ISetSuccessAction
   | ISetHideQR
+  | IChangeUploadModal
   | ISetUploadImageAction;

@@ -1,6 +1,6 @@
 // Input
 
-import { IUploadImage } from './commonReducerTypes';
+import { IImage } from './commonReducerTypes';
 
 interface IFormComponentAdditionallyProps {
   name: string;
@@ -12,6 +12,11 @@ interface IFormComponentAdditionallyProps {
 
 export interface IImageValidateError {
   message: string;
+  id: string;
+}
+
+export interface IUploadModalImages {
+  image: string;
   id: string;
 }
 
@@ -51,7 +56,7 @@ export type FormControlsType = {
     errors: IFormControlsErrors;
     setFieldValue: (
       field: string,
-      value: string | null | number | undefined | Array<IUploadImage>,
+      value: string | null | number | undefined | IImage,
       shouldValidate?: boolean
     ) => void;
   };

@@ -64,8 +64,6 @@ const FormEditPointContainer: React.FC<PropsType> = ({
     return;
   };
 
-  console.log(name);
-
   const initialValues = {
     name,
     address,

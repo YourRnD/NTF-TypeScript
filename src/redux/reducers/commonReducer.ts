@@ -1,6 +1,7 @@
 import { CommonActionTypes, ICommon } from '../../types/commonReducerTypes';
 import {
   CHANGE_LOADED,
+  CHANGE_UPLOAD_MODAL,
   SET_ERROR,
   SET_HIDE_QR,
   SET_SUCCESS,
@@ -18,8 +19,9 @@ const initialState: stateCommon = {
     message: '',
   },
   isError: false,
-  uploadImages: null,
-  countImages: 1,
+  uploadImages: {
+    isUploadModal: false,
+  },
   isSuccess: false,
   successMessage: '',
   isThank: false,
@@ -67,6 +69,14 @@ const commonReducer = (
       return {
         ...state,
         ...action.payload,
+      };
+    case CHANGE_UPLOAD_MODAL:
+      return {
+        ...state,
+        uploadImages: {
+          ...state.uploadImages,
+          ...action.payload,
+        },
       };
     default:
       return state;

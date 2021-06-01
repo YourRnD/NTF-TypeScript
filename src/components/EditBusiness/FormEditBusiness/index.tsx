@@ -5,7 +5,7 @@ import FormEditBusiness from './FormEditBusiness';
 import { RootState } from '../../../redux/reducers';
 import {
   CommonActionTypes,
-  IUploadImage,
+  IUploadImages,
 } from '../../../types/commonReducerTypes';
 import {
   createBusinessTh,
@@ -22,17 +22,13 @@ import { setUploadImage } from '../../../redux/actions/commonAction';
 type MapStatePropsType = {
   businessId: number | null | undefined;
   status: string | null | undefined;
-  uploadImages: Array<IUploadImage> | null;
-  countImages: number;
+  uploadImages: IUploadImages;
 };
 
 type MapDispatchPropsType = {
   createBusiness: (name: string, image: Array<string | ArrayBuffer>) => void;
   updateBusiness: (id: number, obj: IUpdateBusinessObj) => void;
-  setUploadImage: (
-    uploadImages: Array<IUploadImage> | null,
-    countImages: number
-  ) => CommonActionTypes;
+  setUploadImage: (uploadImages: IUploadImages) => CommonActionTypes;
 };
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
@@ -43,11 +39,10 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
   createBusiness,
   status,
   uploadImages,
-  countImages,
   setUploadImage,
 }) => {
   useEffect(() => {
-    setUploadImage(null, 1);
+    // setUploadImage(null, 1);
   }, [setUploadImage]);
 
   const onSubmit = (values: FormikValues): void => {
@@ -58,9 +53,11 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
         obj.name = values.name.trim();
       }
 
+      /*
       if (uploadImages !== null) {
         obj.image = uploadImages.map((item) => item.imageInBase64);
       }
+      */
 
       if (businessId === null || businessId === undefined) {
         return;
@@ -74,26 +71,30 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
         return;
       }
 
+      /*
       return createBusiness(
         values.name.trim(),
         uploadImages.map((item) => item.imageInBase64)
       );
+      */
     }
   };
 
   const initialValue = {
     name: '',
-    image: uploadImages,
+    image: null,
   };
 
   const fileNames = [''];
 
+  /*
   if (uploadImages !== null) {
     fileNames[0] = uploadImages[0].name;
     for (let i = 1; i < countImages; i++) {
       fileNames.push(uploadImages[i].name);
     }
   }
+  */
 
   return (
     <FormEditBusiness
@@ -116,7 +117,6 @@ const mapStateToProps = (state: RootState): MapStatePropsType => ({
   businessId: state.auth.user.idBusiness,
   status: state.auth.user.status,
   uploadImages: state.common.uploadImages,
-  countImages: state.common.countImages,
 });
 
 export default compose(

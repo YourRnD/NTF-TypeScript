@@ -1,7 +1,7 @@
 import { Form, Formik, FormikValues } from 'formik';
 import React from 'react';
 import { IBusinessValidateError } from '../../../common/validate';
-import { IUploadImage } from '../../../types/commonReducerTypes';
+import { IUploadImages } from '../../../types/commonReducerTypes';
 import ContainerField from '../../common/FormControls';
 import Input from '../../common/FormControls/Input';
 import UploadFile from '../../common/FormControls/UploadFile';
@@ -9,7 +9,7 @@ import Style from './FormEditBusiness.module.css';
 
 interface IInitialValue {
   name: string;
-  image: Array<IUploadImage> | null;
+  image: IUploadImages | null;
 }
 
 type PropsType = {

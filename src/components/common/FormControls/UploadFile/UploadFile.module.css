@@ -1,6 +1,192 @@
 .root {
-  margin-bottom: 50px;
 }
+
+.upload-file-btn {
+  border-radius: 10px;
+  border: none;
+
+  background-color: var(--blue);
+
+  padding: 5px;
+
+  transition: all 0.5s;
+}
+
+.upload-file-btn:hover {
+  box-shadow: -10px 10px 15px 0px rgba(0, 0, 0, 0.3);
+
+  transform: translate(5px, -5px);
+}
+
+.camera-icon {
+  max-width: 40px;
+}
+
+.modal {
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  min-width: 100vw;
+  min-height: 100vh;
+
+  z-index: 8998;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.background {
+  background-color: rgba(70, 70, 70, 0.6);
+
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  min-width: 100vw;
+  min-height: 100vh;
+
+  z-index: 8998;
+}
+
+.modal-container {
+  position: relative;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+
+  padding: 40px 20px 20px;
+
+  max-width: 500px;
+  width: 100%;
+
+  min-height: 300px;
+
+  background-color: var(--white);
+
+  border: 2px solid var(--lightBlack);
+  border-radius: 10px;
+
+  z-index: 8999;
+}
+
+.close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+
+  width: 30px;
+  height: 30px;
+
+  background-color: var(--white);
+
+  border: 2px solid var(--lightBlack);
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+
+.close::after,
+.close::before {
+  position: absolute;
+  content: '';
+
+  top: 12px;
+  left: 6px;
+
+  width: 15px;
+  height: 2px;
+
+  transform: rotate(45deg);
+
+  background-color: #000;
+}
+
+.close::before {
+  transform: rotate(-45deg);
+}
+
+.input {
+  visibility: hidden;
+
+  width: 0px;
+  height: 0px;
+}
+
+.images-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+
+  width: 100%;
+  height: 100%;
+}
+
+.img-container {
+  max-width: 100px;
+  width: 100%;
+  max-height: max-content;
+
+  position: relative;
+}
+
+.delete-img-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+
+  width: 30px;
+  height: 30px;
+
+  background-color: var(--white);
+
+  border: 2px solid var(--lightBlack);
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+
+.delete-img-btn::after,
+.delete-img-btn::before {
+  position: absolute;
+  content: '';
+
+  top: 12px;
+  left: 6px;
+
+  width: 15px;
+  height: 2px;
+
+  transform: rotate(45deg);
+
+  background-color: #000;
+}
+
+.delete-img-btn::before {
+  transform: rotate(-45deg);
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-around;
+
+  width: 100%;
+}
+
+.modal-btn {
+  border: none;
+
+  background-color: var(--white);
+  color: var(--blue);
+
+  font-size: 19px;
+  font-weight: bold;
+}
+
+/*
 
 .container {
   position: relative;
@@ -148,3 +334,5 @@
 
   font-size: 14px;
 }
+
+*/
