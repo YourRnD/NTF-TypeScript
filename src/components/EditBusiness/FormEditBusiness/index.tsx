@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { FormikValues } from 'formik';
 import FormEditBusiness from './FormEditBusiness';
@@ -39,12 +39,7 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
   createBusiness,
   status,
   uploadImages,
-  setUploadImage,
 }) => {
-  useEffect(() => {
-    // setUploadImage(null, 1);
-  }, [setUploadImage]);
-
   const onSubmit = (values: FormikValues): void => {
     if (status === 'manager') {
       const obj: IUpdateBusinessObj = {};
@@ -53,11 +48,21 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
         obj.name = values.name.trim();
       }
 
-      /*
-      if (uploadImages !== null) {
-        obj.image = uploadImages.map((item) => item.imageInBase64);
+      const images: Array<string> = [];
+
+      for (const key in uploadImages) {
+        if ({}.hasOwnProperty.call(uploadImages, key)) {
+          const obj = uploadImages[key];
+
+          if (typeof obj !== 'boolean' && obj?.imageInBase64 !== undefined) {
+            images.push(`${obj.imageInBase64}`);
+          }
+        }
       }
-      */
+
+      if (images.length > 0) {
+        obj.image = images;
+      }
 
       if (businessId === null || businessId === undefined) {
         return;
@@ -67,16 +72,23 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
     }
 
     if (status === 'admin') {
-      if (values.name === null || uploadImages === null) {
+      const images: Array<string> = [];
+
+      for (const key in uploadImages) {
+        if ({}.hasOwnProperty.call(uploadImages, key)) {
+          const obj = uploadImages[key];
+
+          if (typeof obj !== 'boolean' && obj?.imageInBase64 !== undefined) {
+            images.push(`${obj.imageInBase64}`);
+          }
+        }
+      }
+
+      if (values.name === null || images?.length === 0) {
         return;
       }
 
-      /*
-      return createBusiness(
-        values.name.trim(),
-        uploadImages.map((item) => item.imageInBase64)
-      );
-      */
+      return createBusiness(values.name.trim(), images);
     }
   };
 
@@ -85,22 +97,10 @@ const FormEditBusinessContainer: React.FC<PropsType> = ({
     image: null,
   };
 
-  const fileNames = [''];
-
-  /*
-  if (uploadImages !== null) {
-    fileNames[0] = uploadImages[0].name;
-    for (let i = 1; i < countImages; i++) {
-      fileNames.push(uploadImages[i].name);
-    }
-  }
-  */
-
   return (
     <FormEditBusiness
       status={status}
       onSubmit={onSubmit}
-      fileNames={fileNames}
       validate={
         status === 'admin'
           ? createBusinessValidate

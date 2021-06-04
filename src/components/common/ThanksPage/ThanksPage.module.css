@@ -47,6 +47,8 @@
   border-radius: 10px;
 
   text-align: center;
+
+  z-index: 8999;
 }
 
 .title {

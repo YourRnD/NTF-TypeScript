@@ -8,6 +8,7 @@ import { createFeedbackValidate } from '../../../common/validate';
 import { IUploadImages } from '../../../types/commonReducerTypes';
 import { getPointTh } from '../../../redux/actions/pointAction';
 import { setUploadImage } from '../../../redux/actions/commonAction';
+import { IUploadModalImages } from '../../../types/componentsTypes';
 
 type MapDispatchPropsType = {
   createFeedback: (
@@ -21,7 +22,7 @@ type MapDispatchPropsType = {
 };
 
 type MapStatePropsType = {
-  uploadImages: IUploadImages | null;
+  uploadImages: IUploadImages;
 };
 
 type OwnPropsType = {
@@ -37,10 +38,26 @@ const FormEditFeedbackContainer: React.FC<PropsType> = ({
   type,
   uploadImages,
   getPoint,
+  setImage,
 }) => {
   useEffect(() => {
     getPoint(pointId);
   }, [getPoint, pointId]);
+
+  const images: Array<IUploadModalImages> = [];
+
+  for (const key in uploadImages) {
+    if ({}.hasOwnProperty.call(uploadImages, key)) {
+      const obj = uploadImages[key];
+
+      if (typeof obj !== 'boolean' && obj?.imageInBase64 !== undefined) {
+        images.push({
+          image: `${obj.imageInBase64}`,
+          id: key,
+        });
+      }
+    }
+  }
 
   const onSubmit = (values: FormikValues): void => {
     if (type === 'edit') {
@@ -69,6 +86,34 @@ const FormEditFeedbackContainer: React.FC<PropsType> = ({
     return;
   };
 
+  const deleteImg = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const imgId = e.currentTarget.parentNode
+      ?.querySelector('img')
+      ?.getAttribute('id');
+
+    if (imgId !== undefined && imgId !== null) {
+      const uploadImagesCopy: IUploadImages = {
+        isUploadModal: uploadImages.isUploadModal,
+      };
+
+      for (const key in uploadImages) {
+        if ({}.hasOwnProperty.call(uploadImages, key)) {
+          const obj = uploadImages[key];
+
+          if (
+            typeof obj !== 'boolean' &&
+            obj?.id !== undefined &&
+            obj.id !== imgId
+          ) {
+            uploadImagesCopy[`${obj.id}`] = obj;
+          }
+        }
+      }
+
+      setImage(uploadImagesCopy);
+    }
+  };
+
   const initialValues = {
     rating: '',
     feedback: '',
@@ -81,6 +126,8 @@ const FormEditFeedbackContainer: React.FC<PropsType> = ({
       initialValues={initialValues}
       validate={type === 'create' ? createFeedbackValidate : undefined}
       type={type}
+      deleteImg={deleteImg}
+      images={images.length === 0 ? null : images}
     />
   );
 };

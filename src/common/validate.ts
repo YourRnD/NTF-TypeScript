@@ -65,6 +65,7 @@ export const createBusinessValidate = (
     values.image !== null &&
     values.image[0].name !== ''
   ) {
+    /*
     const image = values.image[0];
     if (image.type === undefined) {
       errors.image = [
@@ -84,6 +85,7 @@ export const createBusinessValidate = (
           ])
         : null;
     }
+    */
   } else {
     errors.image = [
       {
@@ -115,6 +117,9 @@ export const updateBusinessValidate = (
   values: FormikValues
 ): IBusinessValidateError => {
   const errors: IBusinessValidateError = {};
+
+  /*
+
   // image
   if (
     values.image !== undefined &&
@@ -141,6 +146,8 @@ export const updateBusinessValidate = (
         : null;
     }
   }
+
+  */
 
   // name
   if (values.name !== undefined && values.name !== '') {
