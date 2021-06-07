@@ -95,8 +95,14 @@ export const checkAuthTh = (): ThunkAction<
   dispatch(changeLoaded(true));
   const data:
     | (IUniversalResultData & IAuthAPI)
+    | 'Unauthorized'
     | undefined = await authAPI.me().then((result) => result?.data);
-  if (data !== undefined && data.status === 200) {
+  if (data === 'Unauthorized') {
+    localStorage.removeItem('star_it_access_token');
+    localStorage.removeItem('star_it_refresh_token');
+    sessionStorage.removeItem('star_it_access_token');
+    sessionStorage.removeItem('star_it_refresh_token');
+  } else if (data !== undefined && data.status === 200) {
     const user: IUser = {
       id: data.user?.id,
       name: data.user?.name,

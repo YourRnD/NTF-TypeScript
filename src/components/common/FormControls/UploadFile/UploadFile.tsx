@@ -33,7 +33,7 @@ const UploadFile: React.FC<PropsType> = ({
             <div key={item.id} className={Style['img-container']}>
               <img src={item.image} alt="Upload image" id={item.id} />
               <span
-                data-type="dalete"
+                data-type="delete"
                 role="button"
                 className={Style['delete-img-btn']}
                 onClick={deleteImg}
@@ -81,7 +81,7 @@ const UploadFile: React.FC<PropsType> = ({
                 </button>
               )}
               <button className={Style['modal-btn']} onClick={clearAllImg}>
-                Сancel
+                Clear
               </button>
             </div>
           </div>

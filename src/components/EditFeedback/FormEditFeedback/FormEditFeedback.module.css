@@ -54,13 +54,62 @@
   transform: translateY(1px);
 }
 
-.photos-container {
+.img-view {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
 
-  min-width: 100%;
+  max-width: 100%;
+  width: 100%;
+
+  margin-bottom: 20px;
+}
+
+.img-container {
+  max-width: 40px;
+  width: 100%;
+  max-height: max-content;
+
+  position: relative;
+
+  margin: 0 20px;
+}
+
+.delete-img-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+
+  width: 21px;
+  height: 21px;
+
+  background-color: var(--white);
+
+  border: 2px solid var(--lightBlack);
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+
+.delete-img-btn::after,
+.delete-img-btn::before {
+  position: absolute;
+  content: '';
+
+  top: 8px;
+  left: 4px;
+
+  width: 10px;
+  height: 2px;
+
+  transform: rotate(45deg);
+
+  background-color: #000;
+}
+
+.delete-img-btn::before {
+  transform: rotate(-45deg);
 }
 
 .bottom {

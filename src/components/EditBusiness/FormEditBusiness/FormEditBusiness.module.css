@@ -12,9 +12,17 @@
   flex-direction: column;
 }
 
+.bottom {
+  display: flex;
+  justify-content: space-between;
+
+  max-width: 300px;
+  width: 100%;
+}
+
 .submit {
   height: 50px;
-  width: 300px;
+  width: 200px;
 
   border-radius: 10px;
   border: 0;

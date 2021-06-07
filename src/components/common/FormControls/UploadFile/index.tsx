@@ -33,14 +33,6 @@ const UploadFileContainer: React.FC<PropsType> = ({
   form,
   anotherArg,
 }) => {
-  const openModal = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    await e.currentTarget?.parentNode?.querySelector('input')?.click();
-  };
-
-  const hideModal = () => {
-    changeModal(false);
-  };
-
   const images: Array<IUploadModalImages> = [];
 
   for (const key in uploadImages) {
@@ -55,6 +47,18 @@ const UploadFileContainer: React.FC<PropsType> = ({
       }
     }
   }
+
+  const openModal = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (anotherArg?.maxElem && images.length < anotherArg?.maxElem) {
+      await e.currentTarget?.parentNode?.querySelector('input')?.click();
+    } else {
+      changeModal(true);
+    }
+  };
+
+  const hideModal = () => {
+    changeModal(false);
+  };
 
   const uploadEvent = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e?.currentTarget !== null || e?.currentTarget !== undefined) {
@@ -194,6 +198,7 @@ const UploadFileContainer: React.FC<PropsType> = ({
     setImage({
       isUploadModal: false,
     });
+    form.setFieldValue('image', null);
   };
 
   return (

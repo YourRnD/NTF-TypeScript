@@ -73,7 +73,7 @@ export const updateBusinessTh = (
   BusinessActionTypes | CommonActionTypes
 > => async (dispatch) => {
   dispatch(changeLoaded(true));
-  if (obj.image !== undefined && obj.name !== undefined) {
+  if (obj.image !== undefined || obj.name !== undefined) {
     const data = await businessAPI
       .update(id, obj)
       .then((result) => result.data);
